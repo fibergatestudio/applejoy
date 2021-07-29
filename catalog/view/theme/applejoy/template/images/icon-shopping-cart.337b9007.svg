@@ -1,0 +1,16 @@
+<svg id="_003-shopping-cart" data-name="003-shopping-cart" xmlns="http://www.w3.org/2000/svg" width="17.747" height="18.798" viewBox="0 0 17.747 18.798">
+  <g id="Group_479" data-name="Group 479" transform="translate(0 0)">
+    <g id="Group_478" data-name="Group 478">
+      <g id="Group_477" data-name="Group 477">
+        <path id="Path_3065" data-name="Path 3065" d="M123.88,395.039a2.147,2.147,0,1,0,2.147,2.147A2.149,2.149,0,0,0,123.88,395.039Zm0,2.98a.833.833,0,1,1,.833-.833A.833.833,0,0,1,123.88,398.019Z" transform="translate(-117.789 -380.535)" fill="#868b91"/>
+        <path id="Path_3066" data-name="Path 3066" d="M336.318,395.039a2.147,2.147,0,1,0,2.147,2.147A2.15,2.15,0,0,0,336.318,395.039Zm0,2.98a.832.832,0,1,1,.833-.833A.834.834,0,0,1,336.318,398.019Z" transform="translate(-322.427 -380.535)" fill="#868b91"/>
+        <path id="Path_3067" data-name="Path 3067" d="M19.467,13.847H29.7a.657.657,0,1,0,0-1.315H20.026L18.144.99a.657.657,0,0,0-.536-.542L15.089.01a.657.657,0,1,0-.225,1.3l2.059.358,1.9,11.632A.657.657,0,0,0,19.467,13.847Z" transform="translate(-14.319 0)" fill="#868b91"/>
+      </g>
+    </g>
+  </g>
+  <g id="Group_481" data-name="Group 481" transform="translate(3.725 3.988)">
+    <g id="Group_480" data-name="Group 480">
+      <path id="Path_3068" data-name="Path 3068" d="M129.661,108.881a.657.657,0,0,0-.531-.27H115.765v1.315l.942,5.521h10.649a.658.658,0,0,0,.626-.456l1.775-5.521A.657.657,0,0,0,129.661,108.881Z" transform="translate(-115.765 -108.611)" fill="#868b91"/>
+    </g>
+  </g>
+</svg>

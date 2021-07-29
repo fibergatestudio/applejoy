@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="43.027" height="47.99" viewBox="0 0 43.027 47.99">
+  <g id="shopping-items" transform="translate(-48 -24.01)">
+    <path id="Path_3181" data-name="Path 3181" d="M80,280h36.407v21.513H80Z" transform="translate(-28.69 -229.513)" fill="#f7b030"/>
+    <path id="Path_3182" data-name="Path 3182" d="M272,280h16.549v21.513H272Z" transform="translate(-200.832 -229.513)" fill="#f78a25"/>
+    <path id="Path_3183" data-name="Path 3183" d="M291.858,284.137H275.31L272,280h16.549Z" transform="translate(-200.832 -229.513)" fill="#bd620e"/>
+    <path id="Path_3184" data-name="Path 3184" d="M48,284.137H67.858L71.168,280H51.31Z" transform="translate(0 -229.513)" fill="#bd620e"/>
+    <path id="Path_3185" data-name="Path 3185" d="M0,0H3.51V3.51H0Z" transform="translate(86.056 36.424) rotate(-45)" fill="#ffd33a"/>
+    <path id="Path_3186" data-name="Path 3186" d="M0,0H3.51V3.51H0Z" transform="translate(51.308 26.492) rotate(-45)" fill="#ffd33a"/>
+    <path id="Path_3187" data-name="Path 3187" d="M183.7,78.894H170.459a2.484,2.484,0,1,0,2.34,1.655h6.9a2.482,2.482,0,1,0,4.647-.088,2.482,2.482,0,0,0,.318-4.68l1.492-7.463.666-2.664h1.836a.827.827,0,0,0,0-1.655h-2.482a.827.827,0,0,0-.8.627l-.671,2.683H168.8a.827.827,0,0,0-.811.99l1.655,8.274a.827.827,0,0,0,.811.665H183.7a.827.827,0,1,1,0,1.655ZM170.459,82.2a.827.827,0,1,1,.827-.827A.827.827,0,0,1,170.459,82.2Zm11.584,0a.827.827,0,1,1,.827-.827A.827.827,0,0,1,182.043,82.2ZM170.31,71.447l-.5-2.482h2.379l.248,2.482Zm.827,4.137-.5-2.482h1.965l.248,2.482Zm5.114,0h-1.733L174.27,73.1h1.982Zm0-4.137H174.1l-.248-2.482h2.4Zm3.388,4.137h-1.733V73.1h1.982Zm.414-4.137h-2.147V68.965h2.4Zm2.966,4.137H181.3l.248-2.482h1.965Zm.827-4.137h-2.131l.248-2.482h2.379Z" transform="translate(-107.565 -35.854)" fill="#eb423f"/>
+  </g>
+</svg>

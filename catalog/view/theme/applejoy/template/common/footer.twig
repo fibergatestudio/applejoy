@@ -1,0 +1,72 @@
+<footer>
+   <div class="container content-footer">
+      <div class="block-footer-1">
+         <img src="catalog/view/theme/applejoy/template/html/images/logo-footer.ff93093f.svg" alt="logo" class="logo-footer"> <span>Приймаємо до оплати</span>
+         <svg class="icon icon-bank-footer">
+            <use xlink:href="#icon-bank-footer"></use>
+         </svg>
+      </div>
+      <div class="block-footer-2">
+         <h3 class="title-footer">Продукція</h3>
+         <ul>
+           {% for cat_item in cat_tree %}
+
+            <li><a href="{{ cat_item.href }}">{{ cat_item.name }}</a></li>
+
+            {% endfor %}
+            <!-- <li><a href="#">iPad</a></li>
+            <li><a href="#">MacBook</a></li>
+            <li><a href="#">Apple Watch</a></li>
+            <li><a href="#">Гаджети</a></li>
+            <li><a href="#">Аксесуари</a></li>
+            <li><a href="#">б/у iPhone</a></li>
+            <li><a href="#">б/у MacBook</a></li> -->
+         </ul>
+      </div>
+      <div class="block-footer-3">
+         <h3 class="title-footer">Сервіс</h3>
+         <ul>
+            <li><a href="#">Trade-in</a></li>
+            <li><a href="#">Ремонт</a></li>
+         </ul>
+      </div>
+      <div class="block-footer-4">
+         <h3 class="title-footer">Информація</h3>
+         <ul>
+            <li><a href="#">Блог</a></li>
+            <li><a href="#">Вакансії</a></li>
+            <li><a href="#">Відгуки</a></li>
+            <li><a href="{{ contact }}">Контакти</a></li>
+         </ul>
+      </div>
+      <div class="block-footer-5">
+         <h3 class="title-footer">Для зв'язку і питань</h3>
+         <ul>
+            <li class="item-phone">
+               <svg class="icon icon-phone-write">
+                  <use xlink:href="#icon-phone-write"></use>
+               </svg>
+               <a href="tel:+380950500201">(095) 050 02 01</a>
+            </li>
+            <li>
+               <svg class="icon icon-clockwise-write">
+                  <use xlink:href="#icon-clockwise-write"></use>
+               </svg>
+               <span>11:00 - 20:00</span>
+            </li>
+            <li>
+               <svg class="icon icon-instagram-write">
+                  <use xlink:href="#icon-instagram-write"></use>
+               </svg>
+               <a href="#"><span>apple_joy_kyiv</span></a>
+            </li>
+         </ul>
+      </div>
+   </div>
+</footer>
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+<script src="catalog/view/theme/applejoy/template/html/js/index.1ff9bb98.js"></script>
+</body>
+</html>

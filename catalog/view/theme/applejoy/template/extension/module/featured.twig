@@ -1,0 +1,26 @@
+            <div class="tab-pane fade" id="{{ module_name }}" role="tabpanel" aria-labelledby="top-tab">
+               <ul class="slider-slick-product">
+                 {% for product in products %}
+                  <li class="item-product">
+                     <div class="wrapper-item-product">
+                        <div class="wrapper-img-product">
+                           <a href="{{ product.href }}" class="block-img"><img src="{{ product.thumb }}" alt="image-phone" class="img-product img-fluid"></a>
+                           <div class="icon icon-like active"></div>
+                        </div>
+                        <div><a href="{{ product.href }}" class="name-product">{{ product.name }}</a></div>
+                        <div class="item-product-bottom-wrapper">
+                           <div class="block-price">
+                              <span>Ціна</span>
+                              {% if product.special != false %}
+                              <div class="old-price"><span>750$</span><span>{{ product.special }}</span></div>
+                              {% endif %}
+                              <div class="new-price"><span>719 $</span><span>{{ product.price }}</span></div>
+                           </div>
+                           <div class="block-bottom-buy"><button class="btn-buy-product">Купити</button> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                        </div>
+                     </div>
+                  </li>
+                  {% endfor %}
+
+               </ul>
+            </div>
