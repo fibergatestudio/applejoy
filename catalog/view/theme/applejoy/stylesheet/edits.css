@@ -8,3 +8,14 @@
 	text-align: center;
 	border-radius: 50%;
 }
+
+.modal.show .modal-dialog .modal-content{
+	margin-top: 180px;
+}
+button.modal-button{
+	display: none;
+}
+div.error-phone, div.error-checkbox{
+  color:red;
+  display: none;
+}

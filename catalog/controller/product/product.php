@@ -688,4 +688,160 @@ class ControllerProductProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
+	public function fastBuyPhone(){
+		
+		$this->load->language('product/product');
+		$json = array();
+
+		if($this->request->post){
+			$option_text = '';
+			$fb_phone = (isset($this->request->post['phone']) ? $this->request->post['phone'] : $this->request->post['telephone']);
+			$prd_id = (int)$this->request->post['product_id'];
+			$customer_name = $this->request->post['customer_name'];
+			$this->load->model('catalog/product');
+			$prd_info = $this->model_catalog_product->getProduct($prd_id);
+			$fastBuyProductId = $prd_info['product_id'];
+			$fastBuyProductName = $prd_info['name'];
+			$fastBuyProductModel = $prd_info['model'];
+			/*if(isset($this->request->post['option'])){
+				$options = $this->request->post['option'];
+			} else {
+				$options = array();
+			}*/				
+			$fastBuyProductQuantity = 1;
+			$price = $prd_info['special']?$prd_info['special']:$prd_info['price'];
+			$fastBuyProductPrice = $price;
+			/* добавим цену опции */
+			/*foreach ($options as $product_option_id => $product_option_value_id) {
+				if($product_option_value_id){
+						//получим id опции и id значения
+					$option_value_sql = $this->db->query("SELECT price, price_prefix FROM " . DB_PREFIX . "product_option_value WHERE product_option_value_id = '" . (int)$product_option_value_id . "'");
+					if ($option_value_sql->num_rows) {
+						$opt_price = $option_value_sql->row['price'];
+						$opt_price_pref = $option_value_sql->row['price_prefix'];
+						if($opt_price_pref == '+'){
+							$fastBuyProductPrice += $opt_price;
+						} else if($opt_price_pref == '-'){
+							$fastBuyProductPrice -= $opt_price;
+						}
+					}
+				}
+			}*/	
+
+			$fastBuyProductTotal = $fastBuyProductPrice * $fastBuyProductQuantity;
+			$fastBuyProductReward = 0;
+			$currentDate = date("Y-m-d H:i:s");
+			$status = (int)1;
+			$firstName = $customer_name;
+			$fastOrder = "FAST ORDER BY PHONE";
+			$fastCommentary = "FAST ORDER BY PHONE";
+			$fastEmail = "test@mail.cc";
+			$fastEmail = trim($fastEmail);
+			$fastAddress = "Test Adress";
+			$fastCity = "Test City";
+			$fastCountryId = (int)220;
+			$fastZoneId = (int)3487;
+			$fastPaymentMethod = "Cash On Delivery";
+			$fastPaymentCode = "cod";
+			$fastShippingMethod = "Flat Shipping Rate";
+			$fastShippingCode = "free.free";
+			$fastCurrencyCode = $this->session->data['currency'];
+			$nvoice_prefix = $this->config->get('config_invoice_prefix');
+			$store_id = $this->config->get('config_store_id');
+			$store_name = $this->config->get('config_name');
+			$store_url = $this->config->get('config_url');				
+
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order SET invoice_prefix = '" . $nvoice_prefix . "'
+				, store_id = '" . $store_id . "'
+				, store_name = '" . $store_name . "'
+				, store_url = '" . $store_url . "'
+				, firstname = '" . $firstName . "'
+				, lastname = '" . $fastOrder . "'
+				, payment_firstname = '" . $firstName . "'
+				, payment_lastname = '" . $firstName . "'
+				, payment_address_1 = '" . $fastAddress . "'
+				, payment_city = '" . $fastCity . "'
+				, payment_country_id = '" . $fastCountryId . "'
+				, payment_zone_id = '" . $fastZoneId . "'
+				, payment_method = '" . $fastShippingMethod . "'
+				, payment_code = '" . $fastPaymentCode . "'
+				, shipping_firstname = '" . $firstName . "'
+				, shipping_lastname = '" . $firstName . "'
+				, shipping_address_1 = '" . $fastAddress . "'
+				, shipping_city = '" . $fastCity . "'
+				, shipping_country_id = '" . $fastCountryId . "'
+				, shipping_zone_id = '" . $fastZoneId . "'
+				, shipping_method = '" . $fastPaymentMethod . "'
+				, shipping_code = '" . $fastShippingCode . "'
+				, email = '" . $fastEmail . "'
+				, telephone = '" . $fb_phone . "'
+				, total = '" . $fastBuyProductTotal . "'
+				, date_added = '" . $currentDate . "'
+				, date_modified = '" . $currentDate . "'
+				, order_status_id = '" . $status . "'
+				, currency_code = '".$fastCurrencyCode."'
+				, comment = '" . $fastCommentary . "'");
+			$order_id = $this->db->getLastId();
+
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET product_id = '" . $fastBuyProductId . "'
+				, order_id = '" . $order_id . "'
+				, name = '" . $fastBuyProductName . "'
+				, model = '" . $fastBuyProductModel . "'
+				, quantity = '" . $fastBuyProductQuantity . "'
+				, price = '" . $fastBuyProductPrice . "'
+				, total = '" . $fastBuyProductTotal . "'
+				, reward = '" . $fastBuyProductReward . "'");
+			$order_product_id = $this->db->getLastId();
+
+			/*foreach ($options as $product_option_id => $product_option_value_id) {
+				if($product_option_value_id){
+						//получим id опции и id значения
+					$option_id = $this->db->query("SELECT option_id FROM " . DB_PREFIX . "product_option WHERE product_option_id = '" . (int)$product_option_id . "'")->row['option_id'];
+					$option_value_id = $this->db->query("SELECT option_value_id FROM " . DB_PREFIX . "product_option_value WHERE product_option_value_id = '" . (int)$product_option_value_id . "'")->row['option_value_id'];
+					$option_name = $this->db->query("SELECT name FROM `" . DB_PREFIX . "option_description` WHERE option_id = '" . $option_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'")->row['name'];
+					$value_name = $this->db->query("SELECT name FROM `" . DB_PREFIX . "option_value_description` WHERE option_value_id = '" . $option_value_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'")->row['name'];
+					$type = $this->db->query("SELECT type FROM `" . DB_PREFIX . "option` WHERE option_id = '" . (int)$option_id . "'")->row['type'];
+					$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', product_option_id = '" . (int)$product_option_id . "', product_option_value_id = '" . (int)$product_option_value_id . "', name = '" . $this->db->escape($option_name) . "', `value` = '" . $this->db->escape($value_name) . "', `type` = '" . $this->db->escape($type) . "'");
+				}
+					// тут соберем текст об опциях
+				$optdata = $this->db->query("SELECT od.name as `option`, ovd.name as `value` FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_description od ON (od.option_id = pov.option_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ovd.option_value_id = pov.option_value_id) WHERE pov.product_option_value_id = '" . $product_option_value_id . "'");
+				$option_text .= ' ' . $optdata->row['option'] . ' ' . $optdata->row['value'] . ';';
+			}				
+			if($prd_info['subtract']==1){
+				$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . $fastBuyProductQuantity . ") WHERE product_id = '" . (int)$prd_id . "' AND subtract = '1'");
+			}
+
+			foreach ($options as $product_option_value_id) {
+				if($product_option_value_id){
+					$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . $fastBuyProductQuantity . ") WHERE product_option_value_id = '" . (int)$product_option_value_id. "' AND subtract = '1'");
+				}
+			}*/
+
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '2', notify = '0', comment = 'FAST ORDER', date_added = NOW()");
+
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+			$mail->setTo($this->config->get('config_email'));
+			$mail->setFrom($this->config->get('config_email'));
+			$mail->setSender($this->config->get('config_name'));
+			$mail->setSubject(html_entity_decode('Быстрый заказ'));
+			$mail->setHTML('<p>Вы получили новый заказ.</p> <p>Товар: ' . $prd_info['name'] . ' (' . $option_text . ' )</p> <p>Номер телефона клиента: ' . (isset($this->request->post['phone']) ? $this->request->post['phone'] : $this->request->post['telephone']) . '</p>');
+			$mail->send();
+
+			$json['success'] = $this->language->get('text_success_order');
+		} else {
+			$json['error'] = $this->error;
+		}
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

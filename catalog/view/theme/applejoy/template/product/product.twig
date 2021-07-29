@@ -111,7 +111,7 @@
                   {% endif %}
                </div>
                {% if quantity > 0 %}
-               <div class="wrapper-btn"><button class="btn btn-custom-project btn-1" id="button-cart">Купити</button> <button class="btn btn-2">Купити в 1 клік</button> <button class="btn btn-3"><span class="icon icon-like-purple"></span></button></div>
+               <div class="wrapper-btn"><button class="btn btn-custom-project btn-1" id="button-cart">Купити</button> <button class="btn btn-2" data-product-id="{{ product_id }}">Купити в 1 клік</button> <button class="btn btn-3"><span class="icon icon-like-purple"></span></button></div>
                {% else %}
                <div class="wrapper-btn out-of-stock"><button class="btn btn-2 btn-out-of-stock">Повідомити, коли з'явиться</button> <button class="btn btn-3"><span class="icon icon-like-purple"></span></button></div>
                {% endif %}
