@@ -12,6 +12,7 @@ class ControllerProductProduct extends Controller {
 			'href' => $this->url->link('common/home')
 		);
 
+
 		$this->load->model('catalog/category');
 
 		if (isset($this->request->get['path'])) {
@@ -165,9 +166,12 @@ class ControllerProductProduct extends Controller {
 			$_SESSION["viewed"][] = $product_id;
 		}
 
-		$viewed = $this->load->controller('extension/module/viewed');
+		 $viewed = $this->load->controller('extension/module/viewed');
+		//  echo '<h2>THIS '.$product_id.'</h2>';
+ 		// die();
 
 		$data["viewed"] = $viewed;
+
 
 		$this->load->model('catalog/product');
 
@@ -691,7 +695,7 @@ class ControllerProductProduct extends Controller {
 
 
 	public function fastBuyPhone(){
-		
+
 		$this->load->language('product/product');
 		$json = array();
 
@@ -709,7 +713,7 @@ class ControllerProductProduct extends Controller {
 				$options = $this->request->post['option'];
 			} else {
 				$options = array();
-			}*/				
+			}*/
 			$fastBuyProductQuantity = 1;
 			$price = $prd_info['special']?$prd_info['special']:$prd_info['price'];
 			$fastBuyProductPrice = $price;
@@ -728,7 +732,7 @@ class ControllerProductProduct extends Controller {
 						}
 					}
 				}
-			}*/	
+			}*/
 
 			$fastBuyProductTotal = $fastBuyProductPrice * $fastBuyProductQuantity;
 			$fastBuyProductReward = 0;
@@ -751,7 +755,7 @@ class ControllerProductProduct extends Controller {
 			$nvoice_prefix = $this->config->get('config_invoice_prefix');
 			$store_id = $this->config->get('config_store_id');
 			$store_name = $this->config->get('config_name');
-			$store_url = $this->config->get('config_url');				
+			$store_url = $this->config->get('config_url');
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order SET invoice_prefix = '" . $nvoice_prefix . "'
 				, store_id = '" . $store_id . "'
@@ -808,7 +812,7 @@ class ControllerProductProduct extends Controller {
 					// тут соберем текст об опциях
 				$optdata = $this->db->query("SELECT od.name as `option`, ovd.name as `value` FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_description od ON (od.option_id = pov.option_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ovd.option_value_id = pov.option_value_id) WHERE pov.product_option_value_id = '" . $product_option_value_id . "'");
 				$option_text .= ' ' . $optdata->row['option'] . ' ' . $optdata->row['value'] . ';';
-			}				
+			}
 			if($prd_info['subtract']==1){
 				$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . $fastBuyProductQuantity . ") WHERE product_id = '" . (int)$prd_id . "' AND subtract = '1'");
 			}

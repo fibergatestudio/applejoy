@@ -101,10 +101,16 @@
        {% endfor %}
                <span class="title"></span>
                <div class="block-price">
-                  <div class="price">{{ price }}</div>
-                  {% if stock == "In Stock" %}
+
+                  {% if quantity > 0 %}
                   {% if special != false %}
-                  <div><span class="old-price d-none d-lg-block">{{ special }}</span> <span class="in-stock">В наявності</span></div>
+                  <div class="price">{{ special }}</div>
+                  <div>
+                    <span class="old-price d-none d-lg-block">{{ price }}</span>
+                    <span class="in-stock">В наявності</span></div>
+                    {% else %}
+                    <div class="price">{{ price }}</div>
+                    <div><span class="in-stock">В наявності</span></div>
                   {% endif %}
                   {% else %}
                   <div><span class="in-stock">Немає в наявності</span></div>
@@ -211,9 +217,12 @@
                      <div class="block-price">
                         <span>Ціна</span>
                         {% if rel_product.special != false %}
-                        <div class="old-price"><span>750$</span><span>{{ rel_product.special }}</span></div>
-                        {% endif %}
+                        <div class="old-price"><span>719 $</span><span>{{ rel_product.price }}</span></div>
+                        <div class="new-price"><span>750$</span><span>{{ rel_product.special }}</span></div>
+                        {% else %}
                         <div class="new-price"><span>719 $</span><span>{{ rel_product.price }}</span></div>
+                        {% endif %}
+
                      </div>
                      <div class="block-bottom-buy"><a href="{{ rel_product.href }}"><button class="btn-buy-product">Купити</button></a> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
                   </div>
