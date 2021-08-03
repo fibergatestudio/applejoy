@@ -81,7 +81,7 @@
    </div>
 </div>
 
-<button class="btn btn-secondary w-50 m-5 modal-button" data-toggle="modal" data-target="#Modal-empty-basket">У кошику пусто!</button>
+<button class="btn btn-secondary w-50 m-5 modal-button" data-toggle="modal" data-target="#Modal-empty-basket" id="btn-empty_cart">У кошику пусто!</button>
 <div class="modal fade" id="Modal-empty-basket" tabindex="-1" role="dialog" aria-labelledby="empty-basket-ModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -107,7 +107,7 @@
                <input type="hidden" name="product_id">
                <label>
                   <input class="form-control" name="customer_name" placeholder="Ваше ім'я*" required>
-               </label> 
+               </label>
                <div class="error-phone">Заповніть телефон, приклад: +380501111111 !</div>
                <label>
                   <input name="phone" class="form-control standard-phone" placeholder="Ваш телефон*" required>

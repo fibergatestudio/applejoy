@@ -1,0 +1,37 @@
+<h2>THIS</h2>
+{{ header }}
+<div class="main-page page-basket">
+  <nav aria-label="breadcrumb" class="container block-breadcrumb">
+    <ol class="breadcrumb container">
+      {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ol>
+  </nav>
+  <section class="section-cart">
+    <div class="container">
+      <h1 class="title-section">{{ heading_title }}</h1>
+      <div class="block-wrapper-card">
+        <input type="hidden" name="cart_empty" id="cart_empty" value="{{ cart_empty }}">
+        {% endif %}
+        <p>{{ text_error }}</p>
+        <div class="modal-bottom">
+           <a href="{{ continue }}">
+             <button class="btn-custom-project-2">Продовжити купувати</button>
+           </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{{ content_bottom }}
+</div>
+
+{{ footer }}
+<script>
+
+$(document).ready(function() {
+    if ($("#cart_empty").length > 0){
+      $('#btn-empty_cart').trigger('click');
+    }
+  });
+</script>

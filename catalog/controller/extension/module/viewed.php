@@ -16,6 +16,7 @@ class ControllerExtensionModuleViewed extends Controller {
 
     $products_viewed = [];
 
+
     foreach($arr_id_product as $id_item_product){
       $product_info_viewed = $this->model_catalog_product->getProduct($id_item_product);
 
@@ -67,8 +68,6 @@ class ControllerExtensionModuleViewed extends Controller {
         );
       }
     }
-
-    //$data['products_viewed'] = $products_viewed;
 		return $this->load->view('extension/module/viewed', $data);
 	}
 

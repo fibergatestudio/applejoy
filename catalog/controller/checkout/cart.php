@@ -52,10 +52,12 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->load->model('tool/image');
 			$this->load->model('tool/upload');
+			$this->load->model('catalog/product');
 
 			$data['products'] = array();
 
 			$products = $this->cart->getProducts();
+			$discount = $total_unit = 0;
 
 			foreach ($products as $product) {
 				$product_total = 0;
@@ -100,13 +102,14 @@ class ControllerCheckoutCart extends Controller {
 				// Display prices
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
-					
+
 					$price = $this->currency->format($unit_price, $this->session->data['currency']);
 					$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 				} else {
 					$price = false;
 					$total = false;
 				}
+
 
 				$recurring = '';
 
@@ -130,6 +133,16 @@ class ControllerCheckoutCart extends Controller {
 					}
 				}
 
+				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+				if (!is_null($product_info['special']) && (float)$product_info['special'] >= 0) {
+					$discount_price = (int)$product_info['price'] - (int)$product_info['special'];
+					$procent = $this->model_catalog_product->procent_calculate($product_info);
+					$discount += $discount_price * $product['quantity'];
+				} else {
+					$discount_price = $procent = false;
+				}
+				$total_unit += $product_info['price'] * $product['quantity'];
+
 				$data['products'][] = array(
 					'cart_id'   => $product['cart_id'],
 					'thumb'     => $image,
@@ -142,9 +155,18 @@ class ControllerCheckoutCart extends Controller {
 					'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 					'price'     => $price,
 					'total'     => $total,
-					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+					'unit_price' => $product_info['price'],
+					'sku'        => $product_info['sku'],
+					'special'    => $product_info['special'],
+					'discount'   => $discount_price,
+					'product_id' => $product['product_id'],
+					'procent'    => $procent,
 				);
 			}
+			// echo "<pre>";
+			// var_dump($data['products']);
+			// echo '</pre>';
 
 			// Gift Voucher
 			$data['vouchers'] = array();
@@ -166,14 +188,14 @@ class ControllerCheckoutCart extends Controller {
 			$totals = array();
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
-			
-			// Because __call can not keep var references so we put them into an array. 			
+
+			// Because __call can not keep var references so we put them into an array.
 			$total_data = array(
 				'totals' => &$totals,
 				'taxes'  => &$taxes,
 				'total'  => &$total
 			);
-			
+
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$sort_order = array();
@@ -189,7 +211,7 @@ class ControllerCheckoutCart extends Controller {
 				foreach ($results as $result) {
 					if ($this->config->get('total_' . $result['code'] . '_status')) {
 						$this->load->model('extension/total/' . $result['code']);
-						
+
 						// We have to put the totals in an array so that they pass by reference.
 						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 					}
@@ -213,20 +235,24 @@ class ControllerCheckoutCart extends Controller {
 				);
 			}
 
+
 			$data['continue'] = $this->url->link('common/home');
 
 			$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
+			$data['discount'] = $discount;
+		  $data['total_unit'] = $total_unit;
+
 			$this->load->model('setting/extension');
 
 			$data['modules'] = array();
-			
+
 			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
 
 			if ($files) {
 				foreach ($files as $file) {
 					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
-					
+
 					if ($result) {
 						$data['modules'][] = $result;
 					}
@@ -243,7 +269,7 @@ class ControllerCheckoutCart extends Controller {
 			$this->response->setOutput($this->load->view('checkout/cart', $data));
 		} else {
 			$data['text_error'] = $this->language->get('text_empty');
-			
+
 			$data['continue'] = $this->url->link('common/home');
 
 			unset($this->session->data['success']);
@@ -254,8 +280,9 @@ class ControllerCheckoutCart extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+			$data['cart_empty'] = 'cart_empty';
 
-			$this->response->setOutput($this->load->view('error/not_found', $data));
+			$this->response->setOutput($this->load->view('error/empty_cart', $data));
 		}
 	}
 
@@ -269,7 +296,7 @@ class ControllerCheckoutCart extends Controller {
 		} else {
 			$product_id = 0;
 		}
-		
+
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
@@ -332,8 +359,8 @@ class ControllerCheckoutCart extends Controller {
 				$totals = array();
 				$taxes = $this->cart->getTaxes();
 				$total = 0;
-		
-				// Because __call can not keep var references so we put them into an array. 			
+
+				// Because __call can not keep var references so we put them into an array.
 				$total_data = array(
 					'totals' => &$totals,
 					'taxes'  => &$taxes,
@@ -381,6 +408,7 @@ class ControllerCheckoutCart extends Controller {
 	}
 
 	public function edit() {
+
 		$this->load->language('checkout/cart');
 
 		$json = array();
@@ -432,7 +460,7 @@ class ControllerCheckoutCart extends Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			// Because __call can not keep var references so we put them into an array. 			
+			// Because __call can not keep var references so we put them into an array.
 			$total_data = array(
 				'totals' => &$totals,
 				'taxes'  => &$taxes,
@@ -474,5 +502,11 @@ class ControllerCheckoutCart extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function one_update(){
+		if (!empty($this->request->post['quantity'])) {
+				$this->cart->update($this->request->post['key'], $this->request->post['quantity']);
+			}
 	}
 }
