@@ -507,6 +507,9 @@ class ControllerCheckoutCart extends Controller {
 	public function one_update(){
 		if (!empty($this->request->post['quantity'])) {
 				$this->cart->update($this->request->post['key'], $this->request->post['quantity']);
-			}
+             echo 1;
+			} else {
+                echo 0;
+            }
 	}
 }
