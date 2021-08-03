@@ -39,16 +39,22 @@
               <div class="block-title-product">
                 <span class="title-product fw-500"
                 <a href="{{ product.href }}">{{ product.name }}</a></span> <span class="article">Артікул: {{ product.sku }}</span></div>
-              <div class="wrapper-icon-close"><span class="icon-close-card"></span></div>
+              <div class="wrapper-icon-close">
+                <span class="icon-close-card" onclick="cart.remove('{{ product.cart_id }}');"></span>
+              </div>
               <a href="#" class="block-img"><img src="{{ product.thumb }}" alt="{{ product.name }}" class="img"></a>
-              <div class="label-product sale"></div>
+              <div class="label-product sale">
+                {% if product.procent != false %}
+                <span class="icon-percent">-{{ product.procent }}%</span>
+                {% endif %}
+              </div>
               <div class="price">
                 <span class="price-product fw-700" id="span_total{{ product.product_id }}">{{ product.total }}</span>
                 <span class="quantity-price">
                   <span class="quantity" id="span-quantity{{ product.product_id }}">{{ product.quantity }}</span>X <span class="item-price">{{ product.price }}</span></span>
               </div>
               <div class="block-add-product">
-                <div class="add-product"><span class="minus"
+                <div class="add-product" data-key="{{ product.cart_id }}"><span class="minus"
                   data-prdctid="{{ product.product_id }}"
                   data-unit_price="{{ product.unit_price }}"
                   data-discount="{{ product.discount }}"
@@ -160,10 +166,15 @@
 </div>
 <script>
 $('.plus').on('click', function(e) {
+  var elem = $(this);
+  var div_add = elem.closest(".add-product");
+  var id_cart = div_add.attr('data-key');
+  //console.log(id_cart);
   var product_id = $(this).attr('data-prdctid');
   var unit_price = $(this).attr('data-unit_price');
   var quantity = $('#quantity-'+product_id).val();
   quantity = parseInt(quantity, 10) + 1;
+  one_update(id_cart, quantity);
   var special_price = $(this).attr('data-special');
   var main_total = $('#main-total').text();
   var current_txt = main_total.replace(/[0-9]|\,+/g, '');
@@ -223,5 +234,21 @@ $('.plus').on('click', function(e) {
    $('#quantity-'+product_id).val(quantity);
    $('#span-quantity'+product_id).text(quantity);
   });
+
+  function  one_update(key, quantity) {
+		$.ajax({
+			url: 'index.php?route=checkout/cart/one_update',
+			type: 'post',
+			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
+			dataType: 'json',
+
+			success: function(json) {
+        console.log(json);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
 </script>
 {{ footer }}

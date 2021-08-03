@@ -136,14 +136,12 @@ class ControllerCheckoutCart extends Controller {
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 				if (!is_null($product_info['special']) && (float)$product_info['special'] >= 0) {
 					$discount_price = (int)$product_info['price'] - (int)$product_info['special'];
+					$procent = $this->model_catalog_product->procent_calculate($product_info);
 					$discount += $discount_price * $product['quantity'];
 				} else {
-					$discount_price = false;
+					$discount_price = $procent = false;
 				}
 				$total_unit += $product_info['price'] * $product['quantity'];
-				// echo '<pre>';
-				// var_dump($product_info['price']);
-				// echo '</pre>';
 
 				$data['products'][] = array(
 					'cart_id'   => $product['cart_id'],
@@ -163,8 +161,12 @@ class ControllerCheckoutCart extends Controller {
 					'special'    => $product_info['special'],
 					'discount'   => $discount_price,
 					'product_id' => $product['product_id'],
+					'procent'    => $procent,
 				);
 			}
+			// echo "<pre>";
+			// var_dump($data['products']);
+			// echo '</pre>';
 
 			// Gift Voucher
 			$data['vouchers'] = array();
@@ -278,8 +280,9 @@ class ControllerCheckoutCart extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+			$data['cart_empty'] = 'cart_empty';
 
-			$this->response->setOutput($this->load->view('error/not_found', $data));
+			$this->response->setOutput($this->load->view('error/empty_cart', $data));
 		}
 	}
 
@@ -405,6 +408,7 @@ class ControllerCheckoutCart extends Controller {
 	}
 
 	public function edit() {
+
 		$this->load->language('checkout/cart');
 
 		$json = array();
@@ -498,5 +502,11 @@ class ControllerCheckoutCart extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function one_update(){
+		if (!empty($this->request->post['quantity'])) {
+				$this->cart->update($this->request->post['key'], $this->request->post['quantity']);
+			}
 	}
 }
