@@ -25,7 +25,7 @@
             <li class="nav-item menu-hover"><a class="nav-link" href="tel:+380950500202"><i class="icon icon-phone-purple"></i> <span>(095) 050 02 02</span></a></li>
             <li class="nav-item mt-2"><a class="nav-link fw-400" href="#"><i class="icon icon-clockwise"></i> <span>11:00 - 20:00</span></a></li>
             <li class="nav-item mb-2"><a class="nav-link fw-400" href="#"><i class="icon instagram-purple"></i> <span>apple_joy_kyiv</span></a></li>
-            <li class="nav-item menu-hover d-flex justify-content-center"><a class="px-2 text-dark" href="#"><span class="font-weight-bold">УКР</span></a> <a class="px-2 text-dark" href="#"><span>РУС</span></a></li>
+            {{ mobil_lang }}
          </ul>
       </div>
       <!--####level 1####-->
@@ -238,7 +238,8 @@
                <li class="icon icon-phone"><a href="#">(095) 050 02 02</a></li>
                <li class="icon icon-user" data-toggle="modal" data-target="#Modal-login"></li>
                <li class="icon icon-instagram-header"><a href="#"></a></li>
-               <li class="dropdown">
+               {{ language }}
+               <!-- <li class="dropdown">
                   <a class="dropdown-item lang icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">УКР</a>
                   <div class="dropdown-menu">
                      <ul>
@@ -246,7 +247,7 @@
                         <li><a class="dropdown-item" href="#">ENG</a></li>
                      </ul>
                   </div>
-               </li>
+               </li> -->
             </ul>
             <ul class="d-none d-lg-flex navbar-nav menu-production">
                <li class="nav-item dropdown root-dropdown with-subdropdown">
