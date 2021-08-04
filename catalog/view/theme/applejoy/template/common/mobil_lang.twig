@@ -1,0 +1,18 @@
+{% if languages|length > 1 %}
+<form action="{{ action }}" method="post" enctype="multipart/form-data" id="mobil-language">
+<li class="nav-item menu-hover d-flex justify-content-center">
+{% for language in languages %}
+  <a class="px-2 text-dark" href="#" >
+    {% if language.code == code %}
+    <span class="font-weight-bold" name="{{ language.code }}">{{ language.name }}</span>
+    {% else %}
+    <span class="language-select" name="{{ language.code }}">{{ language.name }}</span>
+    {% endif %}
+  </a>
+  {% endfor %}
+  <!-- <a class="px-2 text-dark" href="#"><span>РУС</span></a> -->
+</li>
+<input type="hidden" name="code" value="" />
+<input type="hidden" name="redirect" value="{{ redirect }}" />
+</form>
+{% endif %}

@@ -50,6 +50,8 @@ class ControllerExtensionModuleTreeCats extends Controller {
 		$data['home'] = $this->url->link('common/home');
 		$data['contact'] = $this->url->link('information/contact');
 		$data['shopping_cart'] = $this->url->link('checkout/cart');
+		$data['language'] = $this->load->controller('common/language');
+		$data['mobil_lang'] = $this->load->controller('common/mobil_lang');
 
 		return $this->load->view('extension/module/cats_template', $data);
 

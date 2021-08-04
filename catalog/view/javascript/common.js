@@ -50,6 +50,15 @@ $(document).ready(function() {
 		$('#form-language').submit();
 	});
 
+	$('#mobil-language .language-select').on('click', function(e) {
+		e.preventDefault();
+
+		$('#mobil-language input[name=\'code\']').val($(this).attr('name'));
+
+		$('#mobil-language').submit();
+	});
+
+
 	/* Search */
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
 		var url = $('base').attr('href') + 'index.php?route=product/search';
