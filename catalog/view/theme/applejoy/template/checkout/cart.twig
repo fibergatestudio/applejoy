@@ -30,15 +30,15 @@
           <ul class="list-card-product">
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
             <li class="item-card-product item-card-product-grid">
-              <span class="block-title-product">Ваше замовлення</span>
-              <span class="price">Ціна</span>
-              <span class="block-add-product">Кількість</span>
+              <span class="block-title-product">{{ your_order }}</span>
+              <span class="price">{{ tab_prod_price }}</span>
+              <span class="block-add-product">{{ text_count }}</span>
             </li>
             {% for product in products %}
             <li class="item-card-product item-card-product-grid">
               <div class="block-title-product">
                 <span class="title-product fw-500"
-                <a href="{{ product.href }}">{{ product.name }}</a></span> <span class="article">Артікул: {{ product.sku }}</span></div>
+                <a href="{{ product.href }}">{{ product.name }}</a></span> <span class="article">{{ text_sku }}: {{ product.sku }}</span></div>
               <div class="wrapper-icon-close">
                 <span class="icon-close-card" onclick="cart.remove('{{ product.cart_id }}');"></span>
               </div>
@@ -69,91 +69,25 @@
             {% endfor %}
             </form>
           </ul>
-          <!-- <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td class="text-center">{{ column_image }}</td>
-                <td class="text-left">{{ column_name }}</td>
-                <td class="text-left">{{ column_model }}</td>
-                <td class="text-left">{{ column_quantity }}</td>
-                <td class="text-right">{{ column_price }}</td>
-                <td class="text-right">{{ column_total }}</td>
-              </tr>
-            </thead>
-            <tbody>
 
-            {% for product in products %}
-            <tr>
-              <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</td>
-              <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% if not product.stock %} <span class="text-danger">***</span> {% endif %}
-                {% if product.option %}
-                {% for option in product.option %} <br />
-                <small>{{ option.name }}: {{ option.value }}</small> {% endfor %}
-                {% endif %}
-                {% if product.reward %} <br />
-                <small>{{ product.reward }}</small> {% endif %}
-                {% if product.recurring %} <br />
-                <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small> {% endif %}</td>
-              <td class="text-left">{{ product.model }}</td>
-              <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
-                  <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="submit" data-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fa fa-times-circle"></i></button>
-                  </span></div></td>
-              <td class="text-right">{{ product.price }}</td>
-              <td class="text-right">{{ product.total }}</td>
-            </tr>
-            {% endfor %}
-            {% for voucher in vouchers %}
-            <tr>
-              <td></td>
-              <td class="text-left">{{ voucher.description }}</td>
-              <td class="text-left"></td>
-              <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
-                  <input type="text" name="" value="1" size="1" disabled="disabled" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="voucher.remove('{{ voucher.key }}');"><i class="fa fa-times-circle"></i></button>
-                  </span></div></td>
-              <td class="text-right">{{ voucher.amount }}</td>
-              <td class="text-right">{{ voucher.amount }}</td>
-            </tr>
-            {% endfor %}
-              </tbody>
-
-          </table> -->
           <div class="total">
             <div class="block-total">
               <div class="block-number">
-                <span>Загалом</span> <span class="line-dotted"></span>
+                <span>{{ general_summ }}</span> <span class="line-dotted"></span>
                 <span class="number" id="full-summ">{{ total_unit }}грн.</span>
               </div>
               <div class="block-sale">
-                <span class="">Скидка</span> <span class="line-dotted"></span>
+                <span class="">{{ text_discount }}</span> <span class="line-dotted"></span>
                 <span class="number" id="main-discount">{{ discount }}грн.</span>
               </div><span class="total-sum">
-                <span>Загальна сума:</span><span class="sum fw-700" id="main-total">{{ totals[0].text }}<span></span></span>
+                <span>{{ text_total_summ }}:</span><span class="sum fw-700" id="main-total">{{ totals[0].text }}<span></span></span>
               </span>
-              <a href="{{ checkout }}" style="text-decoration:none;"><button class="btn-custom-project">Оформити замовлення</button></a>
-              <button class="btn-custom-project-2">Купити в 1 клік</button>
+              <a href="{{ checkout }}" style="text-decoration:none;"><button class="btn-custom-project">{{ text_to_order }}</button></a>
+              <button class="btn-custom-project-2">{{ buy_in_1_click }}</button>
             </div>
           </div>
         </div>
 
-
-      <!-- <div class="row">
-        <div class="col-sm-4 col-sm-offset-8">
-          <table class="table table-bordered">
-            {% for total in totals %}
-            <tr>
-              <td class="text-right"><strong>{{ total.title }}:</strong></td>
-              <td class="text-right">{{ total.text }}</td>
-            </tr>
-            {% endfor %}
-          </table>
-
-        </div>
-      </div> -->
 
       <div class="buttons clearfix">
         <div class="pull-left"><a href="{{ continue }}" class="btn btn-default">{{ button_shopping }}</a></div>

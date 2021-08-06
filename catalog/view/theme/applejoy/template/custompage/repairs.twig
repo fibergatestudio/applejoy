@@ -1,0 +1,109 @@
+{{ header }}
+<div class="main page-repair">
+  <div class="main-page">
+     <nav aria-label="breadcrumb" class="block-breadcrumb">
+        <ol class="breadcrumb container">
+          {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+     </nav>
+  <h1 class="title-section text-lg-left container">Сервісний центр Apple</h1>
+  <section class="section-category">
+    <div class="bg-section-category">
+      <div class="container">
+        <p>Сервісний центр Apple - розбите скло екрану iPhone, iPad, AppleWatch або пошкоджений корпус MacBook - серйозні поломки, що вимагають негайного виправлення. Але немає таких поломок, які не можна було б полагодити.Ми пропонуємо ремонт Apple для виправлення технічних і механічних несправностей даної продукції. Знайдемо і відремонтуємо технічні і механічні помилки.</p><span class="title-section text-center">Оберіть категорію девайсу</span>
+        <ul class="list-category-repair">
+          <li class="item-list-category-repair">
+            <a href="remont-2.html" class="block-img"><img src="catalog/view/theme/applejoy/template/html/images/ihpone-category-repair.71245639.webp" alt="image-phone" class="img-product img-fluid"> </a><a href="remont-2.html" class="name-category-repair"><span class="name">iPhone</span></a></li>
+          <li class="item-list-category-repair">
+            <a href="#" class="block-img"><img src="catalog/view/theme/applejoy/template/html/images/ipad-category-repair.bd420e52.webp" alt="image-phone" class="img-product img-fluid"> </a><a href="#" class="name-category-repair"><span class="name">iPad</span></a></li>
+          <li class="item-list-category-repair">
+            <a href="#" class="block-img"><img src="catalog/view/theme/applejoy/template/html/images/watch-category-repair.e7052bde.webp" alt="image-phone" class="img-product img-fluid"> </a><a href="#" class="name-category-repair"><span class="name">Apple Watch</span></a></li>
+          <li class="item-list-category-repair">
+            <a href="#" class="block-img"><img src="catalog/view/theme/applejoy/template/html/images/macbook-category-repair.65e6f7a3.webp" alt="image-phone" class="img-product img-fluid"> </a><a href="#" class="name-category-repair"><span class="name">Mac</span></a></li>
+          <li class="item-list-category-repair">
+            <a href="#" class="block-img"><img src="catalog/view/theme/applejoy/template/html/images/other-category-repair.8ff9254e.webp" alt="image-phone" class="img-product img-fluid"> </a><a href="#" class="name-category-repair"><span class="name">Інший гаджет</span></a></li>
+        </ul>
+        <button class="btn btn-custom-project" data-toggle="modal" data-target="#Modal-repair">Замовити ремонт</button>
+      </div>
+    </div>
+  </section>
+  <section class="section-preference">
+    <div class="container"><span class="title-section text-center p-0 py-lg-3">Чому нам довіряють?</span>
+      <ul class="list-preference">
+        <li><span class="icon icon-gear"></span>
+          <div><span class="title-preference">Оригінальні запчастини</span> <span class="text">Маємо в своєму розпорядженні власний склад із запчастинами</span></div>
+        </li>
+        <li><span class="icon icon-watch"></span>
+          <div><span class="title-preference">Швидкість роботи</span> <span class="text">Час роботи від 30 хвилин</span></div>
+        </li>
+        <li><span class="icon icon-message"></span>
+          <div><span class="title-preference">Відгуки клієнтів</span> <span class="text">Понад 100 позитивних відгуків</span></div>
+        </li>
+        <li><span class="icon icon-pay"></span>
+          <div><span class="title-preference">Зручна система оплати</span> <span class="text">Безготівкова оплата Visa, MasterCard або LiqPay</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="section-delivery">
+    <div class="container wrapper-section-delivery">
+      <div class="block-2"><img src="catalog/view/theme/applejoy/template/html/images/img-delivery.8f6b382b.webp" alt="image" class="img-delivery"></div>
+      <div class="block-1"><span class="fw-700">Доставка Новою Поштою</span>
+        <p>Щось сталось із гаджетом, а в Вашому місті нема сервісного центру Apple. Ремонтуй із доставкою Новою Поштою.</p>
+        <button class="btn btn-custom-project-2" data-toggle="modal" data-target="#Modal-delivery-nova-poshta">Замовити доставку</button>
+      </div>
+      <div class="block-3"><span class="fw-700">Кур’єрська доставка</span>
+        <p>Потрібна термінова доставка у сервіс? Викликай кур’єра, який доставить ремонт у сервіс, а після виконання робіт доставить його вам у руки. Вартість доставка 150 грн.</p>
+        <button class="btn btn-custom-project-2" data-toggle="modal" data-target="#Modal-delivery">Викликати кур’єра</button>
+      </div>
+    </div>
+  </section>
+  <section class="section-text container"><span class="title-section text-center">Найпоширеніші запитання</span>
+    <div id="accordion-1">
+      <div class="card card-order">
+        <div class="card-header" id="headingOne">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><span class="block-header-order">Скільки часу займає ремонт ? </span><span class="icon icon-arrow-down"></span></button>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-1">
+          <p class="card-body">Ремонт займає від 2 годин до 4-5 днів. Все залежить від поломки і пристрої. Терміни ремонту можна дізнатися в розділах ремонту або вже у менеджера.</p>
+        </div>
+      </div>
+    </div>
+    <div id="accordion-2">
+      <div class="card card-order">
+        <div class="card-header" id="heading-2">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-2" aria-expanded="false" aria-controls="collapse-2"><span class="block-header-order">Яку гарантію на ремонт надає магазин ? </span><span class="icon icon-arrow-down"></span></button>
+        </div>
+        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-2">
+          <p class="card-body"></p>
+        </div>
+      </div>
+    </div>
+    <div id="accordion-3">
+      <div class="card card-order">
+        <div class="card-header" id="heading-3">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-3" aria-expanded="false" aria-controls="collapse-3"><span class="block-header-order">Які пристрої ремонтує сервіс ? </span><span class="icon icon-arrow-down"></span></button>
+        </div>
+        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-3">
+          <p class="card-body"></p>
+        </div>
+      </div>
+    </div>
+    <div id="accordion-4">
+      <div class="card card-order">
+        <div class="card-header" id="heading-4">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-4" aria-expanded="false" aria-controls="collapse-4"><span class="block-header-order">Де знаходиться Сервісний центр? </span><span class="icon icon-arrow-down"></span></button>
+        </div>
+        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-4">
+          <p class="card-body"></p>
+        </div>
+      </div>
+    </div>
+    <h3 class="title-text mt-4">Ремонт техніки Apple</h3>
+    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+  </section>
+</div>
+{{ footer }}

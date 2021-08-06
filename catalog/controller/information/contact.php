@@ -105,6 +105,9 @@ class ControllerInformationContact extends Controller {
 				);
 			}
 		}
+		// echo "<pre>";
+		// var_dump($this->config);
+		// echo "</pre>";
 
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
@@ -137,6 +140,8 @@ class ControllerInformationContact extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+		$data['address_comment'] = nl2br($this->config->get('config_comment'));
+		$data['open'] = nl2br($this->config->get('config_open'));
 
 		$this->response->setOutput($this->load->view('information/contact', $data));
 	}
@@ -183,7 +188,7 @@ class ControllerInformationContact extends Controller {
 			'href' => $this->url->link('information/contact')
 		);
 
- 		$data['text_message'] = $this->language->get('text_message'); 
+ 		$data['text_message'] = $this->language->get('text_message');
 
 		$data['continue'] = $this->url->link('common/home');
 
@@ -193,6 +198,14 @@ class ControllerInformationContact extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+
+		$data["our_contacts"] = $this->language->get('our_contacts');
+		$data["subheading_1"] = $this->language->get('subheading_1');
+		$data["subheading_2"] = $this->language->get('subheading_2');
+		$data["main_text_1"] = $this->language->get('main_text_1');
+		$data["main_text_2"] = $this->language->get('main_text_2');
+		$data["how_to_find_us"] = $this->language->get('how_to_find_us');
+		$data['comment_enter'] = $this->language->get('comment_enter');
 
 		$this->response->setOutput($this->load->view('common/success', $data));
 	}

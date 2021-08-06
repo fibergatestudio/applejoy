@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title'] = 'Кошик для покупок';
+$_['heading_title'] = 'Кошик';
 
 // Text
 $_['text_success'] = '<a href="%s">%s</a> доданий <a href="%s">в кошик</a>!';
@@ -40,3 +40,13 @@ $_['error_minimum'] = 'Мінімальна кількість для замов
 $_['error_required'] = '%s обов&#39;язково!';
 $_['error_product'] = 'У вашому кошику немає товарів!';
 $_['error_recurring_required'] = 'будь Ласка, виберіть періодичність платежу!';
+$_["text_sku"] = "Артікул";
+$_["your_order"] = "Ваше замовлення";
+$_["text_btn_buy"] = "Купити";
+$_['buy_in_1_click'] = 'Купити в 1 клик';
+$_["tab_prod_price"] = "Ціна";
+$_["text_count"] = "Кількість";
+$_["general_summ"] = "Загалом";
+$_["text_discount"] = "Скидка";
+$_["text_total_summ"] = "Загальна сума";
+$_["text_to_order"] = "Оформити замовлення";

@@ -164,9 +164,6 @@ class ControllerCheckoutCart extends Controller {
 					'procent'    => $procent,
 				);
 			}
-			// echo "<pre>";
-			// var_dump($data['products']);
-			// echo '</pre>';
 
 			// Gift Voucher
 			$data['vouchers'] = array();
@@ -265,6 +262,15 @@ class ControllerCheckoutCart extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+			$data["your_order"] = $this->language->get('your_order');
+			$data["buy_in_1_click"] = $this->language->get('buy_in_1_click');
+			$data["tab_prod_price"] = $this->language->get('tab_prod_price');
+			$data["text_count"] = $this->language->get('text_count');
+			$data["text_sku"] = $this->language->get('text_sku');
+			$data["general_summ"] = $this->language->get('general_summ');
+			$data["text_discount"] = $this->language->get('text_discount');
+			$data["text_total_summ"] = $this->language->get('text_total_summ');
+			$data["text_to_order"] = $this->language->get('text_to_order');
 
 			$this->response->setOutput($this->load->view('checkout/cart', $data));
 		} else {
