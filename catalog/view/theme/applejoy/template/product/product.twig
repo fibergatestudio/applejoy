@@ -11,7 +11,7 @@
    <section class="section-item-product">
       <div id="product" class="container">
          <h1 class="title-product">{{ heading_title }}</h1>
-         <span class="article">Артікул: {{ sku }}</span>
+         <span class="article">{{ text_sku }}: {{ sku }}</span>
          <div class="block-product">
             <div class="slider-product">
                <div class="vehicle-detail-banner banner-content clearfix">
@@ -34,7 +34,7 @@
                               <div class="item-product">
                                  <div class="img-block">
                                    {% if special != false %}
-                                   <span class="icon-sale">Aкція</span>
+                                   <span class="icon-sale">{{ text_action }}</span>
                                    <span class="icon-percent">-{{ procent }}%</span>
                                    {% endif %}
                                    <img src="{{ item_popup.popup }}" alt="photo-product" class="img">
@@ -107,19 +107,19 @@
                   <div class="price">{{ special }}</div>
                   <div>
                     <span class="old-price d-none d-lg-block">{{ price }}</span>
-                    <span class="in-stock">В наявності</span></div>
+                    <span class="in-stock">{{ text_in_stok }}</span></div>
                     {% else %}
                     <div class="price">{{ price }}</div>
-                    <div><span class="in-stock">В наявності</span></div>
+                    <div><span class="in-stock">{{ text_in_stok }}</span></div>
                   {% endif %}
                   {% else %}
-                  <div><span class="in-stock">Немає в наявності</span></div>
+                  <div><span class="in-stock">{{ text_not_in_stok }}</span></div>
                   {% endif %}
                </div>
                {% if quantity > 0 %}
-               <div class="wrapper-btn"><button class="btn btn-custom-project btn-1" id="button-cart">Купити</button> <button class="btn btn-2" data-product-id="{{ product_id }}">Купити в 1 клік</button> <button class="btn btn-3"><span class="icon icon-like-purple"></span></button></div>
+               <div class="wrapper-btn"><button class="btn btn-custom-project btn-1" id="button-cart">{{ text_buy }}</button> <button class="btn btn-2" data-product-id="{{ product_id }}">{{ text_buy_1_click }}</button> <button class="btn btn-3"><span class="icon icon-like-purple"></span></button></div>
                {% else %}
-               <div class="wrapper-btn out-of-stock"><button class="btn btn-2 btn-out-of-stock">Повідомити, коли з'явиться</button> <button class="btn btn-3"><span class="icon icon-like-purple"></span></button></div>
+               <div class="wrapper-btn out-of-stock"><button class="btn btn-2 btn-out-of-stock">{{ notify_when_it_appears }}</button> <button class="btn btn-3"><span class="icon icon-like-purple"></span></button></div>
                {% endif %}
             </div>
          </div>
@@ -127,31 +127,31 @@
             <div class="tab-top-product">
                <div class="tab-menu">
                   <ul class="nav nav-tabs nav-tabs-2" id="myTab" role="tablist">
-                     <li class="nav-item" role="presentation"><a class="nav-link active tab-one" id="delivery-tab" data-toggle="tab" href="#delivery" aria-controls="delivery">Доставка</a></li>
-                     <li class="nav-item" role="presentation"><a class="nav-link tab-one" id="money-tab" data-toggle="tab" href="#money" aria-controls="money">Оплата</a></li>
-                     <li class="nav-item" role="presentation"><a class="nav-link" id="warranty-tab" data-toggle="tab" href="#warranty" aria-controls="warranty">Гарантія</a></li>
+                     <li class="nav-item" role="presentation"><a class="nav-link active tab-one" id="delivery-tab" data-toggle="tab" href="#delivery" aria-controls="delivery">{{ text_tab_delivery }}</a></li>
+                     <li class="nav-item" role="presentation"><a class="nav-link tab-one" id="money-tab" data-toggle="tab" href="#money" aria-controls="money">{{ text_tab_money }}</a></li>
+                     <li class="nav-item" role="presentation"><a class="nav-link" id="warranty-tab" data-toggle="tab" href="#warranty" aria-controls="warranty">{{ text_tab_warranty }}</a></li>
                   </ul>
                </div>
                <div class="tab-content tab-main-box" id="myTabContent">
                   <div class="tab-pane fade show active" id="delivery" role="tabpanel" aria-labelledby="delivery-tab">
                      <ul class="list">
-                        <li class="icon icon-novaposhta">«Новою Поштою» до відділень по Україні.</li>
-                        <li class="icon icon-delivery">Курьером «Нова Пошта» адресною доставкою.</li>
-                        <li class="icon icon-location">Самовивіз: Місто Київ вул. Хрещатик б. 44</li>
+                        <li class="icon icon-novaposhta">{{ delivery_text_1 }}</li>
+                        <li class="icon icon-delivery">{{ delivery_text_2 }}</li>
+                        <li class="icon icon-location">{{ delivery_text_3 }}</li>
                      </ul>
                   </div>
                   <div class="tab-pane fade" id="money" role="tabpanel" aria-labelledby="money-tab">
                      <ul class="list">
-                        <li class="icon icon-online-shopping">Оплата при отриманні (в магазині за адресою Самовивіз: Місто Київ вул. Хрещатик б. 44</li>
-                        <li class="icon icon-novaposhta">Оплата при отриманні у відділенні «Нова Пошта»</li>
-                        <li class="icon icon-liqpay-logo">Оплата на сайті за допомогою LiqPay</li>
+                        <li class="icon icon-online-shopping">{{ money_text_1 }}</li>
+                        <li class="icon icon-novaposhta">{{ money_text_2 }}</li>
+                        <li class="icon icon-liqpay-logo">{{ money_text_3 }}</li>
                      </ul>
                   </div>
                   <div class="tab-pane fade" id="warranty" role="tabpanel" aria-labelledby="warranty-tab">
                      <ul class="list">
-                        <li class="icon icon-shopping-items">Гарантія на нову техніку 1 рік.</li>
-                        <li class="icon icon-warranty-used">Гарантія на вживану техніку 1 місяць.</li>
-                        <li class="icon icon-exchange">Обмін та повернення протягом 14 днів.</li>
+                        <li class="icon icon-shopping-items">{{ warranty_text_1 }}</li>
+                        <li class="icon icon-warranty-used">{{ warranty_text_2 }}</li>
+                        <li class="icon icon-exchange">{{ warranty_text_3 }}</li>
                      </ul>
                   </div>
                </div>
@@ -159,8 +159,8 @@
             <div class="tab-top-product">
                <div class="tab-menu">
                   <ul class="nav nav-tabs" id="myTab-2" role="tablist">
-                     <li class="nav-item" role="presentation"><a class="nav-link active tab-one" id="characteristic-tab" data-toggle="tab" href="#characteristic" aria-controls="characteristic">Характеристики</a></li>
-                     <li class="nav-item" role="presentation"><a class="nav-link" id="description-tab" data-toggle="tab" href="#description" aria-controls="description">Опис</a></li>
+                     <li class="nav-item" role="presentation"><a class="nav-link active tab-one" id="characteristic-tab" data-toggle="tab" href="#characteristic" aria-controls="characteristic">{{ text_characteristik }}</a></li>
+                     <li class="nav-item" role="presentation"><a class="nav-link" id="description-tab" data-toggle="tab" href="#description" aria-controls="description">{{ text_descriptions }}</a></li>
                   </ul>
                </div>
                <div class="tab-content tab-main-box" id="myTabContent-2">
@@ -203,7 +203,7 @@
    </section>
    <section class="section-product">
       <div class="container">
-         <span class="title-section">Супутні товари</span>
+         <span class="title-section">{{ tab_rel_productions }}</span>
          <ul class="list-product">
            {% for rel_product in products %}
             <li class="item-product">
@@ -215,7 +215,7 @@
                   <div><a href="{{ rel_product.href }}" class="name-product">{{ rel_product.name }}</a></div>
                   <div class="item-product-bottom-wrapper">
                      <div class="block-price">
-                        <span>Ціна</span>
+                        <span>{{ tab_prod_price }}</span>
                         {% if rel_product.special != false %}
                         <div class="old-price"><span>719 $</span><span>{{ rel_product.price }}</span></div>
                         <div class="new-price"><span>750$</span><span>{{ rel_product.special }}</span></div>
@@ -224,7 +224,7 @@
                         {% endif %}
 
                      </div>
-                     <div class="block-bottom-buy"><a href="{{ rel_product.href }}"><button class="btn-buy-product">Купити</button></a> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                     <div class="block-bottom-buy"><a href="{{ rel_product.href }}"><button class="btn-buy-product">{{ text_btn_buy }}</button></a> <a href="#" class="btn-buy-one-click">{{ buy_in_1_click }}</a></div>
                   </div>
                </div>
             </li>
@@ -236,22 +236,22 @@
    {{ viewed }}
    <section class="section-feedback">
       <div class="container">
-        <span class="title-section">Відгуки</span>
+        <span class="title-section">{{ text_review }}</span>
          <div class="block-feedback">
          <div id="review"></div>
          <form class="form-new-feedback" id="form-review">
-            <span class="title">Написати відгук</span>
+            <span class="title">{{ label_wtite_review }}</span>
             <div class="block-form">
-               <div class="form-group mx-0"><label class="d-none d-xl-block">Ваше ім'я:</label> <input class="form-control" placeholder="Ваше ім'я" name="name" id="input-name"></div>
+               <div class="form-group mx-0"><label class="d-none d-xl-block">{{ your_name }}:</label> <input class="form-control" placeholder="{{ your_name }}" name="name" id="input-name"></div>
                <div class="form-group mx-0"><label class="d-none d-xl-block">E-mail</label> <input class="form-control" placeholder="E-mail"></div>
                <div class="d-flex justify-content-between pb-3">
-                  <span>Оцініть товар</span>
+                  <span>{{ evalute_product }}</span>
                   <input type="hidden" name="rating" id="rating-inpt" value="">
                   <div class="stars" id="rating"><span class="icon icon-star-not-active"></span> <span class="icon icon-star-not-active"></span> <span class="icon icon-star-not-active"></span> <span class="icon icon-star-not-active"></span> <span class="icon icon-star-not-active"></span></div>
                </div>
             </div>
-            <div class="form-group"><label class="d-none d-lg-block mb-lg-3">Ваш відгук або коментар:</label> <textarea class="form-control" placeholder="Відгук" name="text" id="input-review"></textarea></div>
-            <button class="btn btn-custom-project" id="button-review">Відправити</button>
+            <div class="form-group"><label class="d-none d-lg-block mb-lg-3">{{ label_review_text }}:</label> <textarea class="form-control" placeholder="{{ placeholder_review }}" name="text" id="input-review"></textarea></div>
+            <button class="btn btn-custom-project" id="button-review">{{ bth_send_text }}</button>
          </form>
          </div>
       </div>

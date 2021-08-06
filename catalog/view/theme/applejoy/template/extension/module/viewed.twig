@@ -1,6 +1,6 @@
 <section class="section-product">
    <div class="container">
-      <span class="title-section">Товари, які ви переглянули</span>
+      <span class="title-section">{{ heading_title }}</span>
       <ul class="list-product">
         {% for item_viewed in products_viewed %}
          <li class="item-product">
@@ -12,7 +12,7 @@
                <div><a href="{{ item_viewed.href }}" class="name-product">{{ item_viewed.name }}</a></div>
                <div class="item-product-bottom-wrapper">
                   <div class="block-price">
-                     <span>Ціна</span>
+                     <span>{{ tab_prod_price }}</span>
                      {% if item_viewed.special != false %}
                      <div class="old-price"><span>750$</span><span>{{item_viewed.special }}</span></div>
                      <div class="new-price"><span>719 $</span><span>{{ item_viewed.special }}</span></div>
@@ -20,7 +20,7 @@
                      <div class="new-price"><span>719 $</span><span>{{ item_viewed.price }}</span></div>
                      {% endif %}
                   </div>
-                  <div class="block-bottom-buy"><a href="{{ item_viewed.href }}"><button class="btn-buy-product">Купити</button></a> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                  <div class="block-bottom-buy"><a href="{{ item_viewed.href }}"><button class="btn-buy-product">{{ text_btn_buy }}</button></a> <a href="#" class="btn-buy-one-click">{{ buy_in_1_click }}</a></div>
                </div>
             </div>
          </li>

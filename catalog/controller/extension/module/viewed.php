@@ -2,7 +2,6 @@
 class ControllerExtensionModuleViewed extends Controller {
 	public function index() {
 		$this->load->language('extension/module/viewed');
-    $data['test_module'] = 'modele test!!!';
 		if(!isset($_SESSION)){
 			session_start();
 		}
@@ -68,6 +67,12 @@ class ControllerExtensionModuleViewed extends Controller {
         );
       }
     }
+
+		$data["heading_title"] = $this->language->get('heading_title');
+		$data["tab_prod_price"] = $this->language->get('tab_prod_price');
+		$data["text_btn_buy"] = $this->language->get('text_btn_buy');
+		$data["buy_in_1_click"] = $this->language->get('buy_in_1_click');
+
 		return $this->load->view('extension/module/viewed', $data);
 	}
 

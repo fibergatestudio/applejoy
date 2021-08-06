@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']            = 'Корзина покупок';
+$_['heading_title']            = 'Корзина';
 
 // Text
 $_['text_success']             = '<a href="%s">%s</a> добавлен <a href="%s">в корзину покупок</a>!';
@@ -40,4 +40,12 @@ $_['error_minimum']            = 'Минимальное количество д
 $_['error_required']           = '%s обязательно!';
 $_['error_product']            = 'В вашей корзине нет товаров!';
 $_['error_recurring_required'] = 'Пожалуйста, выберите периодичность платежа!';
-
+$_["text_sku"] = "Артикул";
+$_["your_order"] = "Ваш заказ";
+$_['buy_in_1_click'] = 'Купить в 1 клик';
+$_["tab_prod_price"] = "Цена";
+$_["text_count"] = "Количество";
+$_["general_summ"] = "Итого";
+$_["text_discount"] = "Скидка";
+$_["text_total_summ"] = "Общая сумма";
+$_["text_to_order"] = "Оформить заказ";

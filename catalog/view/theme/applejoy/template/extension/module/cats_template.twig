@@ -9,21 +9,21 @@
             </div>
          </div>
          <ul class="main-nav navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="#"><i class="icon icon-user-black"></i> <span data-toggle="modal" data-target="#Modal-login">Вхід / Реєстрація</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="icon icon-like-black"></i> <span>Обране</span></a></li>
-            <li class="nav-item menu-hover"><a class="nav-link parent-submenu" href="#" data-toggle="collapse" data-target="#all-mobile-accordion" aria-controls="all-mobile-accordion" aria-expanded="false"><i class="icon icon-menu"></i> <span>Вся продукція</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="icon icon-user-black"></i> <span data-toggle="modal" data-target="#Modal-login">{{ text_login }} / {{ text_registration }}</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="icon icon-like-black"></i> <span>{{ picking }}</span></a></li>
+            <li class="nav-item menu-hover"><a class="nav-link parent-submenu" href="#" data-toggle="collapse" data-target="#all-mobile-accordion" aria-controls="all-mobile-accordion" aria-expanded="false"><i class="icon icon-menu"></i> <span>{{ btn_all_products }}</span></a></li>
          </ul>
          <ul class="main-nav">
             <li class="nav-item"><a class="nav-link fw-500" href="#"><span>Trade-in</span></a></li>
-            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>Ремонт</span></a></li>
-            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>Блог</span></a></li>
-            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>Вакансії</span></a></li>
-            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>Відгуки</span></a></li>
-            <li class="nav-item"><a class="nav-link fw-500" href="{{ contact }}"><span>Контакти</span></a></li>
+            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>{{ repairs }}</span></a></li>
+            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>{{ text_blog }}</span></a></li>
+            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>{{ text_vacansion }}</span></a></li>
+            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>{{ text_review }}</span></a></li>
+            <li class="nav-item"><a class="nav-link fw-500" href="{{ contact }}"><span>{{ btn_contact }}</span></a></li>
          </ul>
          <ul class="main-nav navbar-nav">
-            <li class="nav-item menu-hover"><a class="nav-link" href="tel:+380950500202"><i class="icon icon-phone-purple"></i> <span>(095) 050 02 02</span></a></li>
-            <li class="nav-item mt-2"><a class="nav-link fw-400" href="#"><i class="icon icon-clockwise"></i> <span>11:00 - 20:00</span></a></li>
+            <li class="nav-item menu-hover"><a class="nav-link" href="tel:+38{{ tel_link }}"><i class="icon icon-phone-purple"></i> <span>{{ telephone }}</span></a></li>
+            <li class="nav-item mt-2"><a class="nav-link fw-400" href="#"><i class="icon icon-clockwise"></i> <span>{{ open }}</span></a></li>
             <li class="nav-item mb-2"><a class="nav-link fw-400" href="#"><i class="icon instagram-purple"></i> <span>apple_joy_kyiv</span></a></li>
             {{ mobil_lang }}
          </ul>
@@ -76,96 +76,7 @@
       {% endif %}
 
       {% endfor %}
-      <div id="ipad-category" class="collapse menu-mobile d-lg-none" data-parent="#main-menu-categories">
-         <div class="menu-mobile-header-wrapper">
-            <div class="menu-mobile-header">
-               <a class="navbar-brand" href="{{ home }}"><img src="catalog/view/theme/applejoy/template/html/images/logo.1c7d6a74.svg" alt="logo" class="logo"></a>
-               <div class="main-toggler" data-toggle="collapse" data-target="#ipad-category" aria-controls="ipad-category" aria-expanded="false"><span>Назад</span></div>
-            </div>
-         </div>
-         <ul id="ipad-groups">
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#ipad-types" aria-expanded="false" aria-controls="ipad-types"><span>Apple iPad</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#ipad-air-types" aria-expanded="false" aria-controls="ipad-air-types"><span>Apple iPad Air</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#ipad-pro-types" aria-expanded="false" aria-controls="ipad-pro-types"><span>Apple iPad Pro</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#ipad-mini-types" aria-controls="ipad-mini-types" aria-expanded="false"><span>Apple iPad Mini</span></a></li>
-         </ul>
-      </div>
-      <div id="macbook-category" class="collapse menu-mobile d-lg-none" data-parent="#main-menu-categories">
-         <div class="menu-mobile-header-wrapper">
-            <div class="menu-mobile-header">
-               <a class="navbar-brand" href="{{ home }}"><img src="catalog/view/theme/applejoy/template/html/images/logo.1c7d6a74.svg" alt="logo" class="logo"></a>
-               <div class="main-toggler" data-toggle="collapse" data-target="#macbook-category" aria-controls="macbook-category" aria-expanded="false"><span>Назад</span></div>
-            </div>
-         </div>
-         <ul id="macbook-groups">
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#macbook-pro-types" aria-controls="macbook-pro-types" aria-expanded="false"><span>MacBook Pro</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#macbook-air-types" aria-controls="macbook-air-types" aria-expanded="false"><span>MacBook Air</span></a></li>
-         </ul>
-      </div>
-      <div id="watch-category" class="collapse menu-mobile d-lg-none" data-parent="#main-menu-categories">
-         <div class="menu-mobile-header-wrapper">
-            <div class="menu-mobile-header">
-               <a class="navbar-brand" href="{{ home }}"><img src="catalog/view/theme/applejoy/template/html/images/logo.1c7d6a74.svg" alt="logo" class="logo"></a>
-               <div class="main-toggler" data-toggle="collapse" data-target="#watch-category" aria-controls="watch-category" aria-expanded="false"><span>Назад</span></div>
-            </div>
-         </div>
-         <ul id="watch-groups">
-            <li class="nav-item"><a class="nav-link" href="#">Series SE</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Series 6</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Series 5</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Series 4</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Series 3</a></li>
-         </ul>
-      </div>
-      <div id="gadget-category" class="collapse menu-mobile d-lg-none" data-parent="#main-menu-categories">
-         <div class="menu-mobile-header-wrapper">
-            <div class="menu-mobile-header">
-               <a class="navbar-brand" href="{{ home }}"><img src="catalog/view/theme/applejoy/template/html/images/logo.1c7d6a74.svg" alt="logo" class="logo"></a>
-               <div class="main-toggler" data-toggle="collapse" data-target="#gadget-category" aria-controls="gadget-category" aria-expanded="false"><span>Назад</span></div>
-            </div>
-         </div>
-         <ul id="gadget-groups">
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#airpods-types" aria-controls="airpods-types" aria-expanded="false"><span>AirPods</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#pencil-types" aria-controls="pencil-types" aria-expanded="false"><span>Apple Pencil</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Приставки Apple TV</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Колонки HomePod</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Мишки Apple Magic Mouse</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#keyboard-types" aria-controls="keyboard-types" aria-expanded="false"><span>Клавіатура Apple</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Trackpad</a></li>
-         </ul>
-      </div>
-      <div id="accessories-category" class="collapse menu-mobile d-lg-none" data-parent="#main-menu-categories">
-         <div class="menu-mobile-header-wrapper">
-            <div class="menu-mobile-header">
-               <a class="navbar-brand" href="{{ home }}"><img src="catalog/view/theme/applejoy/template/html/images/logo.1c7d6a74.svg" alt="logo" class="logo"></a>
-               <div class="main-toggler" data-toggle="collapse" data-target="#accessories-category" aria-controls="accessories-category" aria-expanded="false"><span>Назад</span></div>
-            </div>
-         </div>
-         <ul id="accessories-groups">
-            <li class="nav-item"><a class="nav-link" href="#">Блоки живдення (зарядні пристрої)</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Кабелі</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#iphone-accessories-type" aria-controls="iphone-accessories-type" aria-expanded="false"><span>Аксесуари для IPhone</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#ipad-accessories-type" aria-controls="ipad-accessories-type" aria-expanded="false"><span>Аксесуари для iPad</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#macbook-accessories-type" aria-controls="macbook-accessories-type" aria-expanded="false"><span>Аксесуари для MacBook</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#watch-accessories-type" aria-controls="watch-accessories-type" aria-expanded="false"><span>Аксесуари для Apple Watch</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Аксесуари для AirPods</a></li>
-         </ul>
-      </div>
-      <div id="used-category" class="collapse menu-mobile d-lg-none" data-parent="#main-menu-categories">
-         <div class="menu-mobile-header-wrapper">
-            <div class="menu-mobile-header">
-               <a class="navbar-brand" href="{{ home }}"><img src="catalog/view/theme/applejoy/template/html/images/logo.1c7d6a74.svg" alt="logo" class="logo"></a>
-               <div class="main-toggler" data-toggle="collapse" data-target="#used-category" aria-controls="used-category" aria-expanded="false"><span>Назад</span></div>
-            </div>
-         </div>
-         <ul id="used-groups">
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#used-iphone-type" aria-controls="used-iphone-type" aria-expanded="false">б/у IPhone</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#used-macbook-type" aria-controls="used-macbook-type" aria-expanded="false">б/у MacBook</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">б/у AirPods</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#used-ipad-type" aria-controls="used-ipad-type" aria-expanded="false">б/у iPad</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="collapse" data-target="#used-watch-type" aria-controls="used-watch-type" aria-expanded="false">б/у Apple Watch</a></li>
-         </ul>
-      </div>
+
       <!--####level 3####-->
       {% for id_cat_3, cat_3 in categories_tree %}
       {% if cat_3.childs is defined %}
@@ -215,7 +126,7 @@
                <div class="item-block-function" data-toggle="collapse" data-target="#phone-collapse" aria-expanded="false" aria-controls="search-collapse"><span class="icon icon-phone-inactive"></span></div>
                <div class="collapse popup-collapse" id="phone-collapse">
                   <div class="container">
-                     <a href="tel:+380950500202" class="phone-link m-auto"><i class="icon icon-phone-inactive"></i><span></span>(095) 050 02 02</a>
+                     <a href="tel:+38{{ tel_link }}" class="phone-link m-auto"><i class="icon icon-phone-inactive"></i><span></span>(095) 050 02 02</a>
                      <div class="popup-collapse-close" data-toggle="collapse" data-target="#phone-collapse" aria-expanded="false" aria-controls="search-collapse"><i class="icon icon-quit"></i></div>
                   </div>
                </div>
@@ -227,31 +138,22 @@
             </div>
             <ul class="d-none d-lg-flex menu-info navbar-nav">
                <li class="nav-item"><a class="nav-link" href="#">Trade-in</a></li>
-               <li class="nav-item"><a class="nav-link" href="#">Ремонт</a></li>
-               <li class="nav-item"><a class="nav-link" href="#">Блог</a></li>
-               <li class="nav-item"><a class="nav-link" href="#">Вакансії</a></li>
-               <li class="nav-item"><a class="nav-link" href="#">Відгуки</a></li>
-               <li class="nav-item"><a class="nav-link" href="{{ contact }}">Контакти</a></li>
+               <li class="nav-item"><a class="nav-link" href="#">{{ repairs }}</a></li>
+               <li class="nav-item"><a class="nav-link" href="#">{{ text_blog }}</a></li>
+               <li class="nav-item"><a class="nav-link" href="#">{{ text_vacansion }}</a></li>
+               <li class="nav-item"><a class="nav-link" href="#">{{ text_review }}</a></li>
+               <li class="nav-item"><a class="nav-link" href="{{ contact }}">{{ btn_contact }}</a></li>
             </ul>
             <ul class="d-none d-lg-flex menu-contact">
-               <li class="icon icon-clockwise">11:00 - 20:00</li>
-               <li class="icon icon-phone"><a href="#">(095) 050 02 02</a></li>
+               <li class="icon icon-clockwise">{{ open }}</li>
+               <li class="icon icon-phone"><a href="#">{{ telephone }}</a></li>
                <li class="icon icon-user" data-toggle="modal" data-target="#Modal-login"></li>
                <li class="icon icon-instagram-header"><a href="#"></a></li>
                {{ language }}
-               <!-- <li class="dropdown">
-                  <a class="dropdown-item lang icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">УКР</a>
-                  <div class="dropdown-menu">
-                     <ul>
-                        <li><a class="dropdown-item" href="#">РУС</a></li>
-                        <li><a class="dropdown-item" href="#">ENG</a></li>
-                     </ul>
-                  </div>
-               </li> -->
             </ul>
             <ul class="d-none d-lg-flex navbar-nav menu-production">
                <li class="nav-item dropdown root-dropdown with-subdropdown">
-                  <a class="nav-link nav-link-toggle purple" href="#" id="all-products" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon icon-menu"></i> <span>Вся продукція</span></a>
+                  <a class="nav-link nav-link-toggle purple" href="#" id="all-products" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon icon-menu"></i> <span>{{ btn_all_products }}</span></a>
                   <ul class="dropdown-menu wrap" aria-labelledby="all-products">
 
                      {% for id_parent, category in categories_tree %}

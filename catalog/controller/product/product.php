@@ -247,6 +247,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['heading_title'] = $product_info['name'];
 			$data['sku'] = $product_info['sku'];
+			$data['text_sku'] = $this->language->get('text_sku');
 
 			$data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
 			$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', true), $this->url->link('account/register', '', true));
@@ -453,6 +454,40 @@ class ControllerProductProduct extends Controller {
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
+
+			$data['text_action'] = $this->language->get('text_action');
+			$data['text_in_stok'] = $this->language->get('text_in_stok');
+			$data['text_not_in_stok'] = $this->language->get('text_not_in_stok');
+			$data['text_buy'] = $this->language->get('text_buy');
+			$data['text_buy_1_click'] = $this->language->get('text_buy_1_click');
+			$data['notify_when_it_appears'] = $this->language->get('notify_when_it_appears');
+			$data['text_tab_delivery'] = $this->language->get('text_tab_delivery');
+			$data['text_tab_money'] = $this->language->get('text_tab_money');
+			$data['text_tab_warranty'] = $this->language->get('text_tab_warranty');
+			$data['delivery_text_1'] = $this->language->get('delivery_text_1');
+			$data['delivery_text_2'] = $this->language->get('delivery_text_2');
+			$data['delivery_text_3'] = $this->language->get('delivery_text_3');
+			$data['money_text_1'] = $this->language->get('money_text_1');
+			$data['money_text_2'] = $this->language->get('money_text_2');
+			$data['money_text_3'] = $this->language->get('money_text_3');
+			$data['warranty_text_1'] = $this->language->get('warranty_text_1');
+			$data['warranty_text_2'] = $this->language->get('warranty_text_2');
+			$data['warranty_text_3'] = $this->language->get('warranty_text_3');
+			$data['text_characteristik'] = $this->language->get('text_characteristik');
+			$data['text_descriptions'] = $this->language->get('text_descriptions');
+			$data['tab_rel_productions'] = $this->language->get('tab_rel_productions');
+			$data['tab_prod_price'] = $this->language->get('tab_prod_price');
+			$data['text_btn_buy'] = $this->language->get('text_btn_buy');
+			$data['buy_in_1_click'] = $this->language->get('buy_in_1_click');
+			$data['text_review'] = $this->language->get('text_review');
+			$data['label_wtite_review'] = $this->language->get('label_wtite_review');
+			$data['your_name'] = $this->language->get('your_name');
+			$data['evalute_product'] = $this->language->get('evalute_product');
+			$data['label_review_text'] = $this->language->get('label_review_text');
+			$data['placeholder_review'] = $this->language->get('placeholder_review');
+			$data['bth_send_text'] = $this->language->get('bth_send_text');
+
+
 
 			$data['tags'] = array();
 
