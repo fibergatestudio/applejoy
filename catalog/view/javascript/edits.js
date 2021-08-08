@@ -39,22 +39,22 @@ window.addEventListener('input', function (e) {
 			} else if (e.target.value.length < 2 || regexp.test(e.target.value)) {
 				count_error = 0;
 			}
-		} 
-	}	
+		}
+	}
 }, false);
 
 
 /*
 Buy One Click
 */
-$('#fast-order').submit(function(e) { 	
-	e.preventDefault(); 
+$('#fast-order').submit(function(e) {
+	e.preventDefault();
 	if (!document.getElementById('checken-yes').checked) {
 		$('div.error-checkbox').show()
 		return 0
-	} 
+	}
 	$('div.error-phone').hide()
-	$('div.error-checkbox').hide() 
+	$('div.error-checkbox').hide()
 	$.ajax({
 		url: '/index.php?route=product/product/fastBuyPhone',
 		type: 'POST',
@@ -62,7 +62,7 @@ $('#fast-order').submit(function(e) {
 		dataType: 'json',
 		success: function (json) {
 			if (json.error) {
-				console.log(json)				
+				console.log(json)
 			}
 			if(json['success']){
 				document.getElementById('Modal-buy-one-click').hidden = true;
@@ -90,3 +90,35 @@ $('.item-block-function.basket a').click((e)=>{
 	e.preventDefault()
 	$('button[data-target="#Modal-mini-cart"]').click()
 })
+
+$(document).ready(function() {
+	upload_minicart();
+
+});
+
+function upload_minicart(){
+	$.ajax({
+		url: 'index.php?route=checkout/cart/minicart',
+		success: function(response) {
+
+			rewrite_html_minicart(response);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+function rewrite_html_minicart(response){
+	var minicart_div = $("#Modal-mini-cart");
+	var minicart = minicart_div.find(".block-wrapper-card").eq(0);
+	 minicart.html(response);
+}
+
+function mini_remove(cart_id, quantity){
+	cart.remove(cart_id);
+	var main_count = $('#cart_quantity').text();
+	$('#cart_quantity').text(parseInt(main_count) - quantity);
+	//alert("Quantity: " + quantity);
+	setTimeout(upload_minicart, 5);
+}

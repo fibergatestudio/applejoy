@@ -1,0 +1,29 @@
+{% if cart_empty is defined %}
+   <h5 class="modal-title">{{ shopping_cart }}</h5>
+   <span class="text fw-500">{{ empty_cart }}</span> <span class="text fw-500">{{ return_to_shopping }} <a href="#" class="color-purple">Смартфони iPhone</a></span>
+</div>
+<div class="modal-bottom">
+  <a href="{{ home }}">
+    <button class="btn-custom-project-2">{{ continue_markets }}</button>
+  </a>
+  </div>
+{% else %}
+<ul class="list-card-product">
+  {% for product in products %}
+   <li class="item-card-product item-card-product-grid">
+      <a href="#" class="block-img"><img src="{{ product.thumb }}" alt="photo-product" class="img"></a>
+      <div>
+         <div class="block-title-product"><span class="title-product fw-500"><a href="{{ product.href }}">{{ product.name }}</a></span> <span class="article">{{ text_sku }}: {{ product.sku }}</span></div>
+         <div class="price"><span class="price-product fw-700">{{ product.total }}</span>
+           {% if product.quantity > 1 %}
+           <span class="quantity"> ({{ product.quantity }}</span>X <span class="item-price">{{ product.price }})</span>
+           {% endif %}
+         </div>
+      </div>
+      <span class="pl-3 icon icon-delete" onclick="mini_remove('{{ product.cart_id }}', '{{ product.quantity }}');"></span>
+   </li>
+   {% endfor %}
+</ul>
+<div class="total-block-info"><span class="gray">{{ text_in_cart }} {{ cart_total }} {{ text_count_product }} </span><span class="ml-md-3">{{ text_on_summ }} <span class="sum">{{ totals[0].text }}</span></div>
+<div class="block-btn"><a href="index.php?route=checkout/cart" class="btn btn-custom-project">{{ go_to_cart }}</a></div>
+{% endif %}

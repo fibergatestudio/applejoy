@@ -291,6 +291,7 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
+      setTimeout(upload_minicart, 2);
 			$('.alert-dismissible, .text-danger').remove();
 			$('.form-group').removeClass('has-error');
 			if (json['error']) {
