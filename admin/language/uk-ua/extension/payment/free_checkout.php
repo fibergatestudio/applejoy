@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title'] = 'Безкоштовне замовлення';
+$_['heading_title'] = 'Оплата при отриманні в магазині';
 
 // Text
 $_['text_extension'] = 'Розширення';
