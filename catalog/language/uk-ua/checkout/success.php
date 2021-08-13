@@ -1,6 +1,7 @@
 <?php
 // Heading
 $_['heading_title'] = 'Ваше замовлення прийняте!';
+$_["text_home"] = "Головна";
 
 // Text
 $_['text_basket'] = 'Кошик';

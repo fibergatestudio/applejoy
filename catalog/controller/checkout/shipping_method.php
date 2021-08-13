@@ -62,7 +62,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 		} else {
 			$data['comment'] = '';
 		}
-		
+
 		$this->response->setOutput($this->load->view('checkout/shipping_method', $data));
 	}
 
@@ -76,10 +76,10 @@ class ControllerCheckoutShippingMethod extends Controller {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
-		// Validate if shipping address has been set.
-		if (!isset($this->session->data['shipping_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
-		}
+		// // Validate if shipping address has been set.
+		// if (!isset($this->session->data['shipping_address'])) {
+		// 	$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+		// }
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -105,12 +105,21 @@ class ControllerCheckoutShippingMethod extends Controller {
 			}
 		}
 
+
 		if (!isset($this->request->post['shipping_method'])) {
+
 			$json['error']['warning'] = $this->language->get('error_shipping');
 		} else {
 			$shipping = explode('.', $this->request->post['shipping_method']);
+			// // echo "<pre>";
+			// // var_dump($this->session->data['shipping_methods']);
+			// // echo "</pre>";
+			// echo "<pre>";
+			// var_dump($shipping);
+			// echo "</pre>";
 
 			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+
 				$json['error']['warning'] = $this->language->get('error_shipping');
 			}
 		}

@@ -15,7 +15,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 				'taxes'  => &$taxes,
 				'total'  => &$total
 			);
-			
+
 			$this->load->model('setting/extension');
 
 			$sort_order = array();
@@ -31,7 +31,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			foreach ($results as $result) {
 				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
-					
+
 					// We have to put the totals in an array so that they pass by reference.
 					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
 				}
@@ -169,9 +169,9 @@ class ControllerCheckoutPaymentMethod extends Controller {
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-			}
+			// if ($information_info && !isset($this->request->post['agree'])) {
+			// 	$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			// }
 		}
 
 		if (!$json) {
