@@ -98,14 +98,12 @@ $('.item-block-function.basket a').click((e)=>{
 
 $(document).ready(function() {
 	upload_minicart();
-
 });
 
 function upload_minicart(){
 	$.ajax({
 		url: 'index.php?route=checkout/cart/minicart',
 		success: function(response) {
-
 			rewrite_html_minicart(response);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
