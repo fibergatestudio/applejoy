@@ -93,17 +93,19 @@ $('.item-block-function.basket a').click((e)=>{
 		$('button[data-target="#Modal-empty-basket"]').click();
 	} else {
 		$('button[data-target="#Modal-mini-cart"]').click();
-	}	
+	}
 })
 
 $(document).ready(function() {
 	upload_minicart();
+
 });
 
 function upload_minicart(){
 	$.ajax({
 		url: 'index.php?route=checkout/cart/minicart',
 		success: function(response) {
+
 			rewrite_html_minicart(response);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -214,6 +216,21 @@ $('.plus').on('click', function(e) {
 			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			success: function(json) {
         console.log(json);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+
+	function product_add_to_cart(){
+		$.ajax({
+			url: 'index.php?route=checkout/cart/minicart',
+			success: function(response) {
+				var add_cart_div = $("#Modal-product-in-cart");
+				var add_to_cart = add_cart_div.find(".block-wrapper-card").eq(0);
+				 add_to_cart.html(response);
+				 setTimeout(() => $('button[data-target="#Modal-product-in-cart"]').click(), 1000);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

@@ -309,10 +309,11 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getExtensions('shipping');
-
+		$i = 0;
 		foreach ($results as $result) {
 			if ($this->config->get('shipping_' . $result['code'] . '_status')) {
 				$this->load->model('extension/shipping/' . $result['code']);
+				if($i == 0) { $code = $result['code']; }
 
 				$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote('');
 
@@ -324,7 +325,9 @@ class ControllerCheckoutCheckout extends Controller {
 						'error'      => $quote['error']
 					);
 				}
+				$i++;
 			}
+
 		}
 
 		$sort_order = array();
@@ -335,6 +338,7 @@ class ControllerCheckoutCheckout extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $method_data);
 		$this->session->data['shipping_methods'] = $method_data;
+		$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$code]['quote'][$code];
 		return $method_data;
 	}
 
@@ -347,12 +351,12 @@ $this->load->model('setting/extension');
 $results = $this->model_setting_extension->getExtensions('payment');
 
 $recurring = $this->cart->hasRecurringProducts();
-
+$i = 0;
 foreach ($results as $result) {
 	if ($this->config->get('payment_' . $result['code'] . '_status')) {
 		$total = 0;
 		$this->load->model('extension/payment/' . $result['code']);
-
+		if($i == 0) { $code = $result['code']; }
 		$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
 
 		if ($method) {
@@ -364,6 +368,7 @@ foreach ($results as $result) {
 				$method_data[$result['code']] = $method;
 			}
 		}
+		$i++;
 	}
 }
 
@@ -376,6 +381,7 @@ foreach ($method_data as $key => $value) {
 array_multisort($sort_order, SORT_ASC, $method_data);
 
 $this->session->data['payment_methods'] = $method_data;
+$this->session->data['payment_method'] = $this->session->data['payment_methods'][$code];
 return $method_data;
 	}
 }

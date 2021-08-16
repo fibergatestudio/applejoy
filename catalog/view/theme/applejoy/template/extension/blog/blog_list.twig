@@ -1,0 +1,50 @@
+{{ header }}
+<div class="main-page">
+  <nav aria-label="breadcrumb" class="block-breadcrumb">
+     <ol class="breadcrumb container">
+       {% for breadcrumb in breadcrumbs %}
+       <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+       {% endfor %}
+     </ol>
+  </nav>
+            <div id="cms-blog">
+              <section class="page-blog">
+                <div class="block-title">
+                  <h1 class="title-section container">{{ heading_title }}</h1></div>
+                <div class="container">
+                  <!-- if no record -->
+                  {{noRecord}}
+                  <!-- else -->
+
+                  <ul class="list-posts">
+                    {% for article in articles %}
+                    <li class="post">
+                      <div class="wrapper-item-post">
+                        <div class="wrapper-img-post">
+                          <img src="{{ article.blog_image }}" alt="{{article.title}}" class="img-blog img-fluid">
+                        </div>
+                        <div class="text-post">
+                          <div><span class="name-post">{{article.title}}</span>
+                            <p>{{ article.description|slice(0, 800) ~ '...' }}</p>
+                          </div>
+                          <div class="bottom-post"><span class="data">{{ article.created_at|date("d.m.Y") }}</span><a href="{{article.href}}" class="link-more">{{ button_blog_continue }}</a></div>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+
+                  </ul>
+                  <nav aria-label="Page navigation example">
+                  {{ pagination }}
+                </nav>
+
+                  </nav>
+                </div>
+              </section>
+
+            </div>
+
+        {{ content_bottom }}
+        {{ column_right }}
+
+{{ footer }}
