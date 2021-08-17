@@ -1,0 +1,79 @@
+<section class="page-blog">
+  <div class="block-title">
+    <h1 class="title-section container">Блог</h1></div>
+  <div class="container">
+    <!-- if no record -->
+    {{noRecord}}
+    <!-- else -->
+
+    <ul class="list-posts">
+      {% for article in articles %}
+      <li class="post">
+        <div class="wrapper-item-post">
+          <div class="wrapper-img-post">
+            <img src="{{ article.blog_image }}" alt="{{article.title}}" class="img-blog img-fluid">
+          </div>
+          <div class="text-post">
+            <div><span class="name-post">{{article.title}}</span>
+              <p>{{ article.description|slice(0, 800) ~ '...' }}</p>
+            </div>
+            <div class="bottom-post"><span class="data">{{ article.created_at|date("d.m.Y") }}</span><a href="{{article.href}}" class="link-more">{{ button_blog_continue }}</a></div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+
+    </ul>
+    {{ pagination }}
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link not-active" href="#">Назад</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">...</a></li>
+        <li class="page-item"><a class="page-link" href="#">25</a></li>
+        <li class="page-item"><a class="page-link" href="#">Вперед</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="cms-blog">
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- if no record -->
+                            {{noRecord}}
+                            <!-- else -->
+                            {% for article in articles %}
+                                <div class="blog-item">
+                                    <a href="{{article.href}}"><h2 class="blog-title heading_font sans-serif">{{article.title}}</h2></a>
+                                    <ul class="list-unstyled">
+                                        <li>{{word_by}} <a href="">{{ article.firstname }} {{ article.lastname }}</a></li>
+                                        <li>{{article.created_at}}</li>
+                                        <li><a>{{ article.countComments }} {{word_comments}}</a></li>
+                                    </ul>
+                                    <div class="blog-image">
+                                        <a href="{{article.href}}">
+                                        <img class=" img-responsive" src="{{ article.blog_image }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a>
+                                    </div>
+
+                                    <div class="blog-excerpt">{{ article.description|slice(0, 800) ~ '...' }}</div>
+                                    <a href="{{article.href}}" class="btn btn-primary hidden-xs button_continue">{{button_blog_continue}}</a>
+                                    <a href="{{get_single_article}}&article_id={{article.article_id}}" class="btn btn-primary btn-block visible-xs-block button_continue">{{button_blog_continue}}</a>
+                                </div>
+                            {% endfor %}
+                            <div class="row pagination-margin">
+                                <div  class="col-sm-6 text-left">{{ results }}</div>
+                                <div class="col-sm-6 text-right">{{ pagination }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
