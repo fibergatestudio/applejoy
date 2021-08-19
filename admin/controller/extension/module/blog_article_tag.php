@@ -33,7 +33,7 @@ class ControllerExtensionModuleBlogArticleTag extends Controller {
 			$data['error_name'] = '';
 		}
 
-		
+
 
 		$data['breadcrumbs'] = array();
 
@@ -82,8 +82,8 @@ class ControllerExtensionModuleBlogArticleTag extends Controller {
 			$data['name'] = '';
 		}
 
-	
-		
+
+
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($module_info)) {
@@ -92,7 +92,7 @@ class ControllerExtensionModuleBlogArticleTag extends Controller {
 			$data['status'] = '';
 		}
 
-		
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

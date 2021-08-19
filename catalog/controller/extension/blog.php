@@ -67,6 +67,10 @@ class ControllerExtensionBlog extends Controller
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
+		$session_lang = $this->session->data['language'];
+		$cur_lang_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "language l WHERE l.code = '" . $session_lang . "'");
+		$lang_rows = $cur_lang_data->rows[0];
+		$lang_id = $lang_rows["language_id"];
 
 		$limit = 9;
 		$page=isset($this->request->get['page'])?$this->request->get['page']:1;
@@ -110,21 +114,36 @@ class ControllerExtensionBlog extends Controller
 				$data['noRecord']= '<h3> No result found for '.'"'.$filter.'"'.'</h3>';
 				$totalrecords = 0;
 			}
-
 			$description = $data['articles'];
 			foreach ($description as $key => $value) {
-				$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($description[$key]['description']));
+				//$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($description[$key]['description']));
+				$translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $key. " AND language_id=".$lang_id);
+				if($translate_data->num_rows){
+					$rows_translate = $translate_data->rows[0];
+					$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($rows_translate['article_description']));
+					$description[$key]['title'] = $rows_translate["article_title"];
+				} else {
+					$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($description[$key]['description']));
+				}
+
 			  $description[$key]['description'] = $content;
 				}
 				$data['articles'] = $description ;
 			}
 		else{
-
 			$data['articles']=$this->model_extension_blog_blog->getArticle($start, $limit);
 			$description = $data['articles'];
 
 			foreach ($description as $key => $value) {
-				$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($description[$key]['description']));
+				$translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $key. " AND language_id=".$lang_id);
+				if($translate_data->num_rows){
+					$rows_translate = $translate_data->rows[0];
+					$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($rows_translate['article_description']));
+					$description[$key]['title'] = $rows_translate["article_title"];
+				} else {
+					$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($description[$key]['description']));
+				}
+
 			  $description[$key]['description'] = $content;
 			}
 			$data['articles'] = $description ;
@@ -255,7 +274,19 @@ class ControllerExtensionBlog extends Controller
 		//end pagination
 
 		$description = $data['single_article'];
-		$description['description'] = html_entity_decode($description['description']);
+		$session_lang = $this->session->data['language'];
+		$cur_lang_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "language l WHERE l.code = '" . $session_lang . "'");
+		$lang_rows = $cur_lang_data->rows[0];
+		$lang_id = $lang_rows["language_id"];
+		$translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $article_id. " AND language_id=".$lang_id);
+		if($translate_data->num_rows){
+			$rows_translate = $translate_data->rows[0];
+			$description['description'] = html_entity_decode($rows_translate['article_description']);
+			$description['title'] = $rows_translate["article_title"];
+		} else {
+			$description['description'] = html_entity_decode($description['description']);
+		}
+
 		$data['single_article'] = $description ;
 
 		$data['logged_id'] = $this->customer->getId();
@@ -264,9 +295,6 @@ class ControllerExtensionBlog extends Controller
 		$data['single_article'] = $article_info;
 		$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($article_info['description']));
 		$data['short_desc'] = $content;
-		// echo '<pre>';
-		// var_dump($article_info);
-		// echo '</pre>';
 		$latest_article_limit = $this->config->get('module_blog_setting_no_of_latest_articles');
 		$data['latest_articles'] = $this->model_extension_blog_blog->getLatestArticles($latest_article_limit);
 
