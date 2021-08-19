@@ -217,6 +217,16 @@ class ModelExtensionBlog extends Model {
 	{
 
 		 $this->db->table('blog_articles')->find($id)->delete();
+		 // Delete translate
+		 $translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $id);
+		 $arr_delete_translate = $translate_data->rows;
+		 foreach($arr_delete_translate as $item_translate){
+			 $this->db->table('article_translate')->find($item_translate["article_translate_id"])->delete();
+		 }
+		 // echo "<pre>";
+		 // var_dump($arr_delete_translate);
+		 // echo "</pre>";
+		 // die();
 
 		return $this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE query = 'article_id=" . (int)$id . "'");
 
@@ -365,7 +375,7 @@ class ModelExtensionBlog extends Model {
 
 		$last_category_id = $this->db->getlastid();
 
-		
+
 
 		if (isset($data['category_slug'])){
 

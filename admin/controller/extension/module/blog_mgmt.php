@@ -310,7 +310,7 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 		$this->response->setOutput($this->load->view('extension/module/blog_mgmt', $data));
 	}
 
-	public function trashArticles() {
+	public function getTrashArticles() {
 		$this->load->language('extension/module/blog_mgmt');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -557,7 +557,6 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
@@ -574,6 +573,18 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 		);
 
 		$data['user_token'] = $this->session->data['user_token'];
+
+
+		$this->load->model('localisation/language');
+		$language_total = $this->model_localisation_language->getLanguages();
+		$data["language_article"] = [];
+		foreach($language_total as $code => $item_lang){
+			$data["language_article"][$code] = [];
+			$data["language_article"][$code]['code'] = $code;
+			$data["language_article"][$code]['language_id'] = $item_lang["language_id"];
+		}
+
+
 
 		$this->load->model('tool/image');
 		$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
@@ -596,9 +607,40 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 	public function savePost()
 	{
 		$user_id = $this->session->data['user_id'];
-		$title = $this->request->post['title'];
+		$temp_post = $this->request->post;
+		$curr_lang_id = $this->config->get('config_language_id');
+		$translate_arr = [];
+		foreach($temp_post as $name => $item_post){
+			if(strpos($name, 'title') !== false && $name != 'title' && $name != 'meta_title'){
+				$id_lang = str_replace('title', '', $name);
+				if(isset($translate_arr[$id_lang])){
+					$translate_arr[$id_lang]["article_title"] = $item_post;
+				} else {
+					$translate_arr[$id_lang] = [];
+					$translate_arr[$id_lang]["article_title"] = $item_post;
+				}
+				if($id_lang == $curr_lang_id){
+					$title = $item_post;
+				}
+			}
+			if(strpos($name, 'description') !== false && $name != 'description' && $name != 'meta_description'){
+				$id_lang = str_replace('description', '', $name);
+				if(isset($translate_arr[$id_lang])){
+					$translate_arr[$id_lang]["article_description"] = $item_post;
+				} else {
+					$translate_arr[$id_lang] = [];
+					$translate_arr[$id_lang]["article_description"] = $item_post;
+				}
+				if($id_lang == $curr_lang_id){
+					$description = $item_post;
+				}
+			}
+		}
+
+
+		//$title = $this->request->post['title'];
 		$image = $this->request->post['featured_image'];
-		$description = $this->request->post['description'];
+		//$description = $this->request->post['description'];
 		$category= $this->request->post['category'];
 		$status = $this->request->post['status'];
 		$products  = $this->request->post['product'];
@@ -626,6 +668,19 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 
 		$data['last_article_id'] = $this->model_extension_blog->savePost($data);
 		$last_article_id = $data['last_article_id'];
+
+		$data_translate = [];
+		foreach($translate_arr as $lang_id => $data_arr){
+			$data_translate[$lang_id] = [];
+			$data_translate[$lang_id]['article_id'] = $last_article_id;
+			$data_translate[$lang_id]['language_id'] = $lang_id;
+			$data_translate[$lang_id]['article_title'] = $data_arr["article_title"];
+			$data_translate[$lang_id]['article_description'] = $data_arr["article_description"];
+		}
+
+		foreach ($data_translate as $lang => $value) {
+			$this->db->table('article_translate')->add($value);
+		}
 
 		// save tag
 		$tags = $this->request->post['tags'];
@@ -723,6 +778,36 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
+
+		// Translate custum
+
+		$this->load->model('localisation/language');
+		$language_total = $this->model_localisation_language->getLanguages();
+		$data["language_article"] = [];
+		//$translate_data = $this->db->table('article_translate')->where('article_id', $id)->get();
+
+
+		foreach($language_total as $code => $item_lang){
+			$translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $id. " AND language_id=".$item_lang["language_id"]);
+			$data["language_article"][$code] = [];
+			if(!empty($translate_data->row)){
+				$item_taranslate = $translate_data->row;
+				$data["language_article"][$code]['code'] = $code;
+				$data["language_article"][$code]['language_id'] = $item_lang["language_id"];
+				$data["language_article"][$code]['article_title'] = $item_taranslate["article_title"];
+				$data["language_article"][$code]['article_description'] = $item_taranslate["article_description"];
+				$data["language_article"][$code]['article_translate_id'] = $item_taranslate["article_translate_id"];
+			} else {
+				$item_taranslate = $translate_data->row;
+				$data["language_article"][$code]['code'] = $code;
+				$data["language_article"][$code]['language_id'] = $item_lang["language_id"];
+				$data["language_article"][$code]['article_title'] = $post_data[0]["title"];//$item_taranslate["article_title"];
+				$data["language_article"][$code]['article_description'] = $post_data[0]["description"];//$item_taranslate["article_description"];
+				$data["language_article"][$code]['article_translate_id'] = 0;//$item_taranslate["article_translate_id"];
+			}
+
+		}
+
 		$data['post_categories'] = $post_data;
 		$data['categories'] = $this->model_extension_blog->getActiveCategories();
 		$data['products'] = $this->model_extension_blog->getArticleProducts($id);
@@ -741,10 +826,77 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 
 	public function updatePost()
 	{
-
 		$id = $this->request->post['id'];
-		$title = $this->request->post['title'];
-		$description = $this->request->post['description'];
+		$temp_post = $this->request->post;
+		$curr_lang_id = $this->config->get('config_language_id');
+		$translate_arr = $add_arr = [];
+		foreach($temp_post as $name => $item_post){
+			if(strpos($name, 'title') !== false && $name != 'title' && $name != 'meta_title'){
+				$id_lang = str_replace('title', '', $name);
+				$arr_id = explode('-', $id_lang);
+				if((int)$arr_id[1] != 0 && isset($translate_arr[$arr_id[1]])){
+					$translate_arr[$arr_id[1]]["article_title"] = $item_post;
+				} else if((int)$arr_id[1] != 0){
+					$translate_arr[$arr_id[1]] = [];
+					$translate_arr[$arr_id[1]]["article_title"] = $item_post;
+					$translate_arr[$arr_id[1]]["language_id"] = $arr_id[0];
+					$translate_arr[$arr_id[1]]["article_id"] = $id;
+				} else {
+					if(isset($add_arr[$arr_id[0]])){
+						$add_arr[$arr_id[0]]["article_title"] = $item_post;
+						$add_arr[$arr_id[0]]["language_id"] = $arr_id[0];
+						$add_arr[$arr_id[0]]["article_id"] = $id;
+					} else {
+						$add_arr[$arr_id[0]] = [];
+						$add_arr[$arr_id[0]]["article_title"] = $item_post;
+						$add_arr[$arr_id[0]]["language_id"] = $arr_id[0];
+						$add_arr[$arr_id[0]]["article_id"] = $id;
+					}
+				}
+				if($arr_id[0] == $curr_lang_id){
+					$title = $item_post;
+				}
+			}
+			if(strpos($name, 'description') !== false && $name != 'description' && $name != 'meta_description'){
+				$id_lang = str_replace('description', '', $name);
+				$arr_id = explode('-', $id_lang);
+				if((int)$arr_id[1] != 0 && isset($translate_arr[$arr_id[1]])){
+					$translate_arr[$arr_id[1]]["article_description"] = $item_post;
+				} else if((int)$arr_id[1] != 0){
+					$translate_arr[$arr_id[1]] = [];
+					$translate_arr[$arr_id[1]]["article_description"] = $item_post;
+					$translate_arr[$arr_id[1]]["language_id"] = $arr_id[0];
+					$translate_arr[$arr_id[1]]["article_id"] = $id;
+				} else {
+					if(isset($add_arr[$arr_id[0]])){
+						$add_arr[$arr_id[0]]["article_description"] = $item_post;
+						$add_arr[$arr_id[0]]["language_id"] = $arr_id[0];
+						$add_arr[$arr_id[0]]["article_id"] = $id;
+					} else {
+						$add_arr[$arr_id[0]] = [];
+						$add_arr[$arr_id[0]]["article_description"] = $item_post;
+						$add_arr[$arr_id[0]]["language_id"] = $arr_id[0];
+						$add_arr[$arr_id[0]]["article_id"] = $id;
+					}
+				}
+				if($arr_id[0] == $curr_lang_id){
+					$description = $item_post;
+				}
+			}
+		}
+
+		foreach($translate_arr as $item_id => $data_value){
+			if((int)$item_id != 0){
+				$this->db->table('article_translate')->find($item_id)->set($data_value);
+			} else {
+				$this->db->table('article_translate')->add($data_value);
+			}
+		}
+
+		foreach ($add_arr as $lang => $value) {
+			$this->db->table('article_translate')->add($value);
+		}
+
 		$products = $this->request->post['product'];
 		$category= $this->request->post['category'];
 		$image = $this->request->post['featured_image'];
@@ -827,8 +979,20 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 		if(isset($this->request->post['selected'])  && $this->validateCopy()) {
 			foreach ($this->request->post['selected'] as $article_id) {
 				$this->model_extension_blog->copyPost($article_id);
-			}
+				$translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $article_id);
 
+
+				if($translate_data->num_rows){
+					foreach($translate_data->rows as $item_row){
+						$temp_copy = [];
+						$temp_copy["article_id"] = $item_row["article_id"];
+						$temp_copy["language_id"] = $item_row["language_id"];
+						$temp_copy["article_title"] = $item_row["article_title"];
+						$temp_copy["article_description"] = $item_row["article_description"];
+						$this->db->table('article_translate')->add($temp_copy);
+					}
+				}
+			}
 			$this->session->data['success'] = $this->language->get('copy_success');
 		}
 
@@ -871,6 +1035,7 @@ class ControllerExtensionModuleBlogMgmt extends Controller {
 		$this->model_extension_blog->deleteArticleTags($id);
 		$this->model_extension_blog->deleteArticleComments($id);
 		$this->model_extension_blog->deleteArticleProducts($id);
+		$this->db->query("DELETE FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $id);
 
 		$this->response->redirect($this->url->link('extension/module/blog_mgmt/trashArticles', 'user_token=' . $this->session->data['user_token'], true));
 

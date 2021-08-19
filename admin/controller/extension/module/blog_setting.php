@@ -76,6 +76,15 @@ class ControllerExtensionModuleBlogSetting extends Controller
           PRIMARY KEY (`category_tag_id`)
         )");
 
+        $this->db->query("CREATE TABLE IF NOT EXISTS `".DB_PREFIX."article_translate` (
+          `article_translate_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `article_id` int(11) NOT NULL,
+          `language_id` int(11) NOT NULL,
+          `article_title` text NOT NULL,
+          `article_description` text NOT NULL,          
+          PRIMARY KEY (`article_translate_id`)
+        )");
+
       if($this->config->get('module_blog_setting_allow_comments')==''){
 
         $this->db->query("INSERT INTO ".DB_PREFIX."setting SET `key` ='module_blog_setting_allow_comments' , `store_id` = 0 , `code` = 'module_blog_setting', value = '0' ");
@@ -84,7 +93,7 @@ class ControllerExtensionModuleBlogSetting extends Controller
 
        $this->db->query("INSERT INTO ".DB_PREFIX."setting SET `key` ='module_blog_setting_no_of_articles' , `store_id` = 0 , `code` = 'module_blog_setting', value = '10' ");
       }
-      
+
     }
 
     public function index(){
@@ -94,7 +103,7 @@ class ControllerExtensionModuleBlogSetting extends Controller
         $this->load->language('extension/module/blog_setting');
         $this->load->model('setting/setting');
 
-       
+
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('module_blog_setting', $this->request->post);
@@ -142,33 +151,33 @@ class ControllerExtensionModuleBlogSetting extends Controller
             $data['no_of_articles'] = $this->config->get('module_blog_setting_no_of_articles');
             $data['no_of_latest_articles'] = $this->config->get('module_blog_setting_no_of_latest_articles');
             $data['allow_comments'] = $this->config->get('module_blog_setting_allow_comments');
-        
+
 
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
-        
+
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view('extension/module/blog_setting', $data));
     }
 
     public function saveBlogSetting()
-    {   
+    {
 
         $this->load->language('extension/module/blog_setting');
         $this->load->model('setting/setting');
-        
+
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $data = array(
-                'module_blog_setting_no_of_articles' => $this->request->post['no_of_articles'], 
-                'module_blog_setting_no_of_latest_articles' => $this->request->post['no_of_latest_articles'], 
+                'module_blog_setting_no_of_articles' => $this->request->post['no_of_articles'],
+                'module_blog_setting_no_of_latest_articles' => $this->request->post['no_of_latest_articles'],
                 'module_blog_setting_allow_comments' => $this->request->post['allow_comments'],
                 'module_blog_setting_status' => $this->request->post['setting_status']
             );
             $this->model_setting_setting->editSetting('module_blog_setting', $data);
         }
-        
+
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
@@ -214,7 +223,7 @@ class ControllerExtensionModuleBlogSetting extends Controller
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
-        
+
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view('extension/module/blog_setting', $data));

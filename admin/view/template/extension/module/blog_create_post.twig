@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        
-       
+
+
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
 
         </div>
@@ -28,14 +28,20 @@
       </div>
       <div class="panel-body">
         <form action="{{ create_article }}" onsubmit="inputTags()" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
-         
+
+          <input type="hidden" name="description" value="test description">
+          <input type="hidden" name="title" value="test title">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ text_title }}:</label>
+            {% for lang in language_article %}
+            <label class="col-sm-2 control-label" for="input-status">
+            <img src="language/{{ lang.code }}/{{ lang.code }}.png"> {{ title }}:
+          </label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="title" placeholder="Title" value="" required="required">
+              <input type="text" class="form-control" name="title{{ lang.language_id }}" placeholder="Title" value="" required="required">
             </div>
+            {% endfor %}
           </div>
-          
+
 
           <div class="form-group">
             <label class="col-sm-2 control-label" for="category">{{category }}:</label>
@@ -53,10 +59,15 @@
           </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="description">{{description}}:</label>
+              {% for lang in language_article %}
+
+              <label class="col-sm-2 control-label" for="description{{ lang.code }}">
+                <img src="language/{{ lang.code }}/{{ lang.code }}.png"> {{description}}:
+              </label>
               <div class="col-sm-10">
-              <textarea class="form-control" data-toggle="summernote" name="description" rows="5" id="description" placeholder="Description" required="required"></textarea>
+              <textarea class="form-control" data-toggle="summernote" name="description{{ lang.language_id }}" rows="5" id="description{{ lang.code }}" placeholder="Текст" required="required"></textarea>
               </div>
+              {% endfor %}
             </div>
 
             <div class="form-group">
@@ -77,7 +88,7 @@
               <div>
               <a href="#" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
                <input type="hidden" name="featured_image" value="{{ image }}" id="input-image" /></div>
-               
+
             </div>
             <!-- new additon meta title -->
           <div class="form-group">
@@ -123,7 +134,7 @@
 
           </div>
           <div class="form-group">
-            
+
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" class="form-control">
@@ -134,7 +145,7 @@
           </div>
 
            <div class="form-group">
-            
+
             <label class="col-sm-2 control-label" for="input-status"></label>
             <div class="col-sm-10">
               <input type="submit" class="btn btn-info" value="{{ button_save }}" >
@@ -150,7 +161,7 @@
 
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-<script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
+<script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
 <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
 <script>
   $(function() {
@@ -160,12 +171,12 @@
       tagSize:['lg'],
       promptText:['  Enter tags...'],
     });
-    
+
   });
-  
+
   function inputTags() {
     var values = $('#my-tag-list').tags().getTags();
-    $("input#tags2").val(values);  
+    $("input#tags2").val(values);
   }
 
   $('input[name=\'product_info\']').autocomplete({
@@ -185,16 +196,16 @@
   },
   select: function(item) {
     $('input[name=\'product_info\']').val('');
-    
+
     $('#featured-product' + item['value']).remove();
-    
-    $('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');  
+
+    $('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
   }
 });
-  
+
 $('#featured-product').delegate('.fa-minus-circle', 'click', function() {
   $(this).parent().remove();
 });
-  
+
 </script>
 {{ footer }}
