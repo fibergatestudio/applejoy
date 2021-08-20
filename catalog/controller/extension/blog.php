@@ -135,7 +135,7 @@ class ControllerExtensionBlog extends Controller
 			$description = $data['articles'];
 
 			foreach ($description as $key => $value) {
-				$translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=" . $key. " AND language_id=".$lang_id);
+                $translate_data = $this->db->query("SELECT * FROM " . DB_PREFIX . "article_translate WHERE article_id=".$value["article_id"]." AND language_id=".$lang_id);
 				if($translate_data->num_rows){
 					$rows_translate = $translate_data->rows[0];
 					$content = preg_replace("/<img[^>]+\>/i", "", html_entity_decode($rows_translate['article_description']));

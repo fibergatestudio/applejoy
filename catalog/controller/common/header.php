@@ -84,7 +84,7 @@ class ControllerCommonHeader extends Controller {
                 $data["tree_cats"] = $tree_cats;
 
                 if($_SERVER['REQUEST_URI'] == '/' || $_SERVER['REQUEST_URI'] == '/index.php?route=common/home'){
-                    return $this->load->view('common/header', $data);
+                    return $this->load->view('common/test', $data);
                 } else {
                     return $this->load->view('common/headerpage', $data);
                 }
