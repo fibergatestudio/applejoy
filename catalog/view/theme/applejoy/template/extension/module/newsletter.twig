@@ -96,13 +96,17 @@ $(document).ready(function() {
 			dataType: 'json',
 			data: 'email=' + encodeURIComponent($('input[id=\'email{{ module }}\']').val()),
 			success: function(json) {
+				console.log(json);
 				$('.text-success, .text-danger').remove();
 				if (json['error']) {
 					$('#respond.{{ module }}').after('<span class="text-danger">' + json['error'] + '</span>');
 				}
 				if (json['success']) {
 					$('#respond.{{ module }}').after('<span class="text-success">' + '{{ success_message }}' + '</span>');
-					$.cookie( 'newsletter_already_added' , 1 , { expires: 14 , path: '/' });
+				//	$.cookie( 'newsletter_already_added' , 1 , { expires: 14 , path: '/' });
+				var expires = new Date();
+        expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000 * 14));
+        document.cookie = 'newsletter_already_added' + '=' + '1' + '; path=/;expires=' + expires.toUTCString();
 					setTimeout(function() { $('.popup_close').trigger('click'); }, 1200);
 					$('input[id=\'email{{ module }}\']').val('');
 				}}
