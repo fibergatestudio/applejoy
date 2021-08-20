@@ -1,0 +1,131 @@
+{% if type == 'module' %}
+<h3>{{ heading_title }}</h3>
+<div class="bordered_content padded box newsletter_module">
+{{ html }}
+<div id="respond" class="{{ module }}"></div>
+<div class="input-group">
+<input type="text" id="email{{ module }}" name="email" class="form-control" placeholder="{{ entry_email }}" />
+<span id="button-subscribe" class="{{ module }} input-group-addon btn btn-primary"><i class="fa fa-envelope"></i></span>
+</div>
+{% if unsubscribe %}
+<div class="unsubscribe"><a id="button-unsubscribe" class="{{ module }}">{{ button_unsubscribe }}</a></div>
+{% endif %}
+</div>
+{% elseif type == 'popup' %}
+<div class="init_popup">
+<div style="display: none;" class="window_holder">
+<div class="newsletter_module popup">
+<a class="popup_close"><i class="fa fa-times"></i></a>
+<h3>{{ heading_title }}</h3>
+<div class="table {% if image %} {{ 'split' }} {% endif %}">
+{% if image %}
+<div class="table-cell text-center">
+<img src="{{ image }}" alt="" class="img-responsive" style="margin:5px auto;" />
+</div>
+{% endif %}
+<div class="table-cell">
+{{ html }}
+<div id="respond" class="{{ module }}"></div>
+<div class="form-group">
+<input id="email{{ module }}" name="email" class="form-control" placeholder="{{ entry_email }}" />
+</div>
+<a id="button-subscribe" class="{{ module }} btn btn-primary">{{ button_subscribe }}</a>
+{% if unsubscribe %}
+<a id="button-unsubscribe" class="{{ module }} btn btn-default">{{ button_unsubscribe }}</a>
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="popup_mask popup_close" style="display: none;"></div>
+
+<script>
+$(document).ready(function() {
+
+{% if only_once %}
+	if (getCookie('newsletter_already_popup') == undefined) {
+		initNewsletter();
+		$.cookie( 'newsletter_already_popup' , 1 , { expires: 14 , path: '/' });
+	}
+{% else %}
+	if (getCookie('newsletter_already_added') == undefined) {
+		initNewsletter();
+	}
+{% endif %}
+
+$('.popup_close').click(function () {
+	$('.popup_mask').hide();
+	$('.window_holder').hide();
+});
+
+});
+
+function initNewsletter() {
+	setTimeout(function() {
+		$('.popup_mask').fadeTo(750,0.5);
+		$('.window_holder').show();
+		setTimeout(function() { $('.window_holder').addClass('active'); }, 750);
+	}, {{ delay }});
+}
+function getCookie(name) {
+  var matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+</script>
+
+{% endif %}
+
+<script>
+$(document).ready(function() {
+	$('.newsletter_box input[name=\'email{{ module }}\']').bind('keydown', function(e) {
+		if (e.keyCode == 13) {
+			$('#button-subscribe{{ module }}').trigger('click');
+		}
+	});
+	$('#button-subscribe.{{ module }}').on('click', function() {
+		$.ajax({
+			url: 'index.php?route=extension/module/newsletter/subscribe',
+			type: 'post',
+			dataType: 'json',
+			data: 'email=' + encodeURIComponent($('input[id=\'email{{ module }}\']').val()),
+			success: function(json) {
+				$('.text-success, .text-danger').remove();
+				if (json['error']) {
+					$('#respond.{{ module }}').after('<span class="text-danger">' + json['error'] + '</span>');
+				}
+				if (json['success']) {
+					$('#respond.{{ module }}').after('<span class="text-success">' + '{{ success_message }}' + '</span>');
+					$.cookie( 'newsletter_already_added' , 1 , { expires: 14 , path: '/' });
+					setTimeout(function() { $('.popup_close').trigger('click'); }, 1200);
+					$('input[id=\'email{{ module }}\']').val('');
+				}}
+		});
+	});
+});
+</script>
+<script>
+$(document).ready(function() {
+	$('#button-unsubscribe.{{ module }}').on('click', function() {
+		$.ajax({
+			url: 'index.php?route=extension/module/newsletter/unsubscribe',
+			type: 'post',
+			dataType: 'json',
+			data: 'email=' + encodeURIComponent($('input[id=\'email{{ module }}\']').val()),
+			success: function(json) {
+				$('.text-success, .text-danger').remove();
+				if (json['error']) {
+					$('#respond.{{ module }}').after('<span class="text-danger">' + json['error'] + '</span>');
+				}
+				if (json['success']) {
+					$('#respond.{{ module }}').after('<span class="text-success">' + json['success'] + '</span>');
+					$.cookie( 'newsletter_already_added' , 1 , { expires: 14 , path: '/' });
+					setTimeout(function() { $('.popup_close').trigger('click'); }, 1200);
+					$('input[id=\'email{{ module }}\']').val('');
+				}}
+		});
+	});
+});
+</script>
