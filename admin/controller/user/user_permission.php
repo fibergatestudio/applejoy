@@ -237,7 +237,7 @@ class ControllerUserUserPermission extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_left'] = $this->load->controller('common/column_menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('user/user_group_list', $data));
@@ -310,7 +310,7 @@ class ControllerUserUserPermission extends Controller {
 			'common/login',
 			'common/logout',
 			'common/forgotten',
-			'common/reset',			
+			'common/reset',
 			'common/footer',
 			'common/header',
 			'error/not_found',
@@ -343,7 +343,7 @@ class ControllerUserUserPermission extends Controller {
 
 		// Sort the file array
 		sort($files);
-					
+
 		foreach ($files as $file) {
 			$controller = substr($file, strlen(DIR_APPLICATION . 'controller/'));
 
@@ -371,7 +371,7 @@ class ControllerUserUserPermission extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_left'] = $this->load->controller('common/column_menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('user/user_group_form', $data));

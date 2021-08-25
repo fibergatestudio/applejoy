@@ -1,0 +1,99 @@
+{{ header }}
+<div class="main-page page-vacancies">
+  <nav aria-label="breadcrumb" class="block-breadcrumb">
+     <ol class="breadcrumb container">
+       {% for breadcrumb in breadcrumbs %}
+       <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+       {% endfor %}
+     </ol>
+  </nav>
+  <section class="section-vacancies">
+    <div class="container">
+      <h1 class="title-section">{{ text_header_page }}</h1>
+      <div class="vacancies-wrapper">
+        <div class="pills-wrapper">
+          <ul class="nav nav-pills sliders-vacancies" id="vacancies-tabs" role="tablist">
+            {% for vacancy in vacancies %}
+            {% if vacancy.status != 'Published' %}
+            <li class="nav-item">
+              <a class="nav-link active" id="tab-{{ vacancy.vacancy_id }}" data-toggle="tab" href="#customer{{ vacancy.vacancy_id }}" role="tab" aria-controls="customer{{ vacancy.vacancy_id }}" aria-selected="true">
+              <span class="title-tab">{{ vacancy.title }}</span> <span class="d-block">{{ vacancy.short_description }}</span>
+            </a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" id="tab-{{ vacancy.vacancy_id }}" data-toggle="tab" href="#customer{{ vacancy.vacancy_id }}" role="tab" aria-controls="customer{{ vacancy.vacancy_id }}" aria-selected="true">
+            <span class="title-tab">{{ vacancy.title }}</span> <span class="d-block">{{ vacancy.short_description }}</span>
+          </a>
+        </li>
+          {% endif %}
+        {% endfor %}
+          </ul>
+        </div>
+        <div class="tab-content" id="myTabContent">
+          {% for vacancy in vacancies %}
+          {% if loop.index == 1 %}
+          <div class="tab-pane fade show active" id="customer{{ vacancy.vacancy_id }}" role="tabpanel" aria-labelledby="tab-{{ vacancy.vacancy_id }}">
+            {% else %}
+            <div class="tab-pane fade" id="customer{{ vacancy.vacancy_id }}" role="tabpanel" aria-labelledby="tab-{{ vacancy.vacancy_id }}">
+            {% endif %}
+
+            <img src="{{ vacancy.vacancy_image }}" alt="image-post" class="img-vacans">
+            <h3>{{ vacancy.title }}</h3>
+            <p>{{ vacancy.short_description }}</p>
+            <p>{{ vacancy.price }}</p>
+            <p>{{ vacancy.description }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-anketa">
+    <div class="container"><span class="title-section">{{ head_form_subscribe }}</span>
+      <form class="form-anketa row" id="send-vacancy" onsubmit="return false;" method="post">
+        <div class="mb-3 col-md-6">
+          <label for="nameInput1" class="form-label">{{ your_full_name }}</label>
+          <input class="form-control" name="fullname" id="nameInput1" placeholder="{{ your_full_name }}" minlength="8">
+        </div>
+        <div class="mb-3 col-md-6">
+          <label for="mailInput1" class="form-label">{{ your_contact_text }}</label>
+          <input class="form-control" name="contacts" id="mailInput1" placeholder="{{ your_contact_placeholder }}">
+        </div>
+        <div class="mb-3 col-md-12">
+          <label for="Textarea1" class="form-label">{{ your_comment }}</label>
+          <textarea class="form-control" name="comment" id="Textarea1" rows="4" placeholder="{{ comment_placeholder }}"></textarea>
+        </div>
+        <button class="btn btn-custom-project" id="btn-send" onclick="sendform()">{{ text_button_send }}</button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<script>
+function sendform(){
+  $.ajax({
+		url: 'index.php?route=custompage/vacancies/addSubscribe',
+    type: 'post',
+    data: $('#send-vacancy').serialize(),
+    success: function(json) {
+      if(json['error']){
+        $.each(json.error,function(index,value){
+          console.log('Индекс: ' + index + '; Значение: ' + value);
+          $("#" + index).css("border", "1px solid red");
+        });
+      } else if(!json['success']){
+        console.log();
+      } else {
+        $('#send-vacancy')[0].reset();
+        $("#btn-send").css("border", "2px solid blue");
+      }
+
+    }
+  });
+
+}
+
+</script>
+
+{{ footer }}
