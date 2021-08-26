@@ -1,0 +1,18 @@
+<section class="section-text container"><span class="title-section text-center">{{heading_faq}}</span>
+  {% for key, val in faq %}
+    <div id="accordion-{{key}}">
+      <div class="card card-order">
+        <div class="card-header" id="headingOne">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{key}}" aria-expanded="false" aria-controls="collapseOne"><span class="block-header-order">{{val.question}}</span><span class="icon icon-arrow-down"></span></button>
+        </div>
+        <div id="collapse{{key}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-{{key}}">
+          <p class="card-body">{{val.answer}}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <h3 class="title-text mt-4">{{text_bottom}}</h3>
+  <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+  <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</section>
+

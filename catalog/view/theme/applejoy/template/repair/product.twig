@@ -1,0 +1,65 @@
+{{ header }}
+<div class="main page-repair page-list-price">
+  <div class="main-page">
+     <nav aria-label="breadcrumb" class="block-breadcrumb">
+    <ol class="breadcrumb container">
+      {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ol>
+     </nav>
+    <section class="section-text section-price-repair container">
+            <h1 class="title-section">{{heading_title}} {{product.model.name}}</h1><span class="title-section text-center small">{{text_select_issue}}</span>
+            <div id="repair-accordion" class="accordion repair-accordion">
+                <div class="card card-order">
+                    <div class="card-header" id="headingOne"><button class="btn btn-link"><span class="block-header-order">Загальні проблеми</span></button></div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                        <div class="card-body wrap">
+                            <ul class="list-price-repair">
+                                {% for left_col in product.model.repair.top.left_col %}
+                                <li>
+                                    <div class="list-price-repair-title"><span class="name-repair">{{left_col.name}}</span>
+                                    </div>
+                                    <div class="list-price-repair-value"><span class="price-repair">{{left_col.price}}</span>
+                                    <button class="btn btn-custom-project" data-name="{{left_col.name}}" data-toggle="modal" data-target="#modal-repair">{{text_order}}</button></div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="list-price-repair">
+                                {% for right_col in product.model.repair.top.right_col %}
+                                <li>
+                                    <div class="list-price-repair-title"><span class="name-repair">{{right_col.name}}</span></div>
+                                    <div class="list-price-repair-value"><span class="price-repair">{{right_col.price}}</span><button class="btn btn-custom-project" data-toggle="modal" data-target="#modal-repair">{{text_order}}</button></div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% for key,repair_list in product.model.repair.bottom %}
+                <div class="card card-order">
+                    <div class="card-header" id="heading-2"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-{{key}}" aria-expanded="false" aria-controls="collapse-{{key}}"><span class="block-header-order">{{repair_list.name}} </span><span class="icon icon-arrow-down"></span></button></div>
+                    <div id="collapse-{{key}}" class="collapse" aria-labelledby="heading-2">
+                        <div class="card-body">
+                            <ul class="list-price-repair">
+                                {% for issue in repair_list.issues %}
+                                <li>
+                                    <div class="list-price-repair-title"><span class="name-repair">{{issue.name}}</span>
+                                    </div>
+                                    <div class="list-price-repair-value"><span class="price-repair">{{issue.price}}</span><button class="btn btn-custom-project" data-toggle="modal" data-target="#modal-repair">{{text_order}}</button></div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+  {{faq}}
+</div>
+{{ footer }}
+{{modal}}
+<script>
+    $('.modal-issue input[name=model]').val('{{product.model.name}}')
+</script>
