@@ -1,0 +1,64 @@
+{{ header }}
+<div class="main page-repair">
+  <div class="main-page">
+     <nav aria-label="breadcrumb" class="block-breadcrumb">
+        <ol class="breadcrumb container">
+          {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+     </nav>
+  <h1 class="title-section text-lg-left container">{{ text_header }}</h1>
+  <section class="section-category">
+    <div class="bg-section-category">
+      <div class="container">
+        <p>{{ text_repair_about }}</p>
+        <span class="title-section text-center">{{ text_select_category }}</span>
+        <ul class="list-category-repair">
+          {% for category in categories %}
+              <li class="item-list-category-repair">
+            <a href="index.php?route=repair/category&id={{category.category_id}}" class="block-img"><img src="{{category.image}}" alt="image-phone" class="img-product img-fluid"> </a><a href="remont-2.html" class="name-category-repair"><span class="name">{{category.name}}</span></a></li>
+          {% endfor %}
+        </ul>
+        <button class="btn btn-custom-project" data-toggle="modal" data-target="#Modal-repair">{{text_order_repair}}</button>
+      </div>
+    </div>
+  </section>
+  <section class="section-preference">
+    <div class="container"><span class="title-section text-center p-0 py-lg-3">{{text_why}}</span>
+      <ul class="list-preference">
+        <li><span class="icon icon-gear"></span>
+          <div><span class="title-preference">{{text_original}}</span> <span class="text">{{text_original_details}}</span></div>
+        </li>
+        <li><span class="icon icon-watch"></span>
+          <div><span class="title-preference">{{text_speed}}</span> <span class="text">{{text_speed_details}}</span></div>
+        </li>
+        <li><span class="icon icon-message"></span>
+          <div><span class="title-preference">{{text_reviews}}</span> <span class="text">{{text_reviews_details}}</span></div>
+        </li>
+        <li><span class="icon icon-pay"></span>
+          <div><span class="title-preference">{{text_payment}}</span> <span class="text">{{text_payment_details}}</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="section-delivery">
+    <div class="container wrapper-section-delivery">
+      <div class="block-2"><img src="catalog/view/theme/applejoy/template/html/images/img-delivery.8f6b382b.webp" alt="image" class="img-delivery"></div>
+      <div class="block-1"><span class="fw-700">{{text_delivery}}</span>
+        <p>{{text_delivery_details}}</p>
+        <button class="btn btn-custom-project-2" data-toggle="modal" data-target="#Modal-delivery-nova-poshta">{{text_get_delivery}}</button>
+      </div>
+      <div class="block-3"><span class="fw-700">{{text_courier}}</span>
+        <p>{{text_courier_details}}</p>
+        <button class="btn btn-custom-project-2" data-toggle="modal" data-target="#Modal-delivery">{{text_get_courier}}</button>
+      </div>
+    </div>
+  </section>
+  {{faq}}
+</div>
+{{ footer }}
+{{modal}}
+
+
+

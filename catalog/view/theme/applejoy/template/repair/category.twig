@@ -1,0 +1,58 @@
+{{ header }}
+<div class="main page-repair">
+  <div class="main-page">
+     <nav aria-label="breadcrumb" class="block-breadcrumb">
+        <ol class="breadcrumb container">
+          {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ol>
+     </nav>
+  <h1 class="title-section text-lg-left container">{{ heading_title }}</h1>
+  <section class="section-category">
+            <div class="bg-section-category">
+                <div class="container">
+                    <p>{{ text_repair_about }}</p><span
+                        class="title-section text-center">{{ text_select_category }}</span>
+                    <ul class="nav nav-tabs list-category-repair" id="myTab" role="tablist">
+                         {% for category in categories %}
+                            <li class="nav-item item-list-category-repair" role="presentation"> 
+                                <a id="{{category.name}}-tab" data-toggle="tab" class="nav-link {{category.active}} block-img" data-toggle="tab" href="#{{category.name | replace({' ': ""})}}" role="tab" aria-controls="{{category.name}}" aria-selected="true">
+                                    {{ category.modal ? '<span data-toggle="modal" data-target="#Modal-repair-other">' : ''}}
+                                    <img src="{{category.image}}" alt="image-phone" class="img-product img-fluid"> 
+                                    <span class="name-category-repair">
+                                        <span class="name">{{category.name}}</span>
+                                    </span>
+                                    {{ category.modal ? '</span>' : ''}}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content container" id="myTabContent">
+                {% for category in categories %}
+                <div class="tab-pane fade show {{category.active}}" id="{{category.name | replace({' ': ""})}}" role="tabpanel" aria-labelledby="{{category.name}}-tab">
+                    {% if category.modal != true %}
+                    <div class="section-list-model"><span class="title-section text-center">{{text_select_model}} {{category.name}}</span>
+                        <ul class="list-model">
+                                {% for model in category.models %}
+                                <li><a href="index.php?route=repair/product&id={{model.product_id}}">
+                                    <div class="wrapper-img"><img src="{{model.image}}"
+                                            alt="image-phone" class="img-product img-fluid"></div><span
+                                        class="name-product">{{model.name}}</span>
+                                </a></li>
+                                {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>               
+                {% endfor %}
+            </div>
+            
+        </section>
+        {{faq}}
+</div>
+{{ footer }}
+{{modal}}

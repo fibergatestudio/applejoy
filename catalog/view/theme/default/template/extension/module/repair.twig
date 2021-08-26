@@ -1,0 +1,136 @@
+<!--delivery, repair issue modal-->
+<div class="modal fade modal-issue modal-delivery" id="modal-repair" tabindex="-1" aria-labelledby="repair-ModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="icon-close"></span></button></div>
+            <div class="modal-body">
+                <h5 class="modal-title">{{form_header}}</h5>
+                <span class="small-title"></span>
+                <form class="">
+                <input type="hidden" class="issue" name="issue" value="">
+                <input type="hidden" name="model" value="">
+                <label>
+                <input class="form-control" name="name" placeholder="Ім'я*"></label> 
+                <label><input type="number" name="phone" class="form-control" placeholder="Телефон*"></label> 
+                <button type="submit" class="btn-custom-project">{{text_send}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--repair other modal-->
+
+<div class="modal fade modal-delivery" id="Modal-repair-other" tabindex="-1" aria-labelledby="repair-ModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="icon-close"></span></button></div>
+            <div class="modal-body"><span class="modal-title">{{form_header}}</span> 
+            <span class="small-title">У меня інший Гаджет</span>
+                <form class="">
+                    <div class="row p-0">
+                    <label class="col-lg-6 pr-lg-1"><input class="form-control" name="name" placeholder="Ім'я*"></label> 
+                    <label class="col-lg-6 pl-lg-1"><input type="number" name="phone" class="form-control" placeholder="Телефон*"></label>
+                    </div><label><input class="form-control" name="model" placeholder="Модель пристрою*"></label> 
+                    <label><textarea class="form-control" name="issue" rows="4" placeholder="Опишіть несправність*"></textarea></label>
+                    <button class="btn-custom-project">{{text_send}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--repair other main modal-->
+<div class="modal fade modal-delivery" id="Modal-repair" tabindex="-1" role="dialog"
+   aria-labelledby="repair-ModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+            <div class="modal-header"><button type="button" class="close" data-dismiss="modal"
+                  aria-label="Close"><span aria-hidden="true" class="icon-close"></span></button></div>
+            <div class="modal-body"><span class="modal-title">{{form_header}}</span> <span
+                  class="small-title">Замовити ремонт</span>
+               <form class="">
+               <label><input name="name" class="form-control" placeholder="Ім'я*"></label> 
+               <label><input name="phone" type="number" class="form-control" placeholder="Телефон*"></label> 
+               <label><input name="model" class="form-control" placeholder="Модель пристрою*"></label> 
+               <label><textarea name="issue" class="form-control" rows="4" placeholder="Опишіть несправність*"></textarea></label>
+                <button class="btn-custom-project">{{text_send}}</button></form>
+            </div>
+      </div>
+   </div>
+</div>
+
+<!--nova poshta modal-->
+<div class="modal fade modal-delivery" id="Modal-delivery-nova-poshta" tabindex="-1" role="dialog" aria-labelledby="delivery-nova-poshta-ModalLabel" style="display: none;" aria-modal="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="icon-close"></span></button></div>
+            <div class="modal-body"><span class="modal-title">{{form_header}}</span> <span class="small-title">{{text_delivery}}</span>
+                <form class="">
+                <input type="hidden" class="issue" name="issue" value="{{text_delivery}}">
+                <label><input name="name" class="form-control" placeholder="Ім'я*"></label> 
+                <label><input name="phone" type="number" class="form-control" placeholder="Телефон*"></label> 
+                <button class="btn-custom-project">{{text_send}}</button></form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-delivery" id="Modal-delivery" tabindex="-1" aria-labelledby="delivery-ModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="icon-close"></span></button></div>
+                <div class="modal-body"><span class="modal-title">{{form_header}}</span> <span class="small-title">{{text_courier}}</span>
+                    <form class="">
+                    <input type="hidden" class="issue" name="issue" value="{{text_courier}}">
+                    <label><input name="name" class="form-control" placeholder="Ім'я*"></label> 
+                    <label><input name="phone" type="number" class="form-control" placeholder="Телефон*"></label> 
+                    <button class="btn-custom-project">{{text_send}}</button></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    //update 
+    const modal_issue = document.querySelector('.modal.modal-issue');
+
+    const btn = document.querySelectorAll('.card-body li button');
+
+    btn.forEach(function(element) {
+        element.onclick = function(){
+            text = element.parentElement.previousElementSibling.children[0].textContent;
+
+            modal_issue.querySelector('.issue').value = text;
+
+            modal_issue.querySelector('.small-title').innerHTML = text;
+        };
+    })
+
+	$('.modal form').submit(function (e) {
+		if ($(this).attr('id') == 'no_ajax') {
+			return;
+		}
+        
+		var json;
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: 'index.php?route=extension/module/repair/addOrder',
+			data: new FormData(this),
+			contentType: false,
+			cache: false,
+			processData: false,
+			success: function (result) {
+                if(result.success){
+                    $('.modal.show').click();
+                }
+			},
+		});
+	});
+
+
+
+</script>
