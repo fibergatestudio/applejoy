@@ -137,7 +137,7 @@ class ControllerMarketplaceModification extends Controller {
 				if (empty($xml)){
 					continue;
 				}
-				
+
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
@@ -577,11 +577,11 @@ class ControllerMarketplaceModification extends Controller {
 
 	public function clearlog() {
 		$this->load->language('marketplace/modification');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/modification');
-		
+
 		if ($this->validate()) {
 			$handle = fopen(DIR_LOGS . 'ocmod.log', 'w+');
 
@@ -761,7 +761,7 @@ class ControllerMarketplaceModification extends Controller {
 		$data['clear_log'] = $this->url->link('marketplace/modification/clearlog', 'user_token=' . $this->session->data['user_token'], true);
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_left'] = $this->load->controller('common/column_menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('marketplace/modification', $data));

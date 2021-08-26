@@ -1,0 +1,151 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+
+
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+
+        </div>
+      <h1>{{ heading_blog_create_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i>{{ text_edit_post }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action_edit }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <input type="hidden" name="id" value="{{ vacancy.vacancy_id }}" readonly="readonly">
+          <input type="hidden" name="description" value="test description">
+          <input type="hidden" name="title" value="test title">
+          <div class="form-group">
+            {% for lang in language_vacancy %}
+            <label class="col-sm-2 control-label" for="input-status">
+            <img src="language/{{ lang.code }}/{{ lang.code }}.png"> {{ text_title }}:
+          </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="title{{ lang.language_id }}-{{ lang.vacancy_translate_id }}" placeholder="Title" value="{{ lang.vacancy_title }}" required="required">
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="form-group">
+            {% for lang in language_vacancy %}
+            <label class="col-sm-2 control-label" for="input-status">
+            <img src="language/{{ lang.code }}/{{ lang.code }}.png"> {{ short_description }}:
+          </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="short_desc{{ lang.language_id }}-{{ lang.vacancy_translate_id }}" placeholder="Адреса, метро" value="{{ lang.vacancy_short_description }}" required="required">
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ price_text }}</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="price" placeholder="{{ plsholder_price }}" value="{{ vacancy.price }}" required="required">
+            </div>
+          </div>
+
+            <div class="form-group">
+              {% for lang in language_vacancy %}
+
+              <label class="col-sm-2 control-label" for="description{{ lang.code }}">
+                <img src="language/{{ lang.code }}/{{ lang.code }}.png"> {{ text_description }}:
+              </label>
+              <div class="col-sm-10">
+              <textarea class="form-control" data-toggle="summernote" name="description{{ lang.language_id }}-{{ lang.vacancy_translate_id }}" rows="5" id="description{{ lang.code }}" placeholder="Текст" required="required">
+                {{ lang.vacancy_description }}
+              </textarea>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">{{ featured_image }}</label>
+              <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                <input type="hidden" name="image" value="{{ vacancy.vacancy_image }}" id="input-image" />
+              </div>
+            </div>
+            <!-- new additon meta title -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ meta_title }}</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="meta_title" placeholder="Enter Meta Title" value="{{ vacancy.meta_title }}" required="required">
+            </div>
+          </div>
+          <!-- new additon meta description -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ meta_description }}</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="meta_description" placeholder="Enter Meta Description" value="{{ vacancy.meta_description }}" required="required">
+            </div>
+          </div>
+          <!-- new additon meta keywords -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ meta_keywords }}</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="meta_keywords" placeholder="Enter Meta Keywords" value="{{ vacancy.meta_keywords }}" required="required">
+            </div>
+          </div>
+          <!-- new additon meta slug -->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ vacancy_slug }}</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="slug" placeholder="Enter Post's Slug" value="{{ vacancy.slug }}" required="required">
+            </div>
+          </div>
+
+          <div class="form-group">
+
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" class="form-control">
+                {% if vacancy.status == "Published" %}
+                  <option value="Published" selected="selected">{{ text_publish }}</option>
+                  {% else %}
+                  <option value="Published">{{ text_publish }}</option>
+                  {% endif %}
+                  {% if vacancy.status == "Draft" %}
+                  <option value="Draft" selected="selected">{{ text_draft }}</option>
+                  {% else %}
+                  <option value="Draft">{{ text_draft }}</option>
+                  {% endif %}
+              </select>
+            </div>
+          </div>
+
+           <div class="form-group">
+
+            <label class="col-sm-2 control-label" for="input-status"></label>
+            <div class="col-sm-10">
+              <input type="submit" class="btn btn-info" value="{{ button_save }}" >
+            </div>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+<script src="view/javascript/tags/js/bootstrap-tags.js" type="text/javascript"></script>
+<link href="view/javascript/tags/css/bootstrap-tags.css" type="text/css" rel="stylesheet" media="screen" />
+
+<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+
+{{ footer }}

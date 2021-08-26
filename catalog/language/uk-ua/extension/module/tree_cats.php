@@ -8,6 +8,6 @@ $_["text_registration"] = "Реєстрація";
 $_["picking"] = "Обране";
 $_["repairs"] = "Ремонт";
 $_["text_blog"] = "Блог";
-$_["text_vacansion"] = "Вакансиії";
+$_["text_vacansion"] = "Вакансії";
 $_["text_review"] = "Відгуки";
 $_['text_contact']      = 'Контакти';
