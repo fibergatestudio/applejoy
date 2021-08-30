@@ -380,6 +380,14 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
+			$data['menus'][] = array(
+				'id'       => 'menu-vacancy',
+				'icon'	   => 'fa-television',
+				'name'	   => $this->language->get('Вакансии'),
+				'href'     => $this->url->link('extension/module/addvacancy/lists', 'user_token=' . $this->session->data['user_token'], true),
+				'children' => $design
+			);
+
 			// System
 			$system = array();
 
