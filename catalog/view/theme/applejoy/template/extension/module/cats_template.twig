@@ -147,7 +147,18 @@
             <ul class="d-none d-lg-flex menu-contact">
                <li class="icon icon-clockwise">{{ open }}</li>
                <li class="icon icon-phone"><a href="#">{{ telephone }}</a></li>
+               {% if logged %}
+               <li class="dropdown"><a class="dropdown-item lang icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon icon-user"></span></a>
+                 <div class="dropdown-menu">
+                   <ul>
+                     <li><a class="dropdown-item" href="{{ href_account }}">{{ text_account }}</a></li>
+                     <li><a class="dropdown-item" href="{{ href_logout }}">{{ text_logout }}</a></li>
+                   </ul>
+                 </div>
+               </li>
+               {% else %}
                <li class="icon icon-user" data-toggle="modal" data-target="#Modal-login"></li>
+               {% endif  %}
                <li class="icon icon-instagram-header"><a href="#"></a></li>
                {{ language }}
             </ul>

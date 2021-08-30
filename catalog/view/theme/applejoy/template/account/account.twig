@@ -1,0 +1,508 @@
+{{ header }}
+<div class="main-page">
+  <nav aria-label="breadcrumb" class="container block-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Головна сторіка</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Мій кабінет</li>
+    </ol>
+  </nav>
+  <section class="section-admin">
+    <div class="container">
+      <div class="tab-top-product">
+        <h1 class="title-section d-md-none">Мій профіль</h1>
+        <div class="tab-menu">
+          <ul class="nav nav-tabs" id="myTab-top" role="tablist">
+            <li><span class="title-section d-none d-md-flex">Мій профіль</span></li>
+            <li class="nav-item" role="presentation"><a class="nav-link active" id="personal-info-tab" data-toggle="tab" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">Особисті дані</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false">Мої замовлення</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" id="favorite-tab" data-toggle="tab" href="#favorite" role="tab" aria-controls="favorite" aria-selected="false">Обране</a></li>
+          </ul>
+        </div>
+        <div class="tab-content" id="myTabContent-top">
+          <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+            <form class="form-personal-info"><span class="title-form">Редагування особистих даних</span>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">Ваше Ім'я</label>
+                <div class="col-sm-7 col-md-8">
+                  <input class="form-control" placeholder="Ваше ім'я*">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">Ваше Прізвище</label>
+                <div class="col-sm-7 col-md-8">
+                  <input class="form-control" placeholder="Ваше прізвище*">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">Ваш телефон</label>
+                <div class="col-sm-7 col-md-8"><span class="icon-error"></span>
+                  <input class="form-control border-error" placeholder="Ваш телефон*">
+                </div>
+                <div class="block-error col-"><span class="text-error">Телефон має містити 10 цифр</span></div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">E-mail</label>
+                <div class="col-sm-7 col-md-8"><span class="icon-error"></span>
+                  <input type="email" class="form-control border-error" aria-describedby="Ваше E-mail*" placeholder="Ваше E-mail*">
+                </div>
+                <div class="block-error col-"><span class="text-error">Невірний E-mail</span></div>
+              </div><span class="title-form">Адреса доставки</span>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">Місто</label>
+                <div class="col-sm-7 col-md-8">
+                  <input class="form-control" placeholder="Місто*">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">Адреса</label>
+                <div class="col-sm-7 col-md-8">
+                  <input class="form-control" placeholder="Адреса*">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">№ Відділення (Нова Пошта)</label>
+                <div class="col-sm-7 col-md-8">
+                  <input class="form-control" placeholder="№ Відділення">
+                </div>
+              </div><span class="title-form">Змінити пароль</span>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-form-label">Поточний пароль</label>
+                <div class="col-sm-7 col-md-8">
+                  <input type="password" class="form-control" placeholder="********">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-xl-4 col-form-label">Новий пароль</label>
+                <div class="col-sm-7 col-md-8 col-xl-8">
+                  <input type="password" class="form-control" placeholder="********">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-5 col-md-4 col-xl-4 col-form-label">Повторити новий пароль</label>
+                <div class="col-sm-7 col-md-8 col-xl-8">
+                  <input type="password" class="form-control" placeholder="********">
+                </div>
+                <div class="block-error col-"><span class="text-error">Невірне підтвердження пароля</span></div>
+              </div>
+              <button class="btn-custom-project">Зберегти</button>
+            </form>
+          </div>
+          <div class="tab-pane fade tab-admin-orders" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+            {% for order in orders %}
+            <div id="accordion-order-{{ order.order_id }}">
+              <div class="card card-order">
+                <div class="card-header" id="heading{{ order.order_id }}">
+                  <div class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ order.order_id }}" aria-expanded="false" aria-controls="collapse{{ order.order_id }}">
+                      <span class="block-header-order">
+                        <span class="number-status-order">
+                          <span class="number-order">№ {{ order.order_id }} от {{ order.date_added }}</span> <span class="status-order">{{ order.status }}</span> </span><span class="total-number"><span>Загалом товарів : <span class="number-order">{{ order.products|length }}</span></span>
+                      </span><span class="total-sum"><span>Сума:<span class="sum fw-500">99999.00</span>грн.</span>
+                      </span>
+                      </span><span class="icon icon-arrow-down"></span></button>
+                  </div>
+                </div>
+                <div id="collapse{{ order.order_id }}" class="collapse show" aria-labelledby="heading{{ order.order_id }}" data-parent="#accordion-order">
+                  <div class="card-body">
+                    <div class="content-card-body">
+                      <div class="info-order"><span class="title fw-500">Інформація про поштове замовлення</span>
+                        <ul class="list-info-order">
+                          <li><span>Ім'я та прізвище</span><span>{{ order.name }}</span></li>
+                          <li><span>E-mail</span><span>{{ order.email }}</span></li>
+                          <li><span>Телефон</span><span>{{ order.telephone }}</span></li>
+                          <li><span>Місто</span><span>{{ order.city }}</span></li>
+                          <li><span>№ відділення</span><span>№ {{ order.postcode }} (Нова Пошта)</span></li>
+                          <li><span>Оплата</span><span>Оплата при отриманні відділені Нової Пошти</span></li>
+                        </ul>
+                      </div>
+                      <div class="order">
+                        <ul class="list-card-product">
+                          {% for product in order.products %}
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="{{ product.thumb }}" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">{{ product.name }}</span> <span class="article">Артікул: {{ product.sku }}</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">{{ product.total }}</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">{{ product.quantity }}</span></div>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="total">
+                      <div class="container block-total">
+                        <div class="block-number"><span>Загалом товарів : </span><span class="number">{{ order.total_products }}</span></div>
+                        <div class="block-sum"><span class="">Сума:</span> <span class="total-sum">{{ order.total }}</span> <span>грн.</span></div>
+                        <button class="btn-custom-project">Повторити замовлення</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- <div id="accordion-order-2">
+              <div class="card card-order">
+                <div class="card-header" id="headingOne-2">
+                  <div class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne-2" aria-expanded="false" aria-controls="collapseOne-2"><span class="block-header-order"><span class="number-status-order"><span class="number-order">№ 439 535 953 от 07.06.2020</span> <span class="status-order">Чекає виконання</span> </span><span class="total-number"><span>Загалом товарів : <span class="number-order">4</span></span>
+                      </span><span class="total-sum"><span>Сума:<span class="sum fw-500">99999.00</span>грн.</span>
+                      </span>
+                      </span><span class="icon icon-arrow-down"></span></button>
+                  </div>
+                </div>
+                <div id="collapseOne-2" class="collapse show" aria-labelledby="headingOne-2" data-parent="#accordion-order-2">
+                  <div class="card-body">
+                    <div class="content-card-body">
+                      <div class="info-order"><span class="title fw-500">Інформація про поштове замовлення</span>
+                        <ul class="list-info-order">
+                          <li><span>Ім'я та прізвище</span><span>Іванов Іван</span></li>
+                          <li><span>E-mail</span><span>mail@gmail.com</span></li>
+                          <li><span>Телефон</span><span>(098) 123 45 68</span></li>
+                          <li><span>Місто</span><span>Повна назва міста</span></li>
+                          <li><span>№ відділення</span><span>№ Відділення (Нова Пошта)</span></li>
+                          <li><span>Оплата</span><span>Оплата на сайті за допомогою LiqPay. <span class="fw-400 color-purple">Сплачено</span></span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="order">
+                        <ul class="list-card-product">
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="./images/product-card.e05c1b18.webp" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">Apple iPhone 12 128GB Black (MGJA3) UA</span> <span class="article">Артікул: 01234567891011</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">19 999</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">1</span></div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="total">
+                      <div class="container block-total">
+                        <div class="block-number"><span>Загалом товарів : </span><span class="number">1</span></div>
+                        <div class="block-sum"><span class="">Сума:</span> <span class="total-sum">19 999.00</span> <span>грн.</span></div>
+                        <button class="btn-custom-project">Повторити замовлення</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="accordion-order-3">
+              <div class="card card-order">
+                <div class="card-header" id="headingOne-3">
+                  <div class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne-3" aria-expanded="false" aria-controls="collapseOne-3"><span class="block-header-order"><span class="number-status-order"><span class="number-order">№ 439 535 953 от 07.06.2020</span> <span class="status-order">Чекає виконання</span> </span><span class="total-number"><span>Загалом товарів : <span class="number-order">4</span></span>
+                      </span><span class="total-sum"><span>Сума:<span class="sum fw-500">99999.00</span>грн.</span>
+                      </span>
+                      </span><span class="icon icon-arrow-down"></span></button>
+                  </div>
+                </div>
+                <div id="collapseOne-3" class="collapse show" aria-labelledby="headingOne-3" data-parent="#accordion-order-3">
+                  <div class="card-body">
+                    <div class="content-card-body">
+                      <div class="info-order"><span class="title fw-500">Інформація про кур'єрське замовлення</span>
+                        <ul class="list-info-order">
+                          <li><span>Ім'я та прізвище</span><span>Іванов Іван</span></li>
+                          <li><span>E-mail</span><span>mail@gmail.com</span></li>
+                          <li><span>Телефон</span><span>(098) 123 45 68</span></li>
+                          <li><span>Місто</span><span>Місто</span></li>
+                          <li><span>Адреса</span><span>вул. Вулиця., буд. 7/45</span></li>
+                          <li><span>Оплата</span><span>Оплата на сайті за допомогою LiqPay. <span class="fw-400 color-purple">Сплачено</span></span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="order">
+                        <ul class="list-card-product">
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="./images/product-card.e05c1b18.webp" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">Apple iPhone 12 128GB Black (MGJA3) UA</span> <span class="article">Артікул: 01234567891011</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">19 999</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">1</span></div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="total">
+                      <div class="container block-total">
+                        <div class="block-number"><span>Загалом товарів : </span><span class="number">1</span></div>
+                        <div class="block-sum"><span class="">Сума:</span> <span class="total-sum">19 999.00</span> <span>грн.</span></div>
+                        <button class="btn-custom-project">Повторити замовлення</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="accordion-order-4">
+              <div class="card card-order">
+                <div class="card-header" id="headingOne-4">
+                  <div class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne-4" aria-expanded="false" aria-controls="collapseOne-4"><span class="block-header-order"><span class="number-status-order"><span class="number-order">№ 439 535 953 от 07.06.2020</span> <span class="status-order">Чекає виконання</span> </span><span class="total-number"><span>Загалом товарів : <span class="number-order">4</span></span>
+                      </span><span class="total-sum"><span>Сума:<span class="sum fw-500">99999.00</span>грн.</span>
+                      </span>
+                      </span><span class="icon icon-arrow-down"></span></button>
+                  </div>
+                </div>
+                <div id="collapseOne-4" class="collapse show" aria-labelledby="headingOne-4" data-parent="#accordion-order-4">
+                  <div class="card-body">
+                    <div class="content-card-body">
+                      <div class="info-order"><span class="title fw-500">Інформація про замовлення на самовивіз</span>
+                        <ul class="list-info-order">
+                          <li><span>Ім'я та прізвище</span><span>Іванов Іван</span></li>
+                          <li><span>E-mail</span><span>mail@gmail.com</span></li>
+                          <li><span>Телефон</span><span>(098) 123 45 68</span></li>
+                          <li><span>Оплата</span><span>Оплата на сайті за допомогою LiqPay. <span class="fw-400 color-purple">Сплачено</span></span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="order">
+                        <ul class="list-card-product">
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="./images/product-card.e05c1b18.webp" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">Apple iPhone 12 128GB Black (MGJA3) UA</span> <span class="article">Артікул: 01234567891011</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">19 999</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">1</span></div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="total">
+                      <div class="container block-total">
+                        <div class="block-number"><span>Загалом товарів : </span><span class="number">1</span></div>
+                        <div class="block-sum"><span class="">Сума:</span> <span class="total-sum">19 999.00</span> <span>грн.</span></div>
+                        <button class="btn-custom-project">Повторити замовлення</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="accordion-order-5">
+              <div class="card card-order">
+                <div class="card-header" id="headingOne-5">
+                  <div class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne-5" aria-expanded="false" aria-controls="collapseOne-5"><span class="block-header-order"><span class="number-status-order"><span class="number-order">№ 439 535 953 от 07.06.2020</span> <span class="status-order-done">Виконанно</span> </span><span class="total-number"><span>Загалом товарів : <span class="number-order">4</span></span>
+                      </span><span class="total-sum"><span>Сума:<span class="sum fw-500">99999.00</span>грн.</span>
+                      </span>
+                      </span><span class="icon icon-arrow-down"></span></button>
+                  </div>
+                </div>
+                <div id="collapseOne-5" class="collapse show" aria-labelledby="headingOne-5" data-parent="#accordion-order-5">
+                  <div class="card-body">
+                    <div class="content-card-body">
+                      <div class="info-order"><span class="title fw-500">Інформація про замовлення на самовивіз</span>
+                        <ul class="list-info-order">
+                          <li><span>Ім'я та прізвище</span><span>Іванов Іван</span></li>
+                          <li><span>E-mail</span><span>mail@gmail.com</span></li>
+                          <li><span>Телефон</span><span>(098) 123 45 68</span></li>
+                          <li><span>Оплата</span><span>Оплата при отриманні(м. Київ вул. Хрещатик б. 44)</span></li>
+                        </ul>
+                      </div>
+                      <div class="order">
+                        <ul class="list-card-product">
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="./images/product-card.e05c1b18.webp" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">Apple iPhone 12 128GB Black (MGJA3) UA</span> <span class="article">Артікул: 01234567891011</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">19 999</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">1</span></div>
+                          </li>
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="./images/product-card.e05c1b18.webp" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">Apple iPhone 12 128GB Black (MGJA3) UA</span> <span class="article">Артікул: 01234567891011</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">19 999</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">1</span></div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="total">
+                      <div class="container block-total">
+                        <div class="block-number"><span>Загалом товарів : </span><span class="number">1</span></div>
+                        <div class="block-sum"><span class="">Сума:</span> <span class="total-sum">40000.00</span> <span>грн.</span></div>
+                        <button class="btn-custom-project">Повторити замовлення</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="accordion-order-6">
+              <div class="card card-order">
+                <div class="card-header" id="headingOne-6">
+                  <div class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne-6" aria-expanded="false" aria-controls="collapseOne-6"><span class="block-header-order"><span class="number-status-order"><span class="number-order">№ 439 535 953 от 07.06.2020</span> <span class="status-order-done">Виконанно</span> </span><span class="total-number"><span>Загалом товарів : <span class="number-order">4</span></span>
+                      </span><span class="total-sum"><span>Сума:<span class="sum fw-500">99999.00</span>грн.</span>
+                      </span>
+                      </span><span class="icon icon-arrow-down"></span></button>
+                  </div>
+                </div>
+                <div id="collapseOne-6" class="collapsing" aria-labelledby="headingOne-6" data-parent="#accordion-order-6">
+                  <div class="card-body">
+                    <div class="content-card-body">
+                      <div class="info-order"><span class="title fw-500">Інформація про замовлення на самовивіз</span>
+                        <ul class="list-info-order">
+                          <li><span>Ім'я та прізвище</span><span>Іванов Іван</span></li>
+                          <li><span>E-mail</span><span>mail@gmail.com</span></li>
+                          <li><span>Телефон</span><span>(098) 123 45 68</span></li>
+                          <li><span>Оплата</span><span>Оплата при отриманні(м. Київ вул. Хрещатик б. 44)</span></li>
+                        </ul>
+                      </div>
+                      <div class="order">
+                        <ul class="list-card-product">
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="./images/product-card.e05c1b18.webp" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">Apple iPhone 12 128GB Black (MGJA3) UA</span> <span class="article">Артікул: 01234567891011</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">19 999</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">1</span></div>
+                          </li>
+                          <li class="item-card-product item-card-product-grid">
+                            <div class="block-img"><img src="./images/product-card.e05c1b18.webp" alt="photo-product" class="img img-fluid"></div>
+                            <div class="block-title-product"><span class="title-product">Apple iPhone 12 128GB Black (MGJA3) UA</span> <span class="article">Артікул: 01234567891011</span></div>
+                            <div class="block-summa"><span class="name-line">Сума (грн.)</span>
+                              <div class="block-sum"><span class="sum fw-500">19 999</span> <span class="currency fw-500">грн.</span></div>
+                            </div>
+                            <div class="block-add-product"><span class="name-line">Кількість (шт)</span> <span class="number fw-500">1</span></div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="total">
+                      <div class="container block-total">
+                        <div class="block-number"><span>Загалом товарів : </span><span class="number">1</span></div>
+                        <div class="block-sum"><span class="">Сума:</span> <span class="total-sum">40000.00</span> <span>грн.</span></div>
+                        <button class="btn-custom-project">Повторити замовлення</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="tab-pane fade mt-3" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">
+            <ul class="list-favorite-product">
+              <li class="item-product">
+                <div class="wrapper-item-product">
+                  <div class="wrapper-img-product">
+                    <a href="#" class="block-img"><img src="./images/item-product.b007d20d.webp" alt="image-phone" class="img-product img-fluid"></a>
+                    <div class="icon icon-like active"></div>
+                  </div>
+                  <div><a href="#" class="name-product">iPhone 7 128GB black mate</a></div>
+                  <div class="item-product-bottom-wrapper">
+                    <div class="block-price"><span>Ціна</span>
+                      <div class="old-price"><span>750$</span><span>20 250 ₴</span></div>
+                      <div class="new-price"><span>719 $</span><span>19 999 ₴</span></div>
+                    </div>
+                    <div class="block-bottom-buy">
+                      <button class="btn-buy-product">Купити</button> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="item-product">
+                <div class="wrapper-item-product">
+                  <div class="wrapper-img-product">
+                    <a href="#" class="block-img"><img src="./images/item-product.b007d20d.webp" alt="image-phone" class="img-product img-fluid"></a>
+                    <div class="icon icon-like active"></div>
+                  </div>
+                  <div><a href="#" class="name-product">iPhone 7 128GB black mate</a></div>
+                  <div class="item-product-bottom-wrapper">
+                    <div class="block-price"><span>Ціна</span>
+                      <div class="old-price"><span>750$</span><span>20 250 ₴</span></div>
+                      <div class="new-price"><span>719 $</span><span>19 999 ₴</span></div>
+                    </div>
+                    <div class="block-bottom-buy">
+                      <button class="btn-buy-product">Купити</button> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="item-product">
+                <div class="wrapper-item-product">
+                  <div class="wrapper-img-product">
+                    <a href="https://google.com" class="block-img"><img src="./images/item-product.b007d20d.webp" alt="image-phone" class="img-product img-fluid"></a>
+                    <div class="icon icon-like active"></div>
+                  </div>
+                  <div><a href="#" class="name-product">iPhone 7 128GB black mate</a></div>
+                  <div class="item-product-bottom-wrapper">
+                    <button class="btn-info-me-in-stock">Повідомити, коли з'явиться</button>
+                  </div>
+                </div>
+              </li>
+              <li class="item-product">
+                <div class="wrapper-item-product">
+                  <div class="wrapper-img-product">
+                    <a href="#" class="block-img"><img src="./images/item-product.b007d20d.webp" alt="image-phone" class="img-product img-fluid"></a>
+                    <div class="icon icon-like active"></div>
+                  </div>
+                  <div><a href="#" class="name-product">iPhone 7 128GB black mate</a></div>
+                  <div class="item-product-bottom-wrapper">
+                    <div class="block-price"><span>Ціна</span>
+                      <div class="old-price"><span>750$</span><span>20 250 ₴</span></div>
+                      <div class="new-price"><span>719 $</span><span>19 999 ₴</span></div>
+                    </div>
+                    <div class="block-bottom-buy">
+                      <button class="btn-buy-product">Купити</button> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="item-product">
+                <div class="wrapper-item-product">
+                  <div class="wrapper-img-product">
+                    <a href="#" class="block-img"><img src="./images/item-product.b007d20d.webp" alt="image-phone" class="img-product img-fluid"></a>
+                    <div class="icon icon-like active"></div>
+                  </div>
+                  <div><a href="#" class="name-product">iPhone 7 128GB black mate</a></div>
+                  <div class="item-product-bottom-wrapper">
+                    <div class="block-price"><span>Ціна</span>
+                      <div class="new-price"><span>719 $</span><span>19 999 ₴</span></div>
+                    </div>
+                    <div class="block-bottom-buy">
+                      <button class="btn-buy-product">Купити</button> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="item-product">
+                <div class="wrapper-item-product">
+                  <div class="wrapper-img-product">
+                    <a href="#" class="block-img"><img src="./images/item-product.b007d20d.webp" alt="image-phone" class="img-product img-fluid"></a>
+                    <div class="icon icon-like active"></div>
+                  </div>
+                  <div><a href="#" class="name-product">iPhone 7 128GB black mate</a></div>
+                  <div class="item-product-bottom-wrapper">
+                    <div class="block-price"><span>Ціна</span>
+                      <div class="new-price"><span>719 $</span><span>19 999 ₴</span></div>
+                    </div>
+                    <div class="block-bottom-buy">
+                      <button class="btn-buy-product">Купити</button> <a href="#" class="btn-buy-one-click">Купити в 1 клік</a></div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link not-active" href="#">Назад</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">25</a></li>
+                <li class="page-item"><a class="page-link" href="#">Вперед</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{{ footer }}
