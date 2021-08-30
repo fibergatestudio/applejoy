@@ -1,0 +1,74 @@
+{{ header }}
+<div id="common-success" class="container">
+  <nav aria-label="breadcrumb" class="container block-breadcrumb">
+    <ol class="breadcrumb container">
+      {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ol>
+  </nav>
+  <section class="section-cart">
+    <div class="container">
+      <h1 class="title-section">{{ heading_title }}</h1>
+      {{ text_message }}
+      <div class="modal-bottom">
+        <a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a>
+      </div>
+      {{ content_bottom }}
+    </div>
+  </section>
+</div>
+{% if logout is defined %}
+<!-- Modal logout -->
+<button class="btn btn-secondary w-50 m-5 modal-button" data-toggle="modal" data-target="#Modal-logout-done">{{ order_is_placed }}</button>
+<div class="modal fade" id="Modal-logout-done" tabindex="-1" role="dialog" aria-labelledby="order-done-ModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="icon-close"></span></button></div>
+         <div class="modal-body">
+            <h5 class="modal-title">{{ heading_title }}</h5>
+            <span class="text-thank fw-500">{{ text_message }}</span> <span class="text-thank">{{ text_msg_admin }}</span>
+         </div>
+         <div class="modal-bottom">
+           <a href="{{ continue }}"><button class="btn-custom-project-2 continue-buy">{{ button_continue }}</button>
+           </a>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+$(document).ready(function() {
+    $('button[data-target="#Modal-logout-done"]').click();
+  });
+</script>
+
+{% endif %}
+
+{% if signup is defined %}
+
+<button class="btn btn-secondary w-50 m-5 modal-button" data-toggle="modal" data-target="#Modal-signup-done">{{ order_is_placed }}</button>
+<div class="modal fade" id="Modal-signup-done" tabindex="-1" role="dialog" aria-labelledby="order-done-ModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="icon-close"></span></button></div>
+         <div class="modal-body">
+            <h5 class="modal-title">{{ heading_title }}</h5>
+            <span class="text-thank fw-500">{{ text_message }}</span> <span class="text-thank">{{ text_msg_admin }}</span>
+         </div>
+         <div class="modal-bottom">
+           <a href="{{ continue }}"><button class="btn-custom-project-2 continue-buy">{{ button_continue }}</button>
+           </a>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+$(document).ready(function() {
+    $('button[data-target="#Modal-signup-done"]').click();
+  });
+</script>
+
+
+{% endif %}
+
+{{ footer }}

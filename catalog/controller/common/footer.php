@@ -75,6 +75,8 @@ class ControllerCommonFooter extends Controller {
 		}
 
 		$data['home'] = $this->url->link('common/home');
+		$data['link_register'] = $this->url->link('account/register');
+		$data['link_login'] = $this->url->link('account/login');
 
 		$data['scripts'] = $this->document->getScripts('footer');
 		$data['styles'] = $this->document->getStyles('footer');
