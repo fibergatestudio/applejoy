@@ -65,13 +65,19 @@ class ControllerExtensionModuleTreeCats extends Controller {
 		$data['text_blog'] = $this->language->get('text_blog');
 		$data['text_vacansion'] = $this->language->get('text_vacansion');
 		$data['text_review'] = $this->language->get('text_review');
+		$data['logged'] = $this->customer->isLogged();
+		$data['text_logout'] = $this->language->get('text_logout');
+		$data['href_logout'] = $this->url->link('account/logout');
+		$data['text_account'] = $this->language->get('text_account');
+		$data['href_account'] = $this->url->link('account/account');
+
 
 		$data['telephone'] = nl2br($this->config->get('config_telephone'));
 		$data["tel_link"] = preg_replace('/[^0-9]/', '', nl2br($this->config->get('config_telephone')));
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['vacancies_href'] = $this->url->link('custompage/vacancies');
 		$data['repairs_href'] = $this->url->link('repair/repair');
-		$data['blog_href'] = $this->url->link('extension/blog/blog_list');//$this->url->link('custompage/blog');
+		$data['blog_href'] = $this->url->link('extension/blog/blog_list');
 
 		return $this->load->view('extension/module/cats_template', $data);
 

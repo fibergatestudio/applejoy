@@ -215,14 +215,33 @@
                   <span>{{ text_login_socials }}:</span>
                   <div class="group-soc"><a href="#" class="btn-custom-project-2 icon-google-modal"></a> <a href="#" class="btn-custom-project facebook-white"></a></div>
                   <span class="block-info"><span class="mx-2">{{ word_or }}</span></span>
-                  <form class="form-login">
-                     <label><input class="form-control" placeholder="{{ your_first_name }}*"></label>
-                     <label><input class="form-control" placeholder="{{ your_name }}*"></label>
-                     <label><input type="email" class="form-control" placeholder="E-mail*"></label> <label><input class="form-control" placeholder="{{ your_telephone }}*"></label>
-                     <span class="text-info-custom">{{ validate_passwd }}</span> <label><input class="form-control" placeholder="{{ text_passwd }}*"></label> <label><input class="form-control" placeholder="{{ repeat_passwd }}"></label>
-                     <div class="form-check custom-radios"><input class="form-check-input" type="checkbox" value="" id="yes-regis"> <label class="form-check-label" for="yes-regis"><span class="remind-password"><span><span>{{ i_agree_on }} </span><a href="#" class="link-yes">{{ personal_data_processing }} *</a>
+                  <form action="{{ link_register }}" method="post" enctype="multipart/form-data" class="form-login">
+                     <label>
+                       <input type="text" name="firstname" class="form-control" placeholder="{{ your_first_name }}*">
+                     </label>
+                     <label>
+                       <input type="text" name="lastname" class="form-control" placeholder="{{ your_name }}*">
+                     </label>
+                     <label>
+                       <input type="email" name="email" class="form-control" placeholder="E-mail*">
+                     </label>
+                     <label>
+                       <input type="tel" name="telephone" class="form-control" placeholder="{{ your_telephone }}*">
+                     </label>
+                     <span class="text-info-custom">{{ validate_passwd }}</span>
+                     <label>
+                       <input type="password" name="password" class="form-control" placeholder="{{ text_passwd }}*">
+                     </label>
+                       <label>
+                         <input type="password" name="confirm" class="form-control" placeholder="{{ repeat_passwd }}">
+                       </label>
+                     <div class="form-check custom-radios">
+                       <input class="form-check-input" type="checkbox"  name="agree" value="1" id="yes-regis">
+                       <label class="form-check-label" for="yes-regis">
+                         <span class="remind-password"><span><span>{{ i_agree_on }} </span>
+                         <a href="#" class="link-yes">{{ personal_data_processing }} *</a>
                      </span><a href="#" class="link">{{ forgot_passwd }}</a></span></label></div>
-                     <button class="btn-custom-project main-btn">{{ go_to_registration }}</button> <span>{{ have_account }} </span><a href="#" class="link">{{ text_login }}</a>
+                     <button type="submit" class="btn-custom-project main-btn">{{ go_to_registration }}</button> <span>{{ have_account }} </span><a href="#" class="link">{{ text_login }}</a>
                   </form>
                </div>
                <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
@@ -230,8 +249,11 @@
                   <span>{{ text_login_socials }}:</span>
                   <div class="group-soc"><a href="#" class="btn-custom-project-2 icon-google-modal"></a> <a href="#" class="btn-custom-project facebook-white"></a></div>
                   <span class="block-info"><span class="mx-2">{{ word_or }}</span></span>
-                  <form class="form-login">
-                     <label><input type="password" class="form-control" placeholder="{{ your_login }}*"></label> <label><input class="form-control" placeholder="{{ text_passwd }}*"></label>
+                  <form action="{{ link_login }}" method="post" class="form-login">
+                     <label><input type="email" name="email" class="form-control" placeholder="{{ your_login }}*"></label>
+                     <label>
+                       <input  type="password" name="password" type="password" class="form-control" placeholder="{{ text_passwd }}*">
+                     </label>
                      <div class="form-check custom-radios"><input class="form-check-input" type="checkbox" value="" id="yes"> <label class="form-check-label" for="yes"><span class="remind-password"><span><span>{{ i_agree_on }} </span><a href="#" class="link-yes">{{ personal_data_processing }} *</a> </span>
                        <a href="#" class="link">{{ forgot_passwd }}</a></span></label></div>
                      <button class="btn-custom-project main-btn">{{ text_login }}</button> <span>{{ have_not_account }} </span><a href="#" class="link">{{ text_registration }}</a>

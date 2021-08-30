@@ -1,5 +1,5 @@
 <?php
-class ControllerAccountSuccess extends Controller {
+class ControllerAccountSignup extends Controller {
 	public function index() {
 		$this->load->language('account/success');
 
@@ -40,7 +40,8 @@ class ControllerAccountSuccess extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+    $data['signup'] = 'Yes';
 
-		$this->response->setOutput($this->load->view('common/success', $data));
+		$this->response->setOutput($this->load->view('account/success', $data));
 	}
 }
