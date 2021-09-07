@@ -64,6 +64,7 @@ class ControllerExtensionModuleTreeCats extends Controller {
 		$data['repairs'] = $this->language->get('repairs');
 		$data['text_blog'] = $this->language->get('text_blog');
 		$data['text_vacansion'] = $this->language->get('text_vacansion');
+		$data['text_trade_in'] = $this->language->get('text_trade_in');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['logged'] = $this->customer->isLogged();
 		$data['text_logout'] = $this->language->get('text_logout');
@@ -76,6 +77,7 @@ class ControllerExtensionModuleTreeCats extends Controller {
 		$data["tel_link"] = preg_replace('/[^0-9]/', '', nl2br($this->config->get('config_telephone')));
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['vacancies_href'] = $this->url->link('custompage/vacancies');
+		$data['trade_in_href'] = $this->url->link('custompage/trade-in');
 		$data['repairs_href'] = $this->url->link('repair/repair');
 		$data['blog_href'] = $this->url->link('extension/blog/blog_list');
 

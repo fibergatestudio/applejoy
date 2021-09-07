@@ -9,5 +9,6 @@ $_["picking"] = "Избранное";
 $_["repairs"] = "Ремонт";
 $_["text_blog"] = "Блог";
 $_["text_vacansion"] = "Вакансии";
+$_["text_trade_in"] = "Trade-in";
 $_["text_review"] = "Отзывы";
 $_['text_contact'] = 'Контакты';
