@@ -15,9 +15,11 @@ class ControllerExtensionModuleViewed extends Controller {
 
     $products_viewed = [];
 
+		$this->load->model('account/wishlist');
 
     foreach($arr_id_product as $id_item_product){
       $product_info_viewed = $this->model_catalog_product->getProduct($id_item_product);
+			$wish = $this->model_account_wishlist->productInWishlist($id_item_product);
 
       if ($product_info_viewed) {
         if ($product_info_viewed['image']) {
@@ -63,7 +65,7 @@ class ControllerExtensionModuleViewed extends Controller {
           'rating'      => $rating,
           'minimum'     => $product_info_viewed['minimum'] > 0 ? $product_info_viewed['minimum'] : 1,
           'href'        => $this->url->link('product/product', 'product_id=' . $product_info_viewed['product_id']),
-
+					'wish'        => $wish,
         );
       }
     }

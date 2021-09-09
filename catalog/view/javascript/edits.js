@@ -237,3 +237,105 @@ $('.plus').on('click', function(e) {
 			}
 		});
 	}
+
+	$('#register-form').submit(function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: 'index.php?route=account/register/handler',
+			type: 'POST',
+			data: $(this).serialize(),
+			success: function (json) {
+				if (json.errors) {
+					change_errors(json.errors);
+				}
+				if(json['success']){
+					window.location.href = json['success'];
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	function change_errors(errors){
+		var form_register = $('#register');
+		var input = form_register.find( "input" );
+		 var paras = form_register.find('.text-info-custom');
+		 for(var j = 0; j < paras.length; j++){
+			 	paras[j].parentNode.removeChild(paras[j]);
+		 }
+			for ( var z = 0; z < input.length; z++ ) {
+				var name_inpt = input[z].getAttribute('name');
+				if(name_inpt == 'firstname'){
+					var err_firstname = errors.firstname;
+					if(errors.firstname){
+						input[z].insertAdjacentHTML("beforeBegin", '<span class="text-info-custom">' + errors.firstname + '</span>');
+					}
+				}
+				if(name_inpt == 'lastname'){
+					var err_lastname = errors.lastname;
+					if(err_lastname){
+						input[z].insertAdjacentHTML("beforeBegin", '<span class="text-info-custom">' + err_lastname + '</span>');
+					}
+				}
+				if(name_inpt == 'telephone'){
+					var error_telephone = errors.lastname;
+					if(error_telephone){
+						input[z].insertAdjacentHTML("beforeBegin", '<span class="text-info-custom">' + error_telephone + '</span>');
+					}
+				}
+				if( name_inpt == 'email'){
+					var err_email = errors.email;
+					if(!err_email){
+						err_email = errors.warning;
+					}
+					if(err_email){
+						input[z].insertAdjacentHTML("beforeBegin", '<span class="text-info-custom">' + err_email + '</span>');
+					}
+				}
+				if( name_inpt == 'password'){
+					if(errors.password){
+						input[z].insertAdjacentHTML("beforeBegin", '<span class="text-info-custom">' + errors.password + '</span>');
+					}
+				}
+				if( name_inpt == 'confirm'){
+					if(errors.confirm){
+						input[z].insertAdjacentHTML("beforeBegin", '<span class="text-info-custom">' + errors.confirm + '</span>');
+					}
+				}
+				if( name_inpt == 'agree'){
+					if(errors.agree){
+						var elt = input[z].closest('div');
+						elt.insertAdjacentHTML("beforeBegin", '<span class="text-info-custom">' + errors.agree + '</span>');
+					}
+				}
+			}
+	}
+
+	$('#form-login').submit(function(e) {
+		e.preventDefault();
+		var form_login = $(this);
+		var span_err = form_login.find('.text-info-custom');
+		for(var j = 0; j < span_err.length; j++){
+			 span_err[j].parentNode.removeChild(span_err[j]);
+		}
+		$.ajax({
+			url: 'index.php?route=account/login/handler',
+			type: 'POST',
+			data: $(this).serialize(),
+			success: function (json) {
+				//console.log(json);
+				if (json.errors) {
+					form_login.prepend('<span class="text-info-custom">' + json.errors.warning + '</span>');
+					//change_errors(json.errors);
+				}
+				if(json['success']){
+					window.location.href = json['success'];
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});

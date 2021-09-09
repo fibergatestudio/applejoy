@@ -279,32 +279,39 @@ var voucher = {
 }
 
 var wishlist = {
-	'add': function(product_id) {
-		$.ajax({
-			url: 'index.php?route=account/wishlist/add',
-			type: 'post',
-			data: 'product_id=' + product_id,
-			dataType: 'json',
-			success: function(json) {
-				$('.alert-dismissible').remove();
-
-				if (json['redirect']) {
-					location = json['redirect'];
+	/*'add': function(product_id) {*/
+	'add': function(elem) {
+		var product_id = elem.getAttribute('data-id');
+		if(elem.classList.contains('active')){
+			$.ajax({
+				url: 'index.php?route=account/wishlist/remove',
+				type: 'post',
+				data: 'product_id=' + product_id,
+				dataType: 'json',
+				success: function(json) {
+					elem.classList.add("active");
+					elem.classList.remove("active");
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
-
-				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			});
+		} else {
+			$.ajax({
+				url: 'index.php?route=account/wishlist/add',
+				type: 'post',
+				data: 'product_id=' + product_id,
+				dataType: 'json',
+				success: function(json) {
+					elem.classList.add("active");
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
+			});
+		}
+		return false;
 
-				$('#wishlist-total span').html(json['total']);
-				$('#wishlist-total').attr('title', json['total']);
-
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
 	},
 	'remove': function() {
 

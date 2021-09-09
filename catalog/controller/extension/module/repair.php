@@ -1,14 +1,15 @@
 <?php
 class ControllerExtensionModuleRepair extends Controller {
-	
+
 	public function index($setting) {
 		$this->load->language('repair/repair');
 		$this->load->model('extension/module/repair');
+		$data = [];
 
 		return $this->load->view('extension/module/repair', $data);
 	}
-	
-	
+
+
 	public function addOrder() {
 		$post = $this->request->post;
 
@@ -30,13 +31,13 @@ class ControllerExtensionModuleRepair extends Controller {
 			$json['error']['phoneInput'] = 'Error: not phone!';
 		}
 		if (!isset($json['error'])) {
-			$this->load->model('extension/module/repair'); 
+			$this->load->model('extension/module/repair');
 			$this->model_extension_module_repair->addOrder($data);
 			$json['success'] = true;
-		} 
+		}
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
-	
+
+
 }

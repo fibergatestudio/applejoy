@@ -18,7 +18,7 @@ class ModelAccountCustomer extends Model {
 		if ($customer_group_info['approval']) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_approval` SET customer_id = '" . (int)$customer_id . "', type = 'customer', date_added = NOW()");
 		}
-		
+
 		return $customer_id;
 	}
 
@@ -33,7 +33,7 @@ class ModelAccountCustomer extends Model {
 	public function editAddressId($customer_id, $address_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 	}
-	
+
 	public function editCode($email, $code) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET code = '" . $this->db->escape($code) . "' WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
@@ -67,7 +67,7 @@ class ModelAccountCustomer extends Model {
 
 		return $query->row;
 	}
-	
+
 	public function getTotalCustomersByEmail($email) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
@@ -87,13 +87,13 @@ class ModelAccountCustomer extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function getTotalTransactionsByOrderId($order_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}
-	
+
 	public function getRewardTotal($customer_id) {
 		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$customer_id . "'");
 
@@ -125,28 +125,96 @@ class ModelAccountCustomer extends Model {
 	public function deleteLoginAttempts($email) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_login` WHERE email = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
-	
+
 	public function addAffiliate($customer_id, $data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_affiliate SET `customer_id` = '" . (int)$customer_id . "', `company` = '" . $this->db->escape($data['company']) . "', `website` = '" . $this->db->escape($data['website']) . "', `tracking` = '" . $this->db->escape(token(64)) . "', `commission` = '" . (float)$this->config->get('config_affiliate_commission') . "', `tax` = '" . $this->db->escape($data['tax']) . "', `payment` = '" . $this->db->escape($data['payment']) . "', `cheque` = '" . $this->db->escape($data['cheque']) . "', `paypal` = '" . $this->db->escape($data['paypal']) . "', `bank_name` = '" . $this->db->escape($data['bank_name']) . "', `bank_branch_number` = '" . $this->db->escape($data['bank_branch_number']) . "', `bank_swift_code` = '" . $this->db->escape($data['bank_swift_code']) . "', `bank_account_name` = '" . $this->db->escape($data['bank_account_name']) . "', `bank_account_number` = '" . $this->db->escape($data['bank_account_number']) . "', `status` = '" . (int)!$this->config->get('config_affiliate_approval') . "'");
-		
+
 		if ($this->config->get('config_affiliate_approval')) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_approval` SET customer_id = '" . (int)$customer_id . "', type = 'affiliate', date_added = NOW()");
-		}		
+		}
 	}
-		
+
 	public function editAffiliate($customer_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer_affiliate SET `company` = '" . $this->db->escape($data['company']) . "', `website` = '" . $this->db->escape($data['website']) . "', `commission` = '" . (float)$this->config->get('config_affiliate_commission') . "', `tax` = '" . $this->db->escape($data['tax']) . "', `payment` = '" . $this->db->escape($data['payment']) . "', `cheque` = '" . $this->db->escape($data['cheque']) . "', `paypal` = '" . $this->db->escape($data['paypal']) . "', `bank_name` = '" . $this->db->escape($data['bank_name']) . "', `bank_branch_number` = '" . $this->db->escape($data['bank_branch_number']) . "', `bank_swift_code` = '" . $this->db->escape($data['bank_swift_code']) . "', `bank_account_name` = '" . $this->db->escape($data['bank_account_name']) . "', `bank_account_number` = '" . $this->db->escape($data['bank_account_number']) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
-	
+
 	public function getAffiliate($customer_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row;
 	}
-	
+
 	public function getAffiliateByTracking($tracking) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($tracking) . "'");
 
 		return $query->row;
-	}			
+	}
+
+	public function getCustomerPassword($email, $pwd) {
+		$query = $this->db->query("SELECT count(*) FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($pwd) . "'))))) OR password = '" . $this->db->escape(md5($pwd)) . "') AND status = '1'");
+		return $query->row["count(*)"];
+	}
+
+	public function save_update_customer($post, $customer_id){
+		$sql_0 = "UPDATE `" . DB_PREFIX . "customer` SET ";
+		$sql = '';
+		if(trim($post['firstname']) != ''){
+			$sql .= "firstname = '".$this->db->escape(trim($post['firstname']))."'";
+		}
+		if(trim($post['lastname']) != ''){
+			$sql .= $sql != '' ? ', ' : '';
+			$sql .= "lastname = '".$this->db->escape(trim($post['lastname']))."'";
+		}
+		if(trim($post['telephone']) != ''){
+			$sql .= $sql != '' ? ', ' : '';
+			$sql .= "telephone = '".$this->db->escape(trim($post['telephone']))."'";
+		}
+		if(trim($post['email']) != ''){
+			$sql .= $sql != '' ? ', ' : '';
+			$sql .= "email = '".$this->db->escape(trim($post['email']))."'";
+		}
+		if($sql != ""){
+			$this->db->query($sql_0 . $sql. " WHERE customer_id = ". $customer_id);
+		}
+	}
+
+	public function add_address($post, $customer_id){
+		$sql_1 = "INSERT INTO `" . DB_PREFIX . "address` SET `customer_id` = '".$customer_id .
+		"', `firstname` = '";
+		if(trim($post['firstname']) != ''){
+			$sql_1 .= $this->db->escape($post['firstname'])."', `lastname` = '";
+		} else {
+			$sql_1 .= $this->db->escape($this->customer->getFirstName())."', `lastname` = '";
+		}
+		if(trim($post['lastname']) != ''){
+			$sql_1 .= $this->db->escape($post['lastname'])."', `company` = 'test', `address_1` = '";
+		}else {
+			$sql_1 .= $this->db->escape($this->customer->getLastName())."', `company` = 'test', `address_1` = '";
+		}
+		$sql_1 .= $this->db->escape($post['address_1'])."', `city` = '" .$this->db->escape($post['city'])."', `postcode` = '".$this->db->escape($post["postcode"])."', `country_id` = '220', `zone_id` = '3495'";
+
+		$this->db->query($sql_1);
+		$address_id = $this->db->getLastId();
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '".$address_id . "' WHERE customer_id = ". $customer_id);
+	}
+
+	public function update_address($post, $address_id){
+		$sql_0 = "UPDATE `" . DB_PREFIX . "address` SET ";
+		$sql = '';
+		if(trim($post['city']) != ''){
+			$sql .= "`city` = '".$this->db->escape(trim($post['city']))."'";
+		}
+		if(trim($post['address_1']) != ''){
+			$sql .= $sql != '' ? ', ' : '';
+			$sql .= "`address_1` = '".$this->db->escape(trim($post['address_1']))."'";
+		}
+		if(trim($post['postcode']) != ''){
+			$sql .= $sql != '' ? ', ' : '';
+			$sql .= "`postcode` = '".$this->db->escape(trim($post['postcode']))."'";
+		}
+		if($sql != ""){
+			$this->db->query($sql_0 . $sql. " WHERE 'address_id' = '". $address_id."'");
+		}
+	}
+
 }

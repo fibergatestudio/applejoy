@@ -17,9 +17,11 @@ class ControllerExtensionModuleFeatured extends Controller {
 		if (!empty($setting['product'])) {
 			$products = array_slice($setting['product'], 0, (int)$setting['limit']);
 
+			$this->load->model('account/wishlist');
+
 			foreach ($products as $product_id) {
 				$product_info = $this->model_catalog_product->getProduct($product_id);
-
+				$wish = $this->model_account_wishlist->productInWishlist($product_id);
 				if ($product_info) {
 					if ($product_info['image']) {
 						$image = $this->model_tool_image->resize($product_info['image'], $setting['width'], $setting['height']);
@@ -62,13 +64,8 @@ class ControllerExtensionModuleFeatured extends Controller {
 						}
 					}
 
-
-
-
-$this->load->model('catalog/tree_cats');
-$category_data = $this->model_catalog_tree_cats->getCategory($category_id);
-
-
+					$this->load->model('catalog/tree_cats');
+					$category_data = $this->model_catalog_tree_cats->getCategory($category_id);
 
 
 					$data['products'][] = array(
@@ -82,7 +79,8 @@ $category_data = $this->model_catalog_tree_cats->getCategory($category_id);
 						'rating'      => $rating,
 						'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
 						'id_category' => $category_data["category_id"],
-						'name_category' => $category_data["name"]
+						'name_category' => $category_data["name"],
+						'wish'        => $wish,
 					);
 				}
 			}

@@ -6,6 +6,7 @@ class ControllerAccountRegister extends Controller {
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', '', true));
 		}
+		$this->response->redirect($this->url->link('common/home', '', true));
 
 		$this->load->language('account/register');
 
@@ -96,6 +97,9 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['error_confirm'] = '';
 		}
+		// echo "<pre>";
+		// var_dump($data);
+		// echo "</pre>";
 
 		$data['action'] = $this->url->link('account/register', '', true);
 
@@ -234,8 +238,9 @@ class ControllerAccountRegister extends Controller {
 			$this->error['warning'] = $this->language->get('error_exists');
 		}
 
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
+		$str_tel = preg_replace('/[^0-9]/', '', $this->request->post['telephone']);
+		if(utf8_strlen($this->request->post['telephone']) != 10){
+				$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
 		// Customer Group
@@ -260,7 +265,7 @@ class ControllerAccountRegister extends Controller {
 			}
 		}
 
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 6) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 20)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
@@ -284,7 +289,7 @@ class ControllerAccountRegister extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				$this->error['agree'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
 
@@ -310,6 +315,30 @@ class ControllerAccountRegister extends Controller {
 				'custom_field_id' => $custom_field['custom_field_id'],
 				'required'        => $custom_field['required']
 			);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function handler(){
+		$json = array();
+		$this->load->language('account/register');
+		$this->load->model('account/customer');
+		if(($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()){
+
+				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+
+				// Clear any previous login attempts for unregistered accounts.
+				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+
+				$this->customer->login($this->request->post['email'], $this->request->post['password']);
+
+				unset($this->session->data['guest']);
+				$json['success'] = $this->url->link('account/account', '', true);
+
+		} else {
+			$json['errors'] = $this->error;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

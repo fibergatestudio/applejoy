@@ -7,7 +7,11 @@
             <div class="wrapper-item-product">
                <div class="wrapper-img-product">
                   <a href="{{ item_viewed.href }}" class="block-img"><img src="{{ item_viewed.thumb }}" alt="image-phone" class="img-product img-fluid"></a>
-                  <div class="icon icon-like active"></div>
+                  {% if item_viewed.wish == 1 %}
+                  <div data-id="{{ item_viewed.product_id }}" title="{{ button_wishlist }}" onclick="wishlist.add(this);" class="icon icon-like active"></div>
+                  {% else %}
+                  <div data-id="{{ item_viewed.product_id }}" title="{{ button_wishlist }}" onclick="wishlist.add(this);" class="icon icon-like"></div>
+                  {% endif %}
                </div>
                <div><a href="{{ item_viewed.href }}" class="name-product">{{ item_viewed.name }}</a></div>
                <div class="item-product-bottom-wrapper">
