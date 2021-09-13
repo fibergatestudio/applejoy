@@ -215,7 +215,7 @@
                   <span>{{ text_login_socials }}:</span>
                   <div class="group-soc"><a href="#" class="btn-custom-project-2 icon-google-modal"></a> <a href="#" class="btn-custom-project facebook-white"></a></div>
                   <span class="block-info"><span class="mx-2">{{ word_or }}</span></span>
-                  <form action="{{ link_register }}" method="post" enctype="multipart/form-data" class="form-login">
+                  <form method="post" enctype="multipart/form-data" class="form-login" id="register-form">
                      <label>
                        <input type="text" name="firstname" class="form-control" placeholder="{{ your_first_name }}*">
                      </label>
@@ -228,7 +228,6 @@
                      <label>
                        <input type="tel" name="telephone" class="form-control" placeholder="{{ your_telephone }}*">
                      </label>
-                     <span class="text-info-custom">{{ validate_passwd }}</span>
                      <label>
                        <input type="password" name="password" class="form-control" placeholder="{{ text_passwd }}*">
                      </label>
@@ -249,7 +248,7 @@
                   <span>{{ text_login_socials }}:</span>
                   <div class="group-soc"><a href="#" class="btn-custom-project-2 icon-google-modal"></a> <a href="#" class="btn-custom-project facebook-white"></a></div>
                   <span class="block-info"><span class="mx-2">{{ word_or }}</span></span>
-                  <form action="{{ link_login }}" method="post" class="form-login">
+                  <form class="form-login" id="form-login">
                      <label><input type="email" name="email" class="form-control" placeholder="{{ your_login }}*"></label>
                      <label>
                        <input  type="password" name="password" type="password" class="form-control" placeholder="{{ text_passwd }}*">

@@ -425,17 +425,12 @@ class ControllerExtensionBlog extends Controller
 }
 
 public function render_pagination($total, $page, $limit, $url, $text_next, $text_prev, $num_links = 8) {
-	//$total = $this->total;
+
 
 	if ($page < 1) {
 		$page = 1;
 	}
 
-	// if (!(int)$this->limit) {
-	// 	$limit = 10;
-	// } else {
-	// 	$limit = $this->limit;
-	// }
 	if(!(int)$limit){
 		$limit = 10;
 	}
@@ -448,7 +443,6 @@ public function render_pagination($total, $page, $limit, $url, $text_next, $text
 	$output = '<ul class="pagination">';
 
 	if ($page > 1) {
-		//$output .= '<li><a href="' . str_replace(array('&amp;page={page}', '?page={page}', '&page={page}'), '', $this->url) . '">' . $this->text_first . '</a></li>';
 
 		if ($page === 1) {
 			$output .= '<li class="page-item"><a href="' . str_replace(array('&amp;page={page}', '?page={page}', '&page={page}'), '', $url) . '" class="page-link not-active">' . $text_prev . '</a></li>';

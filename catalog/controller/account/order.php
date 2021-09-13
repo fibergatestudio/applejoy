@@ -10,13 +10,13 @@ class ControllerAccountOrder extends Controller {
 		$this->load->language('account/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -28,7 +28,7 @@ class ControllerAccountOrder extends Controller {
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', true)
 		);
-		
+
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/order', $url, true)
@@ -397,5 +397,64 @@ class ControllerAccountOrder extends Controller {
 		}
 
 		$this->response->redirect($this->url->link('account/order/info', 'order_id=' . $order_id));
+	}
+
+	public function repeat(){
+		$this->load->language('account/order');
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = $this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!$this->customer->isLogged()) {
+			$this->session->data['redirect'] = $this->url->link('account/order/repeat', 'order_id=' . $order_id, true);
+
+			$this->response->redirect($this->url->link('account/login', '', true));
+		}
+
+		$this->load->model('account/order');
+
+		$order_info = $this->model_account_order->getOrder($order_id);
+
+			$this->load->model('catalog/product');
+			$this->load->model('tool/upload');
+
+			// Products
+			$data['products'] = array();
+
+			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
+			$this->cart->clear();
+			foreach ($products as $product) {
+				$option_data = array();
+
+				$options = $this->model_account_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+
+				foreach ($options as $option) {
+					if ($option['type'] != 'file') {
+						$value = $option['value'];
+					} else {
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
+					}
+
+					$option_data[] = array(
+						'name'  => $option['name'],
+						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+					);
+				}
+
+				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
+				$this->cart->add($product['product_id'], $product['quantity'], $option_data, 0);
+			}
+
+			$this->response->redirect($this->url->link('checkout/checkout', '', true));
+
 	}
 }

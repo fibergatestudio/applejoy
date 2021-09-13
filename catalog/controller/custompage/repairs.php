@@ -54,4 +54,8 @@ class ControllerCustompageRepairs extends Controller {
 		return !$this->error;
 	}
 
+	public function test(){
+		echo 'THIS!!!';
+	}
+
 }

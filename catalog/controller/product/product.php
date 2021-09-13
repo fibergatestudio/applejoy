@@ -167,8 +167,6 @@ class ControllerProductProduct extends Controller {
 		}
 
 		 $viewed = $this->load->controller('extension/module/viewed');
-		//  echo '<h2>THIS '.$product_id.'</h2>';
- 		// die();
 
 		$data["viewed"] = $viewed;
 
@@ -406,8 +404,9 @@ class ControllerProductProduct extends Controller {
 			$data['products'] = array();
 
 			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
-
+			$this->load->model('account/wishlist');
 			foreach ($results as $result) {
+				$wish = $this->model_account_wishlist->productInWishlist($result['product_id']);
 				if ($result['image']) {
 					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height'));
 				} else {
@@ -451,7 +450,8 @@ class ControllerProductProduct extends Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'wish'        => $wish,
 				);
 			}
 

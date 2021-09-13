@@ -82,7 +82,7 @@ class ControllerAccountLogin extends Controller {
 				$this->response->redirect($this->url->link('account/account', '', true));
 			}
 		}
-
+		$this->response->redirect($this->url->link('common/home', '', true));
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -156,6 +156,7 @@ class ControllerAccountLogin extends Controller {
 	}
 
 	protected function validate() {
+		$this->load->language('account/login');
 		// Check how many login attempts have been made.
 		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
 
@@ -181,5 +182,44 @@ class ControllerAccountLogin extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function handler(){
+		$json = array();
+		$this->load->language('account/login');
+		$this->load->model('account/customer');
+		if(($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()){
+			// Unset guest
+			unset($this->session->data['guest']);
+
+			// Default Shipping Address
+			$this->load->model('account/address');
+
+			if ($this->config->get('config_tax_customer') == 'payment') {
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+
+			if ($this->config->get('config_tax_customer') == 'shipping') {
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+
+			// Wishlist
+			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+				$this->load->model('account/wishlist');
+
+				foreach ($this->session->data['wishlist'] as $key => $product_id) {
+					$this->model_account_wishlist->addWishlist($product_id);
+
+					unset($this->session->data['wishlist'][$key]);
+				}
+			}
+			$json['success'] = $this->url->link('account/account', '', true);
+
+		} else {
+			$json['errors'] = $this->error;
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }
