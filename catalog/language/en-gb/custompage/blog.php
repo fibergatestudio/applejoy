@@ -1,4 +1,4 @@
-<?php
-
-$_['heading_title'] = 'Блог';
-$_['text_home'] = 'Главная';
+<?php
+
+$_['heading_title'] = 'Блог';
+$_['text_home'] = 'Главная';

@@ -1,4 +1,4 @@
-<?php
-// Text
-$_['text_title'] = 'Карта Visa і MasterCard (LiqPay)';
-
+<?php
+// Text
+$_['text_title'] = 'Карта Visa і MasterCard (LiqPay)';
+

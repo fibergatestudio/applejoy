@@ -1,3 +1,3 @@
-<?php
-// Text
-$_['text_currency'] = 'Валюта';
+<?php
+// Text
+$_['text_currency'] = 'Валюта';

@@ -1,4 +1,4 @@
-<?php
-
-$_['text_sub_total'] = 'Сума';
-
+<?php
+
+$_['text_sub_total'] = 'Сума';
+
