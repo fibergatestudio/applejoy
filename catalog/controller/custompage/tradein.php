@@ -2,6 +2,9 @@
 class ControllerCustompageTradeIn extends Controller {
 	private $error = array();
 
+/**
+ * Index function page
+ */
 	public function index() {
 
 		// Load language var
@@ -17,7 +20,7 @@ class ControllerCustompageTradeIn extends Controller {
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
 		);
-		// 
+		// Trade-in link
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('custompage/trade-in')
@@ -28,6 +31,25 @@ class ControllerCustompageTradeIn extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('custompage/tradein', $data));
+	}
+
+	/**
+	 * Function validate
+	 */
+	protected function validate()
+	{
+
+	}
+
+	/**
+	 * Function from submit contact form page
+	 */
+	public function sendContact()
+	{
+		$post_request = $this->request->post;
+		$json = [];
+		// input
+		$email = trim($post["contacts"]);
 	}
 
 }
