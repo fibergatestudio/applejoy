@@ -248,16 +248,16 @@ function mini_remove(cart_id, quantity){
 
 	var main_count = $('#cart_quantity').text();
 
-/*	if ( parseInt(main_count) <= 0 )
+	if ( parseInt(main_count) >= 1 )
 	{
-		'Иди нах нет тут ниче'
-	}*/
-
-	$('#cart_quantity').text(parseInt(main_count) - quantity);
-
-	//alert("Quantity: " + quantity);
-
-	setTimeout(upload_minicart, 5);
+		$('#cart_quantity').text(parseInt(main_count) - quantity);
+		setTimeout(upload_minicart, 5);
+	} 
+	if ( parseInt($('#cart_quantity').text()) <=0 ) {
+		$('#Modal-product-in-cart').modal('hide');
+		$('.modal-backdrop').hide();
+		setTimeout(upload_minicart, 5);
+	}
 
 }
 
