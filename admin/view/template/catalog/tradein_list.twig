@@ -1,0 +1,355 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      {# <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a> <a href="{{ repair }}" data-toggle="tooltip" title="{{ button_rebuild }}" class="btn btn-default"><i class="fa fa-refresh"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-category').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div> #}
+      <h1>TradeIn</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> Список товаров для TradeIn</h3>
+      </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Тип девайса: </label>
+              <div class="col-sm-10">
+                <select name="device_type" id="device_selector" class="form-control">
+                  <option>Выберите</option>
+                  <option value="iphone">Iphone</option>
+                  <option value="ipad">Ipad</option>
+                  <option value="mac">Mac</option>
+                  <option value="apple_watch">Apple Watch</option>
+                </select>
+              </div>
+            </div>     
+            <!-- Iphone -->
+            <div id="iphone_fields">
+              <form action="{{ add_iphone }}" method="post" enctype="multipart/form-data" id="form-category">
+              <input type="hidden" name="device_type" value="iphone">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Название девайса: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_name" value="" placeholder="Введите название" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Обьем: </label>
+                <div class="col-sm-10">
+                  <select name="device_gb" class="form-control">
+                    <option>Выберите</option>
+                    <option value="16gb">16gb</option>
+                    <option value="32gb">32gb</option>
+                    <option value="64gb">64gb</option>
+                    <option value="128gb">128gb</option>
+                    <option value="256gb">256gb</option>
+                    <option value="512gb">512gb</option>
+                  </select>
+                </div>
+              </div>   
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Скидка $: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_discount" value="" placeholder="Введите сумму скидку" class="form-control" />
+                </div>
+              </div> 
+              <button type="submit">Отправить</button>
+              </form>
+            </div>
+            <!-- END Iphone -->
+            <!-- Ipad -->
+            <div id="ipad_fields">
+              <form action="{{ add_ipad }}" method="post" enctype="multipart/form-data" id="form-category">
+              <input type="hidden" name="device_type" value="ipad">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Название девайса: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_name" value="" placeholder="Введите название" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Обьем: </label>
+                <div class="col-sm-10">
+                  <select name="device_gb" class="form-control">
+                    <option>Выберите</option>
+                    <option value="32gb">32gb</option>
+                    <option value="64gb">64gb</option>
+                    <option value="128gb">128gb</option>
+                    <option value="256gb">256gb</option>
+                    <option value="512gb">512gb</option>
+                  </select>
+                </div>
+              </div>   
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Wi-fi\LTE: </label>
+                <div class="col-sm-10">
+                  <select name="device_conn" class="form-control">
+                    <option>Выберите</option>
+                    <option value="Wi-fi">Wi-fi</option>
+                    <option value="LTE">LTE</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Скидка $: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_discount" value="" placeholder="Введите сумму скидку" class="form-control" />
+                </div>
+              </div> 
+              <button type="submit">Отправить</button>
+              </form>
+            </div>
+            <!-- END Ipad -->
+            <!-- Mac -->
+            <div id="mac_fields">
+              <form action="{{ add_mac }}" method="post" enctype="multipart/form-data" id="form-category">
+              <input type="hidden" name="device_type" value="mac">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Название девайса: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_name" value="" placeholder="Введите название" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Год выпуска: </label>
+                <div class="col-sm-10">
+                  <select name="device_year" class="form-control">
+                    <option>Выберите</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                  </select>
+                </div>
+              </div> 
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Обьем: </label>
+                <div class="col-sm-10">
+                  <select name="device_gb" class="form-control">
+                    <option>Выберите</option>
+                    <option value="128gb">128gb</option>
+                    <option value="256gb">256gb</option>
+                    <option value="512gb">512gb</option>
+                    <option value="1tb">1tb</option>
+                  </select>
+                </div>
+              </div>  
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Скидка $: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_discount" value="" placeholder="Введите сумму скидку" class="form-control" />
+                </div>
+              </div> 
+              <button type="submit">Отправить</button> 
+              </form>
+            </div>
+            <!-- END Mac -->
+            <!-- Apple Watch -->
+            <div id="apple_watch_fields">
+              <form action="{{ add_apple_watch }}" method="post" enctype="multipart/form-data" id="form-category">
+              <input type="hidden" name="device_type" value="apple_watch">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Название девайса: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_name" value="" placeholder="Введите название" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Скидка $: </label>
+                <div class="col-sm-10">
+                  <input type="text" name="device_discount" value="" placeholder="Введите сумму скидку" class="form-control" />
+                </div>
+              </div> 
+              <button type="submit">Отправить</button>
+              </form>
+            </div>
+            <!-- END Apple Watch -->
+
+            <!-- <div class="form-group">
+              <label class="col-sm-2 control-label">Wi-fi\LTE: </label>
+              <div class="col-sm-10">
+                <select name="device_conn" class="form-control">
+                  <option>Выберите</option>
+                  <option value="Wi-fi">Wi-fi</option>
+                  <option value="LTE">LTE</option>
+                </select>
+              </div>
+            </div>   
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Год выпуска: </label>
+              <div class="col-sm-10">
+                <select name="device_year" class="form-control">
+                  <option>Выберите</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                </select>
+              </div>
+            </div>  -->
+            <!-- <div class="form-group">
+              <label class="col-sm-2 control-label">Скидка $: </label>
+              <div class="col-sm-10">
+                <input type="text" name="device_discount" value="" placeholder="Введите сумму скидку" class="form-control" />
+              </div>
+            </div> -->
+            <!-- <button type="submit">Отправить</button> -->
+      <script>
+        $( document ).ready(function() {
+            $('#iphone_fields').hide();
+            $('#ipad_fields').hide();
+            $('#mac_fields').hide();
+            $('#apple_watch_fields').hide();
+
+        });
+        $('#device_selector').on('change', function() {
+          alert( this.value );
+
+          if($('#device_selector').val() == "iphone"){
+            $('#iphone_fields').show();
+            $('#ipad_fields').hide();
+            $('#mac_fields').hide();
+            $('#apple_watch_fields').hide();
+          } else if($('#device_selector').val() == "ipad") {
+            $('#iphone_fields').hide();
+            $('#ipad_fields').show();
+            $('#mac_fields').hide();
+            $('#apple_watch_fields').hide();
+          } else if($('#device_selector').val() == "mac") { 
+            $('#iphone_fields').hide();
+            $('#ipad_fields').hide();
+            $('#mac_fields').show();
+            $('#apple_watch_fields').hide();
+          } else if($('#device_selector').val() == "apple_watch") {
+            $('#iphone_fields').hide();
+            $('#ipad_fields').hide();
+            $('#mac_fields').hide();
+            $('#apple_watch_fields').show();
+          } else {
+            $('#iphone_fields').hide();
+            $('#ipad_fields').hide();
+            $('#mac_fields').hide();
+            $('#apple_watch_fields').hide();
+          }
+        });
+      </script>
+        <div class="panel-body" style="display: initial;">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">
+                    <a href="{{ sort_name }}">{{ column_name }}</a>
+                  </td>
+                  <td class="text-right">
+                    <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
+                  </td>
+                  <td class="text-right"></td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if devices %}
+                  {% for device in devices %}
+                  <tr>
+                    <td class="text-center">
+                      <input type="checkbox" name="selected[]" value="{{ device.tradein_id }}" />
+                    </td>
+                    <td class="text-left">{{ device.device_name }}</td>
+                    <td class="text-right">{{ device.device_type }}</td>
+                    <!-- <td class="text-right"><a href="" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary">
+                      <i class="fa fa-pencil"></i></a>
+                    </td>-->
+                    <form action="{{ deleteDevice }}" method="post" enctype="multipart/form-data" id="form-category">
+                    <td class="text-right">
+                      <input type="hidden" name="device_id" value="{{ device.tradein_id }}">
+                      <button type="submit" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Видалити"><i class="fa fa-minus-circle"></i></button>
+                    </td>
+                    </form>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td class="text-center" colspan="4">{{ text_no_results }}</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+
+        <div class="row">
+          {# <div class="col-sm-6 text-left">{{ pagination }}</div> #}
+          {# <div class="col-sm-6 text-right">{{ results }}</div> #}
+        </div>
+        {# <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-category">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">{% if sort == 'name' %}
+                    <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+                    {% else %}
+                    <a href="{{ sort_name }}">{{ column_name }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{% if sort == 'sort_order' %}
+                    <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
+                    {% else %}
+                    <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if categories %}
+                {% for category in categories %}
+                <tr>
+                  <td class="text-center">{% if category.category_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ category.category_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ category.category_id }}" />
+                    {% endif %}</td>
+                  <td class="text-left">{{ category.name }}</td>
+                  <td class="text-right">{{ category.sort_order }}</td>
+                  <td class="text-right"><a href="{{ category.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td class="text-center" colspan="4">{{ text_no_results }}</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div> #}
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

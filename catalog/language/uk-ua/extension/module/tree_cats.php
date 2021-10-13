@@ -14,3 +14,4 @@ $_["text_review"] = "Відгуки";
 $_['text_contact']      = 'Контакти';
 $_["text_logout"] = "Вихід";
 $_["text_account"] = "Особистий кабінет";
+

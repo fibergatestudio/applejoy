@@ -1,2 +1,2 @@
-<?php
-$_['heading_title']     		= 'Ремонт';
+<?php
+$_['heading_title']     		= 'Ремонт';

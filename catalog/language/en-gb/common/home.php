@@ -1,3 +1,3 @@
-<?php
-
-$_['popular_products']     = 'Popular products';
+<?php
+
+$_['popular_products']     = 'Popular products';

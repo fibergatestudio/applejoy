@@ -1,3 +1,3 @@
-<?php
-// Text
-$_['text_title'] = 'Alipay Cross';
+<?php
+// Text
+$_['text_title'] = 'Alipay Cross';

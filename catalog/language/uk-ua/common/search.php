@@ -1,4 +1,4 @@
-<?php
-// Text
-$_['text_search'] = 'Пошук';
-
+<?php
+// Text
+$_['text_search'] = 'Пошук';
+
