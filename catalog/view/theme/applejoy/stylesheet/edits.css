@@ -43,3 +43,11 @@ div.error-phone, div.error-checkbox{
 .hover-cursor:hover {
 	cursor:pointer;
 }
+
+#orders .collapse:not(.show) {
+    display: block;
+}
+
+#orders .collapse:not(.in) {
+    display: none;
+}
