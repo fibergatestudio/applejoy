@@ -521,7 +521,7 @@ class ControllerCheckoutCart extends Controller {
 	}
 
 	public function minicart(){
-		//echo 'This';
+
 		$this->load->language('checkout/cart');
 		$data['go_to_cart'] = $this->language->get('go_to_cart');
 		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {

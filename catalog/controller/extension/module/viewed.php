@@ -77,6 +77,5 @@ class ControllerExtensionModuleViewed extends Controller {
 
 		return $this->load->view('extension/module/viewed', $data);
 	}
-
-
+
 }
