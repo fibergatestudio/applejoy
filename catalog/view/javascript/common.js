@@ -289,6 +289,10 @@ var wishlist = {
 				data: 'product_id=' + product_id,
 				dataType: 'json',
 				success: function(json) {
+					if(json == '0'){
+						$('button[data-target="#Modal-login"]').click();
+						return false;
+					}
 					elem.classList.add("active");
 					elem.classList.remove("active");
 				},
@@ -303,6 +307,10 @@ var wishlist = {
 				data: 'product_id=' + product_id,
 				dataType: 'json',
 				success: function(json) {
+					if(response == '0'){
+						$('button[data-target="#Modal-login"]').click();
+						return false;
+					}
 					elem.classList.add("active");
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
