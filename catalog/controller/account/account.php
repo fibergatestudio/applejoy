@@ -3,7 +3,6 @@ class ControllerAccountAccount extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
-
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
@@ -458,5 +457,78 @@ class ControllerAccountAccount extends Controller {
 
 		return $error;
 	}
+
+	public function wishlist_modal(){
+		if (!$this->customer->isLogged()) {
+			echo 0;
+			return false;
+		}
+		$this->load->language('account/account');
+		$this->load->language('account/wishlist');
+		$this->load->model('account/wishlist');
+		$this->load->model('catalog/product');
+		$this->load->model('tool/image');
+		$data['products'] = array();
+		$results = $this->model_account_wishlist->getWishlist();
+		foreach ($results as $result) {
+			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+			if ($product_info) {
+				if ($product_info['image']) {
+					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_height'));
+				} else {
+					$image = false;
+				}
+				if ($product_info['quantity'] <= 0) {
+					$stock = $product_info['stock_status'];
+				} elseif ($this->config->get('config_stock_display')) {
+					$stock = $product_info['quantity'];
+				} else {
+					$stock = $this->language->get('text_instock');
+				}
+				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				} else {
+					$price = false;
+				}
+				if ((float)$product_info['special']) {
+					$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				} else {
+					$special = false;
+				}
+				$data['products'][] = array(
+					'product_id' => $product_info['product_id'],
+					'thumb'      => $image,
+					'name'       => $product_info['name'],
+					'model'      => $product_info['model'],
+					'sku'        => $product_info['sku'],
+					'stock'      => $stock,
+					'price'      => $price,
+					'special'    => $special,
+					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
+					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
+				);
+				if(count($data["products"]) >= 5){
+					$data["msg_continue_btn"] = $this->language->get('msg_continue_btn');
+					break;
+				}
+			}else {
+				$this->model_account_wishlist->deleteWishlist($result['product_id']);
+			}
+		}
+		if(empty($data['products'])){
+			$data['msg_empty'] = $this->language->get('msg_empty_wishlist');
+		}
+		$data["wishlist_text"] = $this->language->get('wishlist_text');
+		$data['action_continue'] = $this->url->link('account/account', '', true);
+		$data["text_sku"] = $this->language->get('text_sku');
+		$data["msg_empty_wishlist"] = $this->language->get('msg_empty_wishlist');
+		$data["msg_link_continue_wishlist"] = $this->language->get('msg_link_continue_wishlist');
+		$data['home'] = $this->url->link('common/home');
+		if(!isset($data["msg_continue_btn"])){
+			$data["msg_continue_btn"] = $this->language->get('btn_follow_account');
+		}
+
+		$this->response->setOutput($this->load->view('account/wishlist_modal', $data));
+	}
 
 }

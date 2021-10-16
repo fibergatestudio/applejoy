@@ -1,0 +1,26 @@
+<h5 class="modal-title">{{ wishlist_text }}</h5>
+{% if products is not empty %}
+
+<ul class="list-card-product">
+  {% for product in products %}
+   <li class="item-card-product item-card-product-grid" id="wish-{{ product.product_id }}">
+      <a href="{{ product.href }}" class="block-img"><img src="{{ product.thumb }}" alt="photo-product" class="img"></a>
+      <div>
+         <div class="block-title-product"><span class="title-product fw-500"><a href="{{ product.href }}">{{ product.name }}</a></span> <span class="article">{{ text_sku }}: {{ product.sku }}</span></div>
+         <div class="price"><span class="price-product fw-700">{{ product.price }}</span></div>
+      </div>
+      <span style="position: relative; float: right;">
+        <span class="pl-3 icon icon-delete" onclick="del_from_wishlist_bi_id({{ product.product_id }})"></span>
+      </span>
+   </li>
+   {% endfor %}
+</ul>
+{% else %}
+<div class="modal-body">
+   <span class="text fw-500">{{ msg_empty_wishlist }}</span> <span class="text fw-500">{{ return_to_shopping }} <a href="{{ home }}" class="color-purple">{{ msg_link_continue_wishlist }}</a></span>
+</div>
+
+{% endif %}
+<div class="block-btn">
+  <a href="{{ action_continue }}" class="btn btn-custom-project">{{ msg_continue_btn }}</a>
+</div>

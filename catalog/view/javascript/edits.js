@@ -339,3 +339,39 @@ $('.plus').on('click', function(e) {
 			}
 		});
 	});
+
+	function show_wishlist(){
+		$.ajax({
+			url: 'index.php?route=account/account/wishlist_modal',
+			success: function (response) {
+				if(response == '0'){
+					$('button[data-target="#Modal-login"]').click();
+					return false;
+				}
+				var vishlist_modal = $("#Modal-product-in-vishlist");
+				var vishlist_modal = vishlist_modal.find(".block-wrapper-card").eq(0);
+				 vishlist_modal.html(response);
+				 setTimeout(() => $('button[data-target="#Modal-product-in-vishlist"]').click(), 1000);
+				alert(response);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+
+	});
+	}
+
+	function del_from_wishlist_bi_id(id_product){
+		$.ajax({
+			url: 'index.php?route=account/wishlist/remove',
+			type: 'post',
+			data: 'product_id=' + id_product,
+			dataType: 'json',
+			success: function(json) {
+				$('#wish-' + id_product).remove();
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}

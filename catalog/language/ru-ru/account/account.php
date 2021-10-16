@@ -73,3 +73,7 @@ $_["text_btn_buy"] = "Купить";
 $_["text_buy_one_click"] = "Купить в 1 клик";
 $_["success_save"] = "Изменения успешно сохранены!";
 $_["full_address"] = "Все три поля адреса необходимо заполнить!";
+$_["msg_empty_wishlist"] = "У Вас нет избранных товаров! Но Вы можете их выбрать ";
+$_["msg_link_continue_wishlist"] = "здесь";
+$_["msg_continue_btn"] = "Еще";
+$_["btn_follow_account"] = "В личный кабинет";
