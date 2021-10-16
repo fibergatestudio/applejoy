@@ -307,7 +307,7 @@ var wishlist = {
 				data: 'product_id=' + product_id,
 				dataType: 'json',
 				success: function(json) {
-					if(response == '0'){
+					if(json == '0'){
 						$('button[data-target="#Modal-login"]').click();
 						return false;
 					}
