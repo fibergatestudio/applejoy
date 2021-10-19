@@ -72,10 +72,23 @@ class ControllerInformationTradein extends Controller {
 		$data['prod_devices'] = [];
         $all_prods = $this->getAllProds();
 
+		$data['macbooks'] = [];
+		$macbooks = $this->getProdsByCat("MacBook");
+		foreach($macbooks as $macbook){
+
+			foreach($macbook->rows as $mac){
+				array_push($data['macbooks'], $mac);
+			}
+			
+		}
+		// echo "<pre>";
+		// var_dump($macbooks);
+		// echo "</pre>";
+
 		foreach($all_prods->rows as $prod){
 			array_push($data['prod_devices'], $prod);
 
-			$prod_opt = $this->getProdOption($prod["product_id"]);
+			//$prod_opt = $this->getProdOption($prod["product_id"]);
 			//var_dump($prod_opt);
 
 			//$product_id
@@ -118,12 +131,13 @@ class ControllerInformationTradein extends Controller {
 		$query = $this->db->query(
 						"SELECT * FROM " . DB_PREFIX . "product" . " WHERE model = '". $model ."'"
 				);
+
 		foreach($query->rows as $prod) {
-			$queryOption = $this->getProdOption($prod["product_id"]);
+		 	$queryOption = $this->getProdOption($prod["product_id"]);
 		}
+
 		$this->response->setOutput(json_encode($queryOption));
 	}
-
 	//
 
 	public function checkDevicePrice(){
@@ -149,17 +163,95 @@ class ControllerInformationTradein extends Controller {
 		$this->response->setOutput(json_encode($query));
 	}
 
+	public function getDevicePriceProd() {
+		$prod_device_id = $this->request->get["prod_device_id"];
+		$device_options = $this->request->get["device_options"];
+
+		$w='';
+		for ($i=0; $i < count($device_options); $i++) {
+		  $w.= $device_options[$i];
+		  if($i < count($device_options) -1) $w.= ",";
+		}
+
+		$query = $this->db->query(
+			"SELECT DISTINCT " .
+			DB_PREFIX .
+			"product_option_value.price AS option_price," .
+			DB_PREFIX .
+			"product.price AS model_price," .
+			DB_PREFIX .
+			"product_option_value.product_option_id  AS id FROM " .
+			DB_PREFIX .
+			"product LEFT JOIN " .
+			DB_PREFIX .
+			"product_option_value ON " .
+						DB_PREFIX .
+						"product.product_id = " .
+						DB_PREFIX .
+						"product_option_value.product_id WHERE " .
+											DB_PREFIX .
+											"product_option_value.option_value_id IN (" . $w .") AND " .
+																DB_PREFIX .
+																"product_option_value.product_id ='". $prod_device_id ."'"
+        );
+
+		$this->response->setOutput(json_encode($query));
+	}
+
+	public function checkDevicePriceByName(){
+		$device_name = $this->request->get["device_name"];
+
+		$query = $this->db->query(
+            "SELECT * FROM " . DB_PREFIX . "tradein_devices" . " WHERE device_name = '". $device_name ."'"
+        );
+
+		$this->response->setOutput(json_encode($query));
+	}
+
+
 	public function getProdOption($product_id){
 
 		$query = $this->db->query(
-            "SELECT * FROM " .
+            "SELECT option_value_id FROM " .
                 DB_PREFIX .
-                "product_option WHERE product_id = '" .
-                (int) $product_id .
-                "' AND option_id='14' "
-        );
+                "product_option_value WHERE product_id = '" .
+                (int) $product_id ."'"
+    	);
 
-        return $query;
+		$option_value_id = [];
+		foreach($query->rows as $prod) {
+			foreach($prod as $p) {
+				$option_value_id[] = $p;
+			}
+		}
+		$w='';
+		for ($i=0; $i < count($option_value_id); $i++) {
+		  $w.= $option_value_id[$i];
+		  if($i < count($option_value_id) -1) $w.= ",";
+		}
+		$queryOptions = $this->db->query("SELECT DISTINCT " .
+                DB_PREFIX .
+                "option_value_description.name AS name_value," .
+                DB_PREFIX .
+                "option_description.name AS name_option," .
+                DB_PREFIX .
+                "option_description.option_id AS option_id," .
+                DB_PREFIX .
+                "option_value_description.option_value_id AS option_value_id FROM " .
+                DB_PREFIX .
+                "option_value_description LEFT JOIN " .
+                DB_PREFIX .
+                "option_description ON " .
+                                DB_PREFIX .
+                                "option_description.option_id = " .
+                                DB_PREFIX .
+                                "option_value_description.option_id WHERE " .
+                                                DB_PREFIX .
+                                                "option_value_description.option_value_id IN (" . $w .") AND " .
+                                                                DB_PREFIX .
+                                                                "option_description.language_id = 1"
+																															);
+		return $queryOptions;
 	}
 
     public function getAllProds(){
@@ -171,6 +263,29 @@ class ControllerInformationTradein extends Controller {
 
         return $query;
     }
+
+	public function getProdsByCat($cat_name){
+
+		//'MacBook'
+		//DB_PREFIX . "category"
+		$product_array = [];
+		$query = $this->db->query( "SELECT * FROM " . DB_PREFIX . "category_description WHERE name = '" . $cat_name . "'");
+		foreach($query->rows as $cat){
+			//var_dump($cat['category_id']);
+			
+			$prod_ids_query = $this->db->query( "SELECT * FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" .$cat['category_id'] ."'");
+
+			foreach($prod_ids_query->rows as $prod){
+
+				$prod_to_array = $this->db->query( "SELECT * FROM " . DB_PREFIX . "product WHERE product_id = '" .$prod['product_id']."'");
+				array_push($product_array, $prod_to_array);
+			}
+		}
+
+
+		
+		return $product_array;
+	}
 
 	public function getDeviceByType($type){
 		$query = $this->db->query(

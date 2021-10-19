@@ -97,7 +97,7 @@
                                        <ul class="list-model">
                                           {% set deviceNameArray = [] %}
 
-                                          {% for device in devices %}
+                                          {% for device in iphone_devices %}
                                              {% if device.device_name not in deviceNameArray %}
                                                 <li class="form-check custom-radios">
                                                    <input type="hidden" name="device_price" value="{{ device.device_discount }}">
@@ -227,8 +227,8 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-internet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wi-Fi / LTE</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-internet">
                                        <ul class="list-model" id="list_ipad_conn">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="wifi" id="wifi" name="internet"> <label class="form-check-label" for="wifi">WI-FI</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="LTE" id="LTE" name="internet"> <label class="form-check-label" for="LTE">LTE</label></li>
+                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="wifi" id="wifi" name="internet"> <label class="form-check-label" for="wifi">WI-FI</label></li>
+                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="LTE" id="LTE" name="internet"> <label class="form-check-label" for="LTE">LTE</label></li> -->
                                        </ul>
                                     </div>
                                  </div>
@@ -239,7 +239,7 @@
 
                            var selected_model;
                            var selected_gb;
-                           console.log("qwert");
+
                            $( ".iphone_name" ).click(function(e) {
                               var device_name = $(this).closest("li.form-check").find("input[name='model']").val();
                               $('#dropdown-iphone-sorting-model').text(device_name);
@@ -252,7 +252,7 @@
                                  success: function(json) {
                                        $( "#list_iphone_device_gb" ).empty();
                                     $.each(json['rows'], function(key,val){
-                                       console.log(val);
+                                       //console.log(val);
                                        $( "#list_iphone_device_gb" ).append(
                                        '<li class="form-check custom-radios"> <input class="form-check-input iphone_device_gb" type="radio" value="'+val['device_gb']+'" id="'+val['tradein_id']+'" name="memory"> <label class="form-check-label" for="'+val['tradein_id']+'">'+val['device_gb']+'</label></li>'
                                        );
@@ -263,7 +263,7 @@
                            });
                            //$( ".device_gb" ).click(function(e) {
                            $(document).on('click', '.iphone_device_gb', function(e){
-                              console.log('clicked');
+                              //console.log('clicked');
                               var device_gb = $(this).closest("li.form-check").find("input[name='memory']").val();
                               $('#dropdown-sorting').text(device_gb);
                               selected_gb = device_gb;
@@ -273,22 +273,27 @@
                                  url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model+'&device_gb=' +selected_gb,
                                  dataType: 'json',
                                  success: function(json) {
-                                    console.log(json['rows'][0]['device_discount']);
-                                    var disc_price_usd = (json['rows'][0]['device_discount'] / 27).toFixed(2);
-                                    $( "#left_price_result" ).text( "Вартість "+selected_model+ " "+ json['rows'][0]['device_gb'] +" складає до "+disc_price_usd+" $" );
+                                    //console.log(json['rows'][0]['device_discount']);
+                                    //updateTextPrice(json['rows'][0]['device_discount']);
+                                    var disc_price_usd = (json['rows'][0]['device_discount'] / 27).toFixed(0);
+                                    var disc_price_uah = (json['rows'][0]['device_discount'] * 1).toFixed(0);
+                                    updateOldPriceText(disc_price_uah, disc_price_usd);
+                                    //$( "#left_price_result" ).text( "Вартість "+selected_model+ " "+ json['rows'][0]['device_gb'] +" складає до "+disc_price_usd+" $" );
+                                    $( "#left_price_result" ).text("Вартість складає до "+disc_price_uah+"грн");
                                  }
                               });
-                              alert(selected_model, selected_gb);
+                              //alert(selected_model, selected_gb);
                            });
-
+                           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                            var selected_model_ipad;
                            var selected_gb;
+                           var selected_conn;
 
                            $( ".ipad_name" ).click(function(e) {
                               var device_name = $(this).closest("li.form-check").find("input[name='model']").val();
                               $('#dropdown-sorting-model-ipad').text(device_name);
                               selected_model_ipad = device_name;
-                              console.log(selected_model_ipad);
+                              //console.log(selected_model_ipad);
 
                                  $.ajax({
                                  //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
@@ -298,7 +303,7 @@
                                        //console.log(json);
                                        $( "#list_ipad_device_gb" ).empty();
                                     $.each(json['rows'], function(key,val){
-                                       console.log(val);
+                                       //console.log(val);
                                        $( "#list_ipad_device_gb" ).append(
                                        '<li class="form-check custom-radios"> <input class="form-check-input ipad_device_gb" type="radio" value="'+val['device_gb']+'" id="'+val['tradein_id']+'" name="memory"> <label class="form-check-label" for="'+val['tradein_id']+'">'+val['device_gb']+'</label></li>'
                                        );
@@ -309,7 +314,7 @@
                            });
                            //$( ".device_gb" ).click(function(e) {
                            $(document).on('click', '.ipad_device_gb', function(e){
-                              console.log('clicked');
+                              //console.log('clicked');
                               var device_gb = $(this).closest("li.form-check").find("input[name='memory']").val();
                               $('#dropdown-sorting-memory').text(device_gb);
                               selected_gb = device_gb;
@@ -319,36 +324,41 @@
                                  url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_ipad+'&device_gb=' +selected_gb,
                                  dataType: 'json',
                                  success: function(json) {
-                                    console.log(json['rows'][0]['device_discount']);
+                                    //console.log(json['rows'][0]['device_discount']);
                                     $( "#list_ipad_conn" ).empty();
                                     $.each(json['rows'], function(key,val){
                                        $( "#list_ipad_conn" ).append(
-                                       '<li class="form-check custom-radios"><input class="form-check-input" type="radio" value="'+val['device_conn']+'" id="'+val['device_conn']+'" name="internet"> <label class="form-check-label" for="'+val['device_conn']+'">'+val['device_conn']+'</label></li>'
+                                       '<li class="form-check custom-radios"><input class="form-check-input ipad_device_conn" type="radio" value="'+val['device_conn']+'" id="'+val['device_conn']+'" name="internet"> <label class="form-check-label" for="'+val['device_conn']+'">'+val['device_conn']+'</label></li>'
                                        );
                                     })
                                     //var disc_price_usd = (json['rows'][0]['device_discount'] / 27).toFixed(2);
                                     //$( "#left_price_result" ).text( "Вартість "+selected_model_ipad+ " "+ json['rows'][0]['device_gb'] +" складає до "+disc_price_usd+" $" );
                                  }
                               });
-                              alert(selected_model_ipad, selected_gb);
+                              //alert(selected_model_ipad, selected_gb);
                            });
-                           $(document).on('click', '.ipad_device_gb', function(e){
-                              console.log('clicked');
-                              var device_gb = $(this).closest("li.form-check").find("input[name='memory']").val();
-                              $('#dropdown-sorting-memory').text(device_gb);
-                              selected_gb = device_gb;
+                           $(document).on('click', '.ipad_device_conn', function(e){
+                              //console.log('clicked');
+                              var device_conn = $(this).closest("li.form-check").find("input[name='internet']").val();
+                              $('#dropdown-sorting-internet').text(device_conn);
+                              selected_conn = device_conn;
                               //$('#second_step').show();
                               $.ajax({
                                  //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
                                  url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_ipad+'&device_gb=' +selected_gb,
                                  dataType: 'json',
                                  success: function(json) {
-                                    console.log(json['rows'][0]['device_discount']);
-                                    var disc_price_usd = (json['rows'][0]['device_discount'] / 27).toFixed(2);
-                                    $( "#left_price_result" ).text( "Вартість "+selected_model_ipad+ " "+ json['rows'][0]['device_gb'] +" складає до "+disc_price_usd+" $" );
+                                    //console.log(json['rows'][0]['device_discount']);
+                                    //updateTextPrice(json['rows'][0]['device_discount']);
+                                    var disc_price_usd = (json['rows'][0]['device_discount'] / 27).toFixed(0);
+                                    var disc_price_uah = (json['rows'][0]['device_discount'] * 1).toFixed(0);
+                                    updateOldPriceText(disc_price_uah, disc_price_usd);
+                                    //$( "#left_price_result" ).text( "Вартість "+selected_model_ipad+ " "+ json['rows'][0]['device_gb'] +" складає до "+disc_price_usd+" $" );
+                                    $( "#left_price_result" ).text("Вартість складає до "+disc_price_uah+"грн");
+                                    
                                  }
                               });
-                              alert(selected_model_ipad, selected_gb);
+                              //alert(selected_model_ipad, selected_gb);
                            });
 
                         </script>
@@ -362,8 +372,21 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-model-macbook" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-model-macbook">
                                        <ul class="list-model">
+
+                                          {% set macDeviceArray = [] %}
                                           {% for mac in mac_devices %}
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="ipad" id="macbook" name="model-macbook"> <label class="form-check-label" for="macbook">{{ mac.device_name }}</label></li>
+                                             {% if mac.device_name not in macDeviceArray %}
+                                             <!--<li class="form-check custom-radios"><input class="form-check-input" type="radio" value="ipad" id="macbook" name="model-macbook"> <label class="form-check-label" for="macbook">{{ mac.device_name }}</label></li>-->
+                                                <li class="form-check custom-radios">
+                                                   <input type="hidden" name="device_price" value="{{ mac.device_discount }}">
+                                                   <input type="hidden" name="device_gb" value="{{ mac.device_gb }}">
+                                                   <input class="form-check-input mac_name" type="radio" value="{{ mac.device_name }}" id="mac{{ mac.tradein_id }}" name="model">
+                                                   <label class="form-check-label" for="mac{{ mac.tradein_id }}">
+                                                   {{ mac.device_name }} ( price {{ mac.device_discount }} )
+                                                   </label>
+                                                </li>
+                                             {% set macDeviceArray = macDeviceArray|merge([mac.device_name]) %}
+                                             {% endif %}
                                           {% endfor %}
                                        </ul>
                                     </div>
@@ -373,9 +396,9 @@
                                  <div class="dropdown block-selector">
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-year" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Рік випуску</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-year">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2020" id="2020" name="year"> <label class="form-check-label" for="2020">2020</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2021" id="2021" name="year"> <label class="form-check-label" for="2021">2021</label></li>
+                                       <ul class="list-model" id="list_mac_device_year">
+                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2020" id="2020" name="year"> <label class="form-check-label" for="2020">2020</label></li>
+                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2021" id="2021" name="year"> <label class="form-check-label" for="2021">2021</label></li> -->
                                        </ul>
                                     </div>
                                  </div>
@@ -384,9 +407,9 @@
                                  <div class="dropdown block-selector">
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-memory-macbook" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Об'єм пам'яті</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-memory-macbook">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64-macbook" id="gb64-macbook" name="memory-macbook"> <label class="form-check-label" for="gb64-macbook">64 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128-ipad" id="gb128-macbook" name="memory-macbook"> <label class="form-check-label" for="gb128-macbook">128 Gb</label></li>
+                                       <ul class="list-model" id="list_mac_device_gb">
+                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64-macbook" id="gb64-macbook" name="memory-macbook"> <label class="form-check-label" for="gb64-macbook">64 Gb</label></li>
+                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128-ipad" id="gb128-macbook" name="memory-macbook"> <label class="form-check-label" for="gb128-macbook">128 Gb</label></li> -->
                                        </ul>
                                     </div>
                                  </div>
@@ -394,6 +417,87 @@
                            </ul>
                         </div>
                      </li>
+                     <script>
+                        var selected_model_mac;
+                        var selected_year_mac;
+                        var selected_gb_mac;
+
+                        $( ".mac_name" ).click(function(e) {
+                           var device_name = $(this).closest("li.form-check").find("input[name='model']").val();
+                           $('#dropdown-sorting-model-macbook').text(device_name);
+                           selected_model_mac = device_name;
+
+                           $.ajax({
+                              url: 'index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_mac,
+                              dataType: 'json',
+                              success: function(json) {
+                                    $( "#list_mac_device_year" ).empty();
+                                    // Аррей с повторениями
+                                    var years_array = [];
+
+                                 $.each(json['rows'], function(key,val){
+                                    // Проверка на уникальность
+                                    if(jQuery.inArray(val['device_year'], years_array) == -1){
+                                       $("#list_mac_device_year").append('<li class="form-check custom-radios"><input class="form-check-input mac_device_year" type="radio" value="'+val['device_year']+'" id="'+val['device_year']+'" name="year"> <label class="form-check-label" for="'+val['device_year']+'">'+val['device_year']+'</label></li>');
+                                       // Пушим в аррей для проверки
+                                       years_array.push(val['device_year']);
+                                    }
+
+                                 })
+                              }
+                           });
+                           //$('#second_step').show();
+                        });
+                        $(document).on('click', '.mac_device_year', function(e){
+                           var device_year = $(this).closest("li.form-check").find("input[name='year']").val();
+                           $('#dropdown-sorting-year').text(device_year);
+                           selected_year_mac = device_year;
+
+                           $.ajax({
+                              url: 'index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_mac,
+                              dataType: 'json',
+                              success: function(json) {
+                                    $( "#list_mac_device_gb" ).empty();
+                                    // Аррей с повторениями
+                                    var gb_size_array = [];
+                                 $.each(json['rows'], function(key,val){
+                                    console.log(val);
+                                    // Проверка на уникальность
+                                    if(jQuery.inArray(val['device_gb'], gb_size_array) == -1){
+                                       $( "#list_mac_device_gb" ).append(
+                                       '<li class="form-check custom-radios"> <input class="form-check-input mac_device_gb" type="radio" value="'+val['device_gb']+'" id="'+val['tradein_id']+'" name="memory"> <label class="form-check-label" for="'+val['tradein_id']+'">'+val['device_gb']+'</label></li>'
+                                       );
+                                       gb_size_array.push(val['device_gb']);
+                                    }
+                                 })
+                              }
+                           });
+                        });
+
+                        //$( ".device_gb" ).click(function(e) {
+                        $(document).on('click', '.mac_device_gb', function(e){
+                           console.log('clicked');
+                           var device_gb = $(this).closest("li.form-check").find("input[name='memory']").val();
+                           $('#dropdown-sorting-memory-macbook').text(device_gb);
+                           selected_gb_mac = device_gb;
+                           //$('#second_step').show();
+                           $.ajax({
+                              //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                              url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_mac+'&device_gb=' +selected_gb_mac,
+                              dataType: 'json',
+                              success: function(json) {
+                                 //console.log(json['rows'][0]['device_discount']);
+                                 //updateTextPrice(json['rows'][0]['device_discount']);
+                                 var disc_price_usd = (json['rows'][0]['device_discount'] / 27).toFixed(0);
+                                 var disc_price_uah = (json['rows'][0]['device_discount'] * 1).toFixed(0);
+                                 updateOldPriceText(disc_price_uah, disc_price_usd);
+                                 //$( "#left_price_result" ).text( "Вартість "+selected_model_mac+ " "+ json['rows'][0]['device_gb'] +" складає до "+disc_price_usd+" $" );
+                                  $( "#left_price_result" ).text("Вартість складає до "+disc_price_uah+"грн");
+                              }
+                           });
+                           //alert(selected_model_mac, selected_gb_mac, selected_year_mac);
+                        });
+                     </script>
                   </ul>
                   <ul class="list-btn-trade">
                      <li class="list-trade-item">
@@ -406,7 +510,15 @@
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-model-watch">
                                        <ul class="list-model">
                                           {% for apple_watch in apple_watch_devices %}
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="watch" id="watch{{ apple_watch.tradein_id }}" name="model-watch"> <label class="form-check-label" for="watch{{ apple_watch.tradein_id }}">{{ apple_watch.device_name }}</label></li>
+                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="watch" id="watch{{ apple_watch.tradein_id }}" name="model-watch"> <label class="form-check-label" for="watch{{ apple_watch.tradein_id }}">{{ apple_watch.device_name }}</label></li> -->
+                                             <li class="form-check custom-radios">
+                                                <input type="hidden" name="device_price" value="{{ apple_watch.device_discount }}">
+                                                <input type="hidden" name="device_gb" value="{{ apple_watch.device_gb }}">
+                                                <input class="form-check-input apple_watch_name" type="radio" value="{{ apple_watch.device_name }}" id="apple_watch{{ apple_watch.tradein_id }}" name="model">
+                                                <label class="form-check-label" for="apple_watch{{ apple_watch.tradein_id }}">
+                                                {{ apple_watch.device_name }} ( price {{ apple_watch.device_discount }} )
+                                                </label>
+                                             </li>
                                           {% endfor %}
                                        </ul>
                                     </div>
@@ -414,6 +526,33 @@
                               </li>
                            </ul>
                         </div>
+                        <script>
+                           var selected_model;
+
+                           $( ".apple_watch_name" ).click(function(e) {
+                              var device_name = $(this).closest("li.form-check").find("input[name='model']").val();
+                              $('#dropdown-sorting-model-watch').text(device_name);
+                              selected_model = device_name;
+
+                              $.ajax({
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/checkDevicePriceByName&device_name='+selected_model,
+                                 dataType: 'json',
+                                 success: function(json) {
+                                    //console.log(json['rows'][0]['device_discount']);
+                                    //updateTextPrice(json['rows'][0]['device_discount']);
+                                    var disc_price_usd = (json['rows'][0]['device_discount'] / 27).toFixed(0);
+                                    var disc_price_uah = (json['rows'][0]['device_discount'] * 1).toFixed(0);
+                                    updateOldPriceText(disc_price_uah, disc_price_usd);
+                                    //$( "#left_price_result" ).text( "Вартість "+selected_model+ " "+ json['rows'][0]['device_gb'] +" складає до "+disc_price_usd+" $" );
+                                    $( "#left_price_result" ).text("Вартість складає до "+disc_price_uah+"грн");
+                                 }
+                              });
+                              //alert(selected_model, selected_gb);
+
+                              //$('#second_step').show();
+                           });
+                        </script>
                      </li>
                      <li class="list-trade-item">
                         <div class="img-other-trade btn-trade" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther"><span>Інше</span></div>
@@ -426,7 +565,7 @@
                         </div>
                      </li>
                   </ul>
-                  <p class="text-result" id="left_price_result">Вартість iPhone 12 mini (128GB) складає до 840 $</p>
+                  <p class="text-result" id="left_price_result"></p> <!-- Вартість iPhone 12 mini (128GB) складає до 840 $ -->
                </div>
 
                <div class="block-device-buy block-trade-grid">
@@ -440,10 +579,11 @@
                                  <div class="dropdown block-selector">
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-model-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-modal">
-                                       <ul class="list-model" id = "list_prod_device_gb">
+                                       <ul class="list-model">
                                           {% for prod_device in prod_devices %}
                                              <li class="form-check custom-radios">
                                                <input type="hidden" name="prod_price" value="{{ prod_device.price }}">
+                                               <input type="hidden" name="prod_id" value="{{ prod_device.product_id }}">
                                                 <input class="form-check-input prod_device" type="radio" value="{{ prod_device.model }}" id="iphone-12-buy{{ prod_device.product_id }}" name="model-buy">
                                                 <label class="form-check-label" for="iphone-12-buy{{ prod_device.product_id }}">{{ prod_device.model }} ( price {{ prod_device.price }} )</label>
                                              </li>
@@ -452,11 +592,13 @@
                                     </div>
                                  </div>
                               </li>
+                            </ul>
+                            <ul class="dropdown-wrapper" id="el_list">
                               <li class="dropdown-wrapper-item">
                                  <div class="dropdown block-selector">
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Об'єм пам'яті</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy">
-                                       <ul class="list-model">
+                                       <ul class="list-model" id="list_prod_device_gb">
                                           <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb32" id="gb32-buy" name="memory-buy"> <label class="form-check-label" for="gb32-buy">32 Gb</label></li>
                                           <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64" id="gb64-buy" name="memory-buy"> <label class="form-check-label" for="gb64-buy">64 Gb</label></li>
                                           <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128" id="gb128-buy" name="memory-buy"> <label class="form-check-label" for="gb128-buy">128 Gb</label></li>
@@ -479,31 +621,96 @@
                         </div>
                         <script>
 
-                           var selected_model;
-                           var selected_gb;
-                           console.log("qwert");
                            $( ".prod_device" ).click(function(e) {
                               var device_name = $(this).closest("li.form-check").find("input[name='model-buy']").val();
                               $('#dropdown-sorting-model-buy').text(device_name);
-                              selected_model = device_name;
 
+                              var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
                                  //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+selected_model,
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
-                                       $( "#list_prod_device_gb" ).empty();
-                                    $.each(json['rows'], function(key,val){
-                                       console.log(val);
-                                       $( "#list_prod_device_gb" ).append(
-                                       '<li class="form-check custom-radios"> <input class="form-check-input prod_device_gb" type="radio" value="'+val['device_gb']+'" id="'+val['tradein_id']+'" name="memory"> <label class="form-check-label" for="'+val['tradein_id']+'">'+val['device_gb']+'</label></li>'
-                                       );
-                                    })
+                                   $( "#el_list" ).empty();
+                                   json = json['rows'];
+                                   console.log(json);
+
+                                   let el =[];
+                                   let options_id =[];
+                                $.each(json, function(key,val){
+                                  console.log(key);
+                                  if (!el.includes(val['name_option'])) {
+                                    el.push(val['name_option']);
+                                    options_id.push(val['option_id']);
+
+                                    $( "#el_list" ).append(
+                                    '<li class="dropdown-wrapper-item"><div class="dropdown block-selector"><button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy-'+val['option_id']+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+val['name_option']+'</button><div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy"><ul class="list-model" id="list_prod_device_'+val['option_id']+'"></ul></div></div></li>'
+                                    );
+                                  }
+                                   console.log("#"+val['name_option']+"");
+                                   $( "#list_prod_device_"+val['option_id']+"").append(
+                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input prod_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="'+val['option_value_id']+'" name="list_prod_device_'+val['option_id']+'"> <label class="form-check-label" for="'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
+                                   );
+                                })
+                                let options_value_id ={};
+                                $.each(options_id, function(key, option_id){
+                                  $(document).on('click', '.prod_device_option'+option_id, function(e) {
+                                  //$( ".prod_device_q" ).click(function(e) {
+                                     console.log("here");
+                                     var device_name = $(this).closest("li.form-check").find("input[name= list_prod_device_"+option_id+"]").val();
+                                     var option_value_id = $(this).closest("li.form-check").find("input[name= 'option_value']").val();
+                                     options_value_id[option_id] = option_value_id;
+                                     console.log(options_value_id);
+                                     $('#dropdown-sorting-buy-'+option_id).text(device_name);
+                                     //selected_gb_mac = device_name;
+                                     if(options_id.length == Object.keys(options_value_id).length)
+                                     {
+                                       console.log(true);
+                                       console.log(device_id);
+                                       console.log(Object.values(options_value_id));
+                                       getPrice(device_id,Object.values(options_value_id))
+                                     }
+                                   })
+                                 })
                                  }
                               });
                               //$('#second_step').show();
                            });
-                           //$( ".device_gb" ).click(function(e) {
+                        </script>
+
+                        <script>
+                           function getPrice(model, options)
+                           {
+                             $.ajax({
+                                //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                url: 'index.php?route=information/tradein/getDevicePriceProd&prod_device_id='+model+'&device_options[]=' +options,
+                                dataType: 'json',
+                                success: function(json) {
+                                  json = json['rows'];
+                                  console.log(json);
+                                 //console.log(json['rows'][0]['device_discount']);
+                                  let el =[];
+                                  let price = 0;
+                                  $.each(json, function(key,val){
+                                     console.log(val);
+                                     if (!el.includes(val['model_price'])) {
+                                       el.push(val['model_price']);
+                                       price += Number(val['model_price']);
+                                       console.log(price);
+                                     }
+                                     price += Number(val['option_price']);
+                                 })
+                                 $( "#right_price_result" ).text( "Вартість складає до "+price.toFixed(0)+"грн");
+                                 var main_price_uah = price.toFixed(0);
+                                 var main_price_usd = (price / 27).toFixed(0);
+                                 updateNewPriceText(main_price_uah, main_price_usd);
+                                 console.log(main_price_uah, main_price_usd);
+                                 //updateTextPrice(price);
+                                }
+                             });
+                             //alert(selected_model_mac, selected_gb_mac, selected_year_mac);
+
+                           }
 
                         </script>
                      </li>
@@ -768,23 +975,23 @@
                         </div>
                      </li>
                   </ul> -->
-                  <p class="text-result">Вартість iPhone 12 Pro Max (128GB) складає до 1 140 $</p>
+                  <p class="text-result" id="right_price_result"></p> <!-- Вартість iPhone 12 Pro Max (128GB) складає до 1 140 $ -->
                </div>
                <div class="block-images">
                   <div class="wrapper-img"><img src="/catalog/view/theme/applejoy/template/html/images/main-images-trade.aa2e7581.webp" alt="image" class="img"></div>
                   <ul class="table-result">
                      <li class="item-table-result">
                         <span class="name">Стара ціна</span>
-                        <span id="old_price_usd">1 255$</span>
-                        <span id="old_price">35 115 ₴</span>
+                        <span id="old_price_usd"> - $</span>
+                        <span id="old_price"> - ₴</span>
                      </li>
                      <li class="item-table-result new-price">
                         <span class="name">Нова ціна</span>
-                        <span id="new_price_usd">415 $</span>
-                        <span id="new_price">11 612 ₴</span>
+                        <span id="new_price_usd"> - $</span>
+                        <span id="new_price"> - ₴</span>
                      </li>
                   </ul>
-                  <p id="final_text" class="text-result fw-500">Вітаємо, Ваша економія складає 23 503 грн</p>
+                  <p id="final_text" class="text-result fw-500"></p> <!-- Вітаємо, Ваша економія складає 23 503 грн -->
                </div>
 
                <script>
@@ -794,6 +1001,9 @@
                   var new_price = 0;
                   var new_price_usd = 0;
 
+                  var global_price = 0;
+                  var global_price_usd = 0;
+
                   //var final_price = 0;
                   //var final_price_usd = 0;
 
@@ -802,23 +1012,87 @@
                      // Берем цену (грн)
                      var device_price = $(this).closest("li.form-check").find("input[name='device_price']").val();
                      // Конвертируем цену (долл)
-                     var converted_price = (device_price / 27).toFixed(2);
+                     var converted_price = (device_price / 27).toFixed(0);
                      // Заносим цену в общие переменные
-                     new_price = (old_price - device_price).toFixed(2);
-                     new_price_usd = (old_price_usd - converted_price).toFixed(2);
+                     new_price = (old_price - device_price).toFixed(0);
+                     new_price_usd = (old_price_usd - converted_price).toFixed(0);
                      // Обновляем текст-инфу
                      $("#new_price").text(new_price + " ₴");
                      $("#new_price_usd").text(new_price_usd + " $");
                      // Считаем и обновляем цену экономии
                      var diff_uah = old_price - new_price;
-                     $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + diff_uah + " грн" );
+                     //$( "#final_text" ).text( "Вітаємо, Ваша економія складає " + diff_uah + " грн" );
                   });
+                  function updateTextPrice(device_price){
+                     console.log("UpdatingFunction");
+                     var old_price = 0;
+                     var old_price_usd = 0;
+                     var converted_price = (device_price / 27).toFixed(0);
+                     // Заносим цену в общие переменные
+                     new_price = (old_price - device_price).toFixed(0);
+                     new_price_usd = (old_price_usd - converted_price).toFixed(0);
+                     // Обновляем текст-инфу
+                     // Считаем и обновляем цену экономии
+                     var diff_uah = old_price - new_price;
+                     //$( "#final_text" ).text( "Вітаємо, Ваша економія складає " + diff_uah + " грн" );
+                  }
+                  function updateOldPriceText(old_price_p, old_price_usd_p){
+                     //console.log();
+                     //global_price = old_price;
+                     old_price = old_price_p;
+                     old_price_usd = old_price_usd_p;
+
+                     if(new_price != 0){
+                        console.log("Updating old price");
+                        global_price = (new_price - old_price).toFixed(0);
+                        global_price_usd = (new_price_usd - old_price_usd).toFixed(0);
+
+                        //alert("Старая цена: " + old_price_usd + "Новая цена: " + new_price_usd);   
+
+                        // Обновляем Старую Цену
+                        $("#old_price").text(new_price + " ₴");
+                        $("#old_price_usd").text(new_price_usd + " $");
+                        // Обновляем новую цену
+                        $("#new_price").text(global_price + " ₴");
+                        $("#new_price_usd").text(global_price_usd + " $");
+                        // Обновляем экономию
+                        var diff_uah = new_price - old_price;
+                        $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
+                     } else {
+                        alert("Виберіть бажаний девайс");
+                     }
+                     //}
+                  }
+                  function updateNewPriceText(new_price_p, new_price_usd_p){
+                     //console.log("old_prices " + old_price + " " + old_price_usd);
+                     new_price = new_price_p;
+                     new_price_usd = new_price_usd_p;
+                     if(old_price != 0){
+                        console.log("Updating new price");
+                        global_price = (new_price - old_price).toFixed(0);
+                        global_price_usd = (new_price_usd - old_price_usd).toFixed(0);
+
+                        //alert("Старая цена: " + old_price_usd + "Новая цена: " + new_price_usd);
+
+                        // Обновляем Старую Цену
+                        $("#old_price").text(new_price + " ₴");
+                        $("#old_price_usd").text(new_price_usd + " $");
+                        // Обновляем новую цену
+                        $("#new_price").text(global_price + " ₴");
+                        $("#new_price_usd").text(global_price_usd + " $");
+                        // Обновляем экономию
+                        var diff_uah = new_price - old_price;
+                        $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
+                     } else {
+                        alert("Виберіть ваш девайс");
+                     }
+                  }
                   // Дейвайсы на сайте
-                  $( ".prod_device" ).click(function(e) {
+                  $( ".prod_device1" ).click(function(e) {
                      // Берем цену (грн)
                      var device_price = $(this).closest("li.form-check").find("input[name='prod_price']").val();
                      // Конвертируем цену (долл)
-                     var converted_price = (device_price / 27).toFixed(2);
+                     var converted_price = (device_price / 27).toFixed(0);
                      // Заносим цену в общие переменные
                      old_price = device_price;
                      old_price_usd = converted_price;
