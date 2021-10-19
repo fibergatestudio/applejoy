@@ -114,6 +114,10 @@ class ControllerAccountWishList extends Controller {
 	}
 
 	public function add() {
+		if (!$this->customer->isLogged()) {
+			echo 0;
+			return false;
+		}
 		$this->load->language('account/wishlist');
 
 		$json = array();
@@ -158,6 +162,10 @@ class ControllerAccountWishList extends Controller {
 	}
 
 	public function remove(){
+		if (!$this->customer->isLogged()) {
+			echo 0;
+			return false;
+		}
 		$this->load->language('account/wishlist');
 
 		$json = array();
