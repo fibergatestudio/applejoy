@@ -565,7 +565,7 @@
                         </div>
                      </li>
                   </ul>
-                  <p class="text-result" id="left_price_result">Вартість iPhone 12 mini (128GB) складає до 840 $</p>
+                  <p class="text-result" id="left_price_result"></p> <!-- Вартість iPhone 12 mini (128GB) складає до 840 $ -->
                </div>
 
                <div class="block-device-buy block-trade-grid">
@@ -975,23 +975,23 @@
                         </div>
                      </li>
                   </ul> -->
-                  <p class="text-result" id = "right_price_result">Вартість iPhone 12 Pro Max (128GB) складає до 1 140 $</p>
+                  <p class="text-result" id="right_price_result"></p> <!-- Вартість iPhone 12 Pro Max (128GB) складає до 1 140 $ -->
                </div>
                <div class="block-images">
                   <div class="wrapper-img"><img src="/catalog/view/theme/applejoy/template/html/images/main-images-trade.aa2e7581.webp" alt="image" class="img"></div>
                   <ul class="table-result">
                      <li class="item-table-result">
                         <span class="name">Стара ціна</span>
-                        <span id="old_price_usd">1 255$</span>
-                        <span id="old_price">35 115 ₴</span>
+                        <span id="old_price_usd"> - $</span>
+                        <span id="old_price"> - ₴</span>
                      </li>
                      <li class="item-table-result new-price">
                         <span class="name">Нова ціна</span>
-                        <span id="new_price_usd">415 $</span>
-                        <span id="new_price">11 612 ₴</span>
+                        <span id="new_price_usd"> - $</span>
+                        <span id="new_price"> - ₴</span>
                      </li>
                   </ul>
-                  <p id="final_text" class="text-result fw-500">Вітаємо, Ваша економія складає 23 503 грн</p>
+                  <p id="final_text" class="text-result fw-500"></p> <!-- Вітаємо, Ваша економія складає 23 503 грн -->
                </div>
 
                <script>
@@ -1047,7 +1047,7 @@
                         global_price = (new_price - old_price).toFixed(0);
                         global_price_usd = (new_price_usd - old_price_usd).toFixed(0);
 
-                        alert("Старая цена: " + old_price_usd + "Новая цена: " + new_price_usd);   
+                        //alert("Старая цена: " + old_price_usd + "Новая цена: " + new_price_usd);   
 
                         // Обновляем Старую Цену
                         $("#old_price").text(new_price + " ₴");
@@ -1059,7 +1059,7 @@
                         var diff_uah = new_price - old_price;
                         $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
                      } else {
-                        alert("Выберите Желаемый девайс");
+                        alert("Виберіть бажаний девайс");
                      }
                      //}
                   }
@@ -1072,7 +1072,7 @@
                         global_price = (new_price - old_price).toFixed(0);
                         global_price_usd = (new_price_usd - old_price_usd).toFixed(0);
 
-                        alert("Старая цена: " + old_price_usd + "Новая цена: " + new_price_usd);
+                        //alert("Старая цена: " + old_price_usd + "Новая цена: " + new_price_usd);
 
                         // Обновляем Старую Цену
                         $("#old_price").text(new_price + " ₴");
@@ -1084,7 +1084,7 @@
                         var diff_uah = new_price - old_price;
                         $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
                      } else {
-                        alert("Выберите Ваш девайс");
+                        alert("Виберіть ваш девайс");
                      }
                   }
                   // Дейвайсы на сайте
