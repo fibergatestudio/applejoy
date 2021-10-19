@@ -1,4 +1,5 @@
 {{ header }}
+
 <div class="main-page page-vacancies">
   <nav aria-label="breadcrumb" class="block-breadcrumb">
      <ol class="breadcrumb container">
@@ -64,14 +65,36 @@
           <label for="Textarea1" class="form-label">{{ your_comment }}</label>
           <textarea class="form-control" name="comment" id="Textarea1" rows="4" placeholder="{{ comment_placeholder }}"></textarea>
         </div>
-        <button class="btn btn-custom-project" id="btn-send" onclick="sendform()">{{ text_button_send }}</button>
+        <button class="btn btn-custom-project" id="btn-send" onclick="sendform();$('#Modal-vacanse-done').modal('show');">{{ text_button_send }}</button>
       </form>
     </div>
   </section>
+
+</div>
+<style>.modal-backdrop{opacity:0.5 !important;}</style>
+<div class="modal" id="Modal-vacanse-done" tabindex="-1" role="dialog" aria-labelledby="order-vacanse-ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            		<span aria-hidden="true" class="icon-close"></span>
+            	</button>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title">Спасибо!</h5>
+                <span class="text-thank fw-500">Ваш запрос на обработке!</span>
+            </div>
+        	<div class="modal-bottom"><button class="btn-custom-project-2" data-dismiss="modal" aria-label="Close">Продолжить</button></div>
+        </div>
+   	</div>
 </div>
 
 <script>
+
 function sendform(){
+	$('#Modal-vacanse-done').modal('show');
+	//$('#Modal-vacanse-done').addClass('show');
+	return;
   $.ajax({
 		url: 'index.php?route=custompage/vacancies/addSubscribe',
     type: 'post',
@@ -85,8 +108,10 @@ function sendform(){
       } else if(!json['success']){
         console.log();
       } else {
+      	$('#Modal-order-done').modal();
         $('#send-vacancy')[0].reset();
         $("#btn-send").css("border", "2px solid blue");
+
       }
 
     }

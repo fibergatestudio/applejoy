@@ -1,0 +1,61 @@
+{{ header }}
+  <div class="main-page">
+  <nav aria-label="breadcrumb" class="block-breadcrumb">
+    <ol class="breadcrumb container">
+        {% for breadcrumb in breadcrumbs %}
+        <li class="breadcrumb-item active"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+  </nav>
+  <section class="page-feedback">
+      {{ column_left }}
+
+      {% if column_left and column_right %}
+        {% set class = 'col-sm-6' %}
+      {% elseif column_left or column_right %}
+        {% set class = 'col-sm-9' %}
+      {% else %}
+        {% set class = 'col-sm-12' %}
+      {% endif %}
+      <div class="{{ class }}">{{ content_top }}
+        <div class="block-title">
+          <h1 class="title-section container">{{ text_feedback_shop }}</h1>
+        </div>
+        <div class="bg-feedback">
+          <div class="container">
+              <ul class="list-feedback" id="list">
+                {% for comment in comments %}
+                <li class="item-feedback">
+                  <div class="wrapper-img"><img src="/image/{{ comment.image }}" alt="photo-user" class="img-fluid"></div>
+                  <div class="feedback">
+                    <div class="header-feedback"><span class="fw-700 user">{{ comment.author_name }}</span> <span class="data-feedback">{{ comment.date }}</span></div>
+                    <p class="text-feedback">{{ comment.comment }}</p>
+                  </div>
+                  <span class="icon icon-facebook-feedback"></span>
+                </li>
+                {% endfor %}
+              </ul>
+          <button class="btn-custom-project-2" onclick="loadMore()">{{ text_more_comments }}</button></div>
+        </div>
+      </div>
+      {{ column_right }}
+  </section>
+
+<script type="text/javascript">
+  let page = 1;
+  function loadMore(){
+    page = page+1;
+    $.ajax({
+      url:'https://applejoytest.xyz/index.php?route=information/feedback&page=' + page,
+      type:'GET',
+      success: function(data){
+        let new_ = $($.parseHTML(data)).find('#list');
+        if((new_.children().length) == 0)
+          $('.btn-custom-project-2').remove();
+        $('#list').append(new_.html());
+      }
+    });
+  }
+</script>
+
+{{ footer }}

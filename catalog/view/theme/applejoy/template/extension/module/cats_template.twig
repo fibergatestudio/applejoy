@@ -18,7 +18,7 @@
             <li class="nav-item"><a class="nav-link fw-500" href="{{ repairs_href }}"><span>{{ repairs }}</span></a></li>
             <li class="nav-item"><a class="nav-link fw-500" href="{{ blog_href }}"><span>{{ text_blog }}</span></a></li>
             <li class="nav-item"><a class="nav-link fw-500" href="{{ vacancies_href }}"><span>{{ text_vacansion }}</span></a></li>
-            <li class="nav-item"><a class="nav-link fw-500" href="#"><span>{{ text_review }}</span></a></li>
+            <li class="nav-item"><a class="nav-link fw-500" href="{{ feedback_href }}"><span>{{ text_review }}</span></a></li>
             <li class="nav-item"><a class="nav-link fw-500" href="{{ contact }}"><span>{{ btn_contact }}</span></a></li>
          </ul>
          <ul class="main-nav navbar-nav">
@@ -146,7 +146,7 @@
             </ul>
             <ul class="d-none d-lg-flex menu-contact">
                <li class="icon icon-clockwise">{{ open }}</li>
-               <li class="icon icon-phone"><a href="#">{{ telephone }}</a></li>
+               <li class="icon icon-phone"><a href="tel:{{ telephone }}">{{ telephone }}</a></li>
                {% if logged %}
                <li class="dropdown"><a class="dropdown-item lang icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon icon-user"></span></a>
                  <div class="dropdown-menu">
