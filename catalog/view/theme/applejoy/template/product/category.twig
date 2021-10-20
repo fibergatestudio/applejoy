@@ -1,170 +1,436 @@
 {{ header }}
-<div id="product-category" class="container">
-  <ul class="breadcrumb">
-    {% for breadcrumb in breadcrumbs %}
-    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-    {% endfor %}
-  </ul>
-  <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-    {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-    {% set class = 'col-sm-9' %}
-    {% else %}
-    {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
-      <h2>{{ heading_title }}</h2>
-      {% if thumb or description %}
-      <div class="row"> {% if thumb %}
-        <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail" /></div>
-        {% endif %}
-        {% if description %}
-        <div class="col-sm-10">{{ description }}</div>
-        {% endif %}</div>
-      <hr>
-      {% endif %}
-      {% if categories %}
-      <h3>{{ text_refine }}</h3>
-      {% if categories|length <= 5 %}
-      <div class="row">
-        <div class="col-sm-3">
-          <ul>
-            {% for category in categories %}
-            <li><a href="{{ category.href }}">{{ category.name }}</a></li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-      {% else %}
-      <div class="row">{% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
-        <div class="col-sm-3">
-          <ul>
-            {% for child in category %}
-            <li><a href="{{ child.href }}">{{ child.name }}</a></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endfor %}</div>
-      <br />
-      {% endif %}
-      {% endif %}
-      {% if products %}
-      <div class="row">
-        <div class="col-md-2 col-sm-6 hidden-xs">
-          <div class="btn-group btn-group-sm">
-            <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="{{ button_list }}"><i class="fa fa-th-list"></i></button>
-            <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="{{ button_grid }}"><i class="fa fa-th"></i></button>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="form-group"><a href="{{ compare }}" id="compare-total" class="btn btn-link">{{ text_compare }}</a></div>
-        </div>
-        <div class="col-md-4 col-xs-6">
-          <div class="form-group input-group input-group-sm">
-            <label class="input-group-addon" for="input-sort">{{ text_sort }}</label>
-            <select id="input-sort" class="form-control" onchange="location = this.value;">
-              
-              
-              
-              {% for sorts in sorts %}
-              {% if sorts.value == '%s-%s'|format(sort, order) %}
-              
-              
-              
-              <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-              
-              
-              
-              {% else %}
-              
-              
-              
-              <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-              
-              
-              
-              {% endif %}
-              {% endfor %}
-            
-            
-            
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3 col-xs-6">
-          <div class="form-group input-group input-group-sm">
-            <label class="input-group-addon" for="input-limit">{{ text_limit }}</label>
-            <select id="input-limit" class="form-control" onchange="location = this.value;">
-              
-              
-              
-              {% for limits in limits %}
-              {% if limits.value == limit %}
-              
-              
-              
-              <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
-              
-              
-              
-              {% else %}
-              
-              
-              
-              <option value="{{ limits.href }}">{{ limits.text }}</option>
-              
-              
-              
-              {% endif %}
-              {% endfor %}
-            
-            
-            
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="row"> {% for product in products %}
-        <div class="product-layout product-list col-xs-12">
-          <div class="product-thumb">
-            <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
-            <div>
-              <div class="caption">
-                <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-                <p>{{ product.description }}</p>
-                {% if product.price %}
-                <p class="price"> {% if not product.special %}
-                  {{ product.price }}
-                  {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
-                  {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
-                {% endif %}
-                {% if product.rating %}
-                <div class="rating"> {% for i in 1..5 %}
-                  {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>{% endif %}
-                  {% endfor %} </div>
-                {% endif %} </div>
-              <div class="button-group">
-                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
-                <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
-                <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
-              </div>
+
+<div class="main-page page-catalog">
+  <nav aria-label="breadcrumb" class="container block-breadcrumb">
+                <ol class="breadcrumb">
+                  {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                  {% endfor %}
+                </ol>
+            </nav>
+   <div class="container">
+                <div class="main-catalog-top">
+                    <h1 class="title-section title-section-2 pb-md-0">MacBook</h1>
+                    <div class="block-filter-product">
+                        <div class="d-md-none">
+                            <button class="btn btn-custom-project-2" type="button" data-toggle="collapse" data-target="#filter-collapse" aria-expanded="false" aria-controls="filter-collapse">
+                                <span class="icon icon-mob-filter"></span> <span>Фільтр</span> <i class="icon icon-arrow-select"></i>
+                            </button>
+                        </div>
+                        <div class="block-sort d-md-none">
+                            <div class="dropdown">
+                                <button class="btn ml-1 ml-lg-3 icon-arrow-select" type="button" id="dropdown-sorting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Сортування:</button>
+                                <div class="dropdown-menu rounded-0" aria-labelledby="dropdown-sorting">
+                                    <a class="dropdown-item" href="#">за популярністю</a> <a class="dropdown-item" href="#">спочатку дешевше</a> <a class="dropdown-item" href="#">спочатку дорожче</a>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="block-filter-product-desktop">
+                            <li>Сортування:</li>
+                            <li class="active border-right">за популярністю</li>
+                            <li class="border-right">спочатку дешевше</li>
+                            <li>спочатку дорожче</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="main-catalog">
+                    <div class="active-filter">
+                        <ul class="list-active-filter line-bottom">
+                            <li>
+                                <span class="name-item-filter">Модель:</span>
+                                <ul class="list-item-filter">
+                                    <li>
+                                        <div class="item-filter"><span>iPhone 12 Pro Max</span><span class="icon icon-close"></span></div>
+                                    </li>
+                                    <li>
+                                        <div class="item-filter"><span>iPhone 11</span><span class="icon icon-close"></span></div>
+                                    </li>
+                                    <li>
+                                        <div class="item-filter"><span>iPhone 7 Pro </span><span class="icon icon-close"></span></div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="name-item-filter">Колір:</span><span class="item-filter">Black<span class="icon icon-close"></span></span>
+                            </li>
+                        </ul>
+                        <button class="btn btn-custom-project-2 my-3">Очистити фільтр</button>
+                    </div>
+                    <div class="collapse" id="filter-collapse">
+                        <div class="filter-catalog">
+                            <div class="block-filter-price">
+                                <div>
+                                    <span class="title fw-500">Ціна, грн.</span>
+                                    <div class="filter-price">
+                                        <span>від</span> <input type="number" class="form-control" placeholder="10" /> <span>до</span> <input type="number" class="form-control" placeholder="100" />
+                                        <button class="btn btn-custom-project-2">ок</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="true" aria-controls="collapse">
+                                                <span class="title">Модель</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse" class="collapse show block-scroll" aria-labelledby="heading">
+                                        <div class="card-body scroll">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="macbook-pro-16" />
+                                                <label class="form-check-label" for="macbook-pro-16"><span>MacBook Pro 16"</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="macbook-pro-15" />
+                                                <label class="form-check-label" for="macbook-pro-15"><span>MacBook Pro 15"</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="macbook-pro-14" />
+                                                <label class="form-check-label" for="macbook-pro-14"><span>MacBook Pro 14"</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="macbook-pro-13" />
+                                                <label class="form-check-label" for="macbook-pro-13"><span>MacBook Pro 13"</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="macbook-air-13,3" />
+                                                <label class="form-check-label" for="macbook-air-13,3"><span>MacBook Air 13,3"</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="macbook-12" />
+                                                <label class="form-check-label" for="macbook-12"><span>MacBook 12"</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-1">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                                <span class="title">Б/у MacBook</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-1" class="collapse block-scroll" aria-labelledby="heading-1">
+                                        <div class="card-body scroll">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="used-macbook-pro-16" />
+                                                <label class="form-check-label" for="used-macbook-pro-16"><span>б/у MacBook Pro 16"</span><span class="quantity-product">4</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="used-macbook-pro-15" />
+                                                <label class="form-check-label" for="used-macbook-pro-15"><span>б/у MacBook Pro 15"</span><span class="quantity-product">12</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="used-macbook-pro-14" />
+                                                <label class="form-check-label" for="used-macbook-pro-14"><span>б/у MacBook Pro 14"</span><span class="quantity-product">26</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="used-macbook-pro-13" />
+                                                <label class="form-check-label" for="used-macbook-pro-13"><span>б/у MacBook Pro 13"</span><span class="quantity-product">26</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="used-macbook-air" />
+                                                <label class="form-check-label" for="used-macbook-air"><span>б/у MacBook Air 13,3"</span><span class="quantity-product">16</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="used-macbook-12" />
+                                                <label class="form-check-label" for="used-macbook-12"><span>б/у MacBook 12"</span><span class="quantity-product">23</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-2">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-2" aria-expanded="true" aria-controls="collapse-2">
+                                                <span class="title">Акційна пропозиція</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-2" class="collapse" aria-labelledby="heading-2">
+                                        <div class="card-body scroll">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="sale-macbook-pro-16" />
+                                                <label class="form-check-label" for="sale-macbook-pro-16"><span>MacBook Pro 16"</span><span class="quantity-product">6</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="sale-macbook-pro-15" />
+                                                <label class="form-check-label" for="sale-macbook-pro-15"><span>MacBook Pro 15"</span><span class="quantity-product">26</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="sale-macbook-pro-14" />
+                                                <label class="form-check-label" for="sale-macbook-pro-14"><span>MacBook Pro 14"</span><span class="quantity-product">26</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="sale-macbook-pro-13" />
+                                                <label class="form-check-label" for="sale-macbook-pro-13"><span>MacBook Pro 13"</span><span class="quantity-product">16</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="sale-macbook-air" />
+                                                <label class="form-check-label" for="sale-macbook-air"><span>MacBook Air 13,3"</span><span class="quantity-product">12</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="sale-macbook-12" />
+                                                <label class="form-check-label" for="sale-macbook-12"><span>MacBook 12"</span><span class="quantity-product">5</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-3">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-3" aria-expanded="true" aria-controls="collapse-3">
+                                                <span class="title">Рік виходу</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-3" class="collapse show block-scroll" aria-labelledby="heading-3">
+                                        <div class="card-body scroll">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="2021" /> <label class="form-check-label" for="2021"><span>2021</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id=" 2020" /> <label class="form-check-label" for=" 2020"><span>2020</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="2019" /> <label class="form-check-label" for="2019"><span>2019</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="2018" /> <label class="form-check-label" for="2018"><span>2018</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="2017" /> <label class="form-check-label" for="2017"><span>2017</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="other" /> <label class="form-check-label" for="other"><span>Інше</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-4">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-4" aria-expanded="true" aria-controls="collapse-4">
+                                                <span class="title">Процесор</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-4" class="collapse show block-scroll" aria-labelledby="heading-4">
+                                        <div class="card-body scroll">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="apple-m1" /> <label class="form-check-label" for="apple-m1"><span>Apple M1</span><span class="quantity-product">22</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="apple-m1-x" />
+                                                <label class="form-check-label" for="apple-m1-x"><span>Apple M1X</span><span class="quantity-product">13</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="intel-core-i3" />
+                                                <label class="form-check-label" for="intel-core-i3"><span>Intel Core i3</span><span class="quantity-product">24</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="intel-core-i5" />
+                                                <label class="form-check-label" for="intel-core-i5"><span>Intel Core i5</span><span class="quantity-product">16</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="intel-core-i7" />
+                                                <label class="form-check-label" for="intel-core-i7"><span>Intel Core i7</span><span class="quantity-product">17</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="intel-core-i9" />
+                                                <label class="form-check-label" for="intel-core-i9"><span>Intel Core i9</span><span class="quantity-product">20</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-5">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-5" aria-expanded="true" aria-controls="collapse-5">
+                                                <span class="title">Оративна пам'ять (RAM)</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-5" class="collapse show block-scroll" aria-labelledby="heading-5">
+                                        <div class="card-body scroll">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="gb-8" /> <label class="form-check-label" for="gb-8"><span>8 Гб</span><span class="quantity-product">26</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="gb-16" /> <label class="form-check-label" for="gb-16"><span>16 Гб</span><span class="quantity-product">3</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="gb-32" /> <label class="form-check-label" for="gb-32"><span>32 Гб</span><span class="quantity-product">6</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="gb-64" /> <label class="form-check-label" for="gb-64"><span>64 Гб</span><span class="quantity-product">4</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-6">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-6" aria-expanded="true" aria-controls="collapse-6">
+                                                <span class="title">Об'єм пам'яті (SSD)</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-6" class="collapse show block-scroll" aria-labelledby="heading-6">
+                                        <div class="card-body scroll">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ssd-128" /> <label class="form-check-label" for="ssd-128"><span>128 Гб</span><span class="quantity-product">32</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ssd-256" /> <label class="form-check-label" for="ssd-256"><span>256 Гб</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ssd-512" /> <label class="form-check-label" for="ssd-512"><span>512 Гб</span><span class="quantity-product">15</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ssd-1" /> <label class="form-check-label" for="ssd-1"><span>1 Тб</span><span class="quantity-product">24</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ssd-2" /> <label class="form-check-label" for="ssd-2"><span>2 Тб</span><span class="quantity-product">34</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ssd-4" /> <label class="form-check-label" for="ssd-4"><span>4 Тб</span><span class="quantity-product">26</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ssd-8" /> <label class="form-check-label" for="ssd-8"><span>8 Тб</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-7">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-7" aria-expanded="true" aria-controls="collapse-7">
+                                                <span class="title">Колір</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-7" class="collapse show block-scroll" aria-labelledby="heading-7">
+                                        <div class="card-body scroll min">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="space-gray" />
+                                                <label class="form-check-label" for="space-gray"><span>Space Gray</span><span class="quantity-product">33</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="silver" /> <label class="form-check-label" for="silver"><span>Silver</span><span class="quantity-product">36</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="gold" /> <label class="form-check-label" for="gold"><span>Gold</span><span class="quantity-product">17</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-8">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-8" aria-expanded="true" aria-controls="collapse-8">
+                                                <span class="title">TouchBar</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-8" class="collapse show block-scroll" aria-labelledby="heading-8">
+                                        <div class="card-body scroll min">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="touchbar" /> <label class="form-check-label" for="touchbar"><span>З TouchBar</span><span class="quantity-product">25</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="touchbar-none" />
+                                                <label class="form-check-label" for="touchbar-none"><span>Без TouchBar</span><span class="quantity-product">6</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header line-top" id="heading-9">
+                                        <div class="mb-0 wrapper-title">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-9" aria-expanded="true" aria-controls="collapse-9">
+                                                <span class="title">Тип дисплея</span> <span class="icon icon-arrow-down"></span> <span class="icon icon-arrow-up"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-9" class="collapse show block-scroll" aria-labelledby="heading-9">
+                                        <div class="card-body scroll min">
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="ips" /> <label class="form-check-label" for="space-gray"><span>IPS</span><span class="quantity-product">6</span></label>
+                                            </div>
+                                            <div class="form-check custom-radios">
+                                                <input class="form-check-input" type="checkbox" value="" id="retina" /> <label class="form-check-label" for="silver"><span>Retina</span><span class="quantity-product">16</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-list-catalog">
+                        {% if products %}
+                        <ul class="list-catalog-product">
+                          {% for product in products %}
+                            <li class="item-product">
+
+                     <div class="wrapper-item-product">
+
+                        <div class="wrapper-img-product">
+
+                           <a href="{{ product.href }}" class="block-img"><img src="{{ product.thumb }}" alt="image-phone" class="img-product img-fluid"></a>
+
+                           {% if product.wish == 1 %}
+
+                           <div data-id="{{ product.product_id }}" title="{{ button_wishlist }}" onclick="wishlist.add(this);" class="icon icon-like active"></div>
+
+                           {% else %}
+
+                           <div data-id="{{ product.product_id }}" title="{{ button_wishlist }}" onclick="wishlist.add(this);" class="icon icon-like"></div>
+
+                           {% endif %}
+
+                        </div>
+
+                        <div><a href="{{ product.href }}" class="name-product">{{ product.name }}</a></div>
+
+                        <div class="item-product-bottom-wrapper">
+
+                           <div class="block-price">
+
+                              <span>Ціна</span>
+
+                              {% if product.special != false %}
+
+                              <div class="old-price"><span>750$</span><span>{{ product.price }}</span></div>
+
+                              <div class="new-price"><span>719 $</span><span>{{ product.special }}</span></div>
+
+                              {% else %}
+
+                              <div class="new-price"><span>719 $</span><span>{{ product.price }}</span></div>
+
+                              {% endif %}
+
+                           </div>
+
+                           <div class="block-bottom-buy"><a href="{{ product.href }}"><button class="btn-buy-product">Купити</button> </a><a href="#" class="btn-buy-one-click" data-product-id="{{ product.product_id }}">Купити в 1 клік</a></div>
+
+                        </div>
+
+                     </div>
+
+                  </li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                        {{ pagination }}
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        {% endfor %} </div>
-      <div class="row">
-        <div class="col-sm-6 text-left">{{ pagination }}</div>
-        <div class="col-sm-6 text-right">{{ results }}</div>
-      </div>
-      {% endif %}
-      {% if not categories and not products %}
-      <p>{{ text_empty }}</p>
-      <div class="buttons">
-        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      </div>
-      {% endif %}
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
 </div>
 {{ footer }} 
+
