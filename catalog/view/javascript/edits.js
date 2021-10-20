@@ -124,7 +124,6 @@ function mini_remove(cart_id, quantity){
 	cart.remove(cart_id);
 	var main_count = $('#cart_quantity').text();
 	$('#cart_quantity').text(parseInt(main_count) - quantity);
-	//alert("Quantity: " + quantity);
 	setTimeout(upload_minicart, 5);
 }
 
@@ -352,7 +351,6 @@ $('.plus').on('click', function(e) {
 				var vishlist_modal = vishlist_modal.find(".block-wrapper-card").eq(0);
 				 vishlist_modal.html(response);
 				 setTimeout(() => $('button[data-target="#Modal-product-in-vishlist"]').click(), 1000);
-				alert(response);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
