@@ -454,6 +454,7 @@ class ControllerProductProduct extends Controller {
 					'wish'        => $wish,
 				);
 			}
+			$data["in_wishlist"] = (int)$this->model_account_wishlist->productInWishlist($product_info['product_id']);
 
 			$data['text_action'] = $this->language->get('text_action');
 			$data['text_in_stok'] = $this->language->get('text_in_stok');
