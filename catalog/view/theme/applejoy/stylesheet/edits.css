@@ -1,21 +1,45 @@
-.item-block-function.basket .items-amount{
-	position: relative;
-	background: #f2273b;
-	color: #fff;
-	line-height: 16px;
-	width: 16px;
-	font-size: 10px;
-	text-align: center;
-	border-radius: 50%;
-}
-
-.modal.show .modal-dialog .modal-content{
-	margin-top: 180px;
-}
-button.modal-button{
-	display: none;
-}
-div.error-phone, div.error-checkbox{
-  color:red;
-  display: none;
+.item-block-function.basket .items-amount{
+
+	position: relative;
+
+	background: #f2273b;
+
+	color: #fff;
+
+	line-height: 16px;
+
+	width: 16px;
+
+	font-size: 10px;
+
+	text-align: center;
+
+	border-radius: 50%;
+
+}
+
+
+
+.modal.show .modal-dialog .modal-content{
+
+	margin-top: 180px;
+
+}
+
+button.modal-button{
+
+	display: none;
+
+}
+
+div.error-phone, div.error-checkbox{
+
+  color:red;
+
+  display: none;
+
+}
+
+.hover-cursor:hover {
+	cursor:pointer;
 }
