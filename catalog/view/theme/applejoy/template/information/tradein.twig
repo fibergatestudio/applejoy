@@ -215,9 +215,7 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-memory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Об'єм пам'яті</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-memory">
                                        <ul class="list-model" id="list_ipad_device_gb">
-                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb32-ipad" id="gb32-ipad" name="memory-ipad"> <label class="form-check-label" for="gb32-ipad">32 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64-ipad" id="gb64-ipad" name="memory-ipad"> <label class="form-check-label" for="gb64-ipad">64 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128-ipad" id="gb128-ipad" name="memory-ipad"> <label class="form-check-label" for="gb128-ipad">128 Gb</label></li> -->
+                                          <!-- -->
                                        </ul>
                                     </div>
                                  </div>
@@ -227,8 +225,7 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-internet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wi-Fi / LTE</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-internet">
                                        <ul class="list-model" id="list_ipad_conn">
-                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="wifi" id="wifi" name="internet"> <label class="form-check-label" for="wifi">WI-FI</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="LTE" id="LTE" name="internet"> <label class="form-check-label" for="LTE">LTE</label></li> -->
+                                          <!-- -->
                                        </ul>
                                     </div>
                                  </div>
@@ -397,8 +394,7 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-year" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Рік випуску</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-year">
                                        <ul class="list-model" id="list_mac_device_year">
-                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2020" id="2020" name="year"> <label class="form-check-label" for="2020">2020</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2021" id="2021" name="year"> <label class="form-check-label" for="2021">2021</label></li> -->
+                                          <!-- -->
                                        </ul>
                                     </div>
                                  </div>
@@ -408,8 +404,7 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-memory-macbook" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Об'єм пам'яті</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-memory-macbook">
                                        <ul class="list-model" id="list_mac_device_gb">
-                                          <!-- <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64-macbook" id="gb64-macbook" name="memory-macbook"> <label class="form-check-label" for="gb64-macbook">64 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128-ipad" id="gb128-macbook" name="memory-macbook"> <label class="form-check-label" for="gb128-macbook">128 Gb</label></li> -->
+                                          <!--  -->
                                        </ul>
                                     </div>
                                  </div>
@@ -571,6 +566,7 @@
                <div class="block-device-buy block-trade-grid">
                   <span class="title">Який девайс хотіли би купити?</span>
                   <ul class="list-btn-trade">
+                     {% if iphones is not empty %}
                      <li class="list-trade-item">
                         <div class="img-iphone-trade btn-trade new" data-toggle="collapse" data-target="#collapseIphoneBuy" aria-expanded="false" aria-controls="collapseIphoneBuy"><span>iPhone</span></div>
                         <div class="collapse" id="collapseIphoneBuy">
@@ -580,12 +576,12 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-model-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-modal">
                                        <ul class="list-model">
-                                          {% for prod_device in prod_devices %}
+                                          {% for iphone in iphones %}
                                              <li class="form-check custom-radios">
-                                               <input type="hidden" name="prod_price" value="{{ prod_device.price }}">
-                                               <input type="hidden" name="prod_id" value="{{ prod_device.product_id }}">
-                                                <input class="form-check-input prod_device" type="radio" value="{{ prod_device.model }}" id="iphone-12-buy{{ prod_device.product_id }}" name="model-buy">
-                                                <label class="form-check-label" for="iphone-12-buy{{ prod_device.product_id }}">{{ prod_device.model }} ( price {{ prod_device.price }} )</label>
+                                               <input type="hidden" name="prod_price" value="{{ iphone.price }}">
+                                               <input type="hidden" name="prod_id" value="{{ iphone.product_id }}">
+                                                <input class="form-check-input prod_device" type="radio" value="{{ iphone.model }}" id="iphone-12-buy{{ iphone.product_id }}" name="model-buy">
+                                                <label class="form-check-label" for="iphone-12-buy{{ iphone.product_id }}">{{ iphone.model }} ( price {{ iphone.price }} )</label>
                                              </li>
                                           {% endfor %}
                                        </ul>
@@ -593,45 +589,21 @@
                                  </div>
                               </li>
                             </ul>
-                            <ul class="dropdown-wrapper" id="el_list">
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Об'єм пам'яті</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy">
-                                       <ul class="list-model" id="list_prod_device_gb">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb32" id="gb32-buy" name="memory-buy"> <label class="form-check-label" for="gb32-buy">32 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64" id="gb64-buy" name="memory-buy"> <label class="form-check-label" for="gb64-buy">64 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128" id="gb128-buy" name="memory-buy"> <label class="form-check-label" for="gb128-buy">128 Gb</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-color-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Колір</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-color-buy">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="red" id="red-buy" name="color-buy"> <label class="form-check-label" for="red-buy">red</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="black" id="black-buy" name="color-buy"> <label class="form-check-label" for="black-buy">black</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                           </ul>
+                            <ul class="dropdown-wrapper" id="el_list"></ul>
                         </div>
                         <script>
 
                            $( ".prod_device" ).click(function(e) {
+                              console.log("IPHONE");
                               var device_name = $(this).closest("li.form-check").find("input[name='model-buy']").val();
                               $('#dropdown-sorting-model-buy').text(device_name);
 
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
-                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
                                  url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
-                                   $( "#el_list" ).empty();
+                                   clearAllLists();
                                    json = json['rows'];
                                    console.log(json);
 
@@ -649,7 +621,7 @@
                                   }
                                    console.log("#"+val['name_option']+"");
                                    $( "#list_prod_device_"+val['option_id']+"").append(
-                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input prod_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="'+val['option_value_id']+'" name="list_prod_device_'+val['option_id']+'"> <label class="form-check-label" for="'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
+                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input prod_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="list_prod_device_'+val['option_value_id']+'" name="list_prod_device_'+val['option_id']+'"> <label class="form-check-label" for="list_prod_device_'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
                                    );
                                 })
                                 let options_value_id ={};
@@ -677,44 +649,10 @@
                               //$('#second_step').show();
                            });
                         </script>
-
-                        <script>
-                           function getPrice(model, options)
-                           {
-                             $.ajax({
-                                //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                url: 'index.php?route=information/tradein/getDevicePriceProd&prod_device_id='+model+'&device_options[]=' +options,
-                                dataType: 'json',
-                                success: function(json) {
-                                  json = json['rows'];
-                                  console.log(json);
-                                 //console.log(json['rows'][0]['device_discount']);
-                                  let el =[];
-                                  let price = 0;
-                                  $.each(json, function(key,val){
-                                     console.log(val);
-                                     if (!el.includes(val['model_price'])) {
-                                       el.push(val['model_price']);
-                                       price += Number(val['model_price']);
-                                       console.log(price);
-                                     }
-                                     price += Number(val['option_price']);
-                                 })
-                                 $( "#right_price_result" ).text( "Вартість складає до "+price.toFixed(0)+"грн");
-                                 var main_price_uah = price.toFixed(0);
-                                 var main_price_usd = (price / 27).toFixed(0);
-                                 updateNewPriceText(main_price_uah, main_price_usd);
-                                 console.log(main_price_uah, main_price_usd);
-                                 //updateTextPrice(price);
-                                }
-                             });
-                             //alert(selected_model_mac, selected_gb_mac, selected_year_mac);
-
-                           }
-
-                        </script>
                      </li>
-                     <!-- <li class="list-trade-item">
+                     {% endif %}
+                     {% if ipads is not empty %}
+                     <li class="list-trade-item">
                         <div class="img-ipad-trade btn-trade new" data-toggle="collapse" data-target="#collapseIpadBuy" aria-expanded="false" aria-controls="collapseIpadBuy"><span>iPad</span></div>
                         <div class="collapse" id="collapseIpadBuy">
                            <ul class="dropdown-wrapper">
@@ -723,101 +661,167 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-model-ipad-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель</button>
                                     <div class="dropdown-menu dropdown-menu-right rounded-0 keep-open" aria-labelledby="dropdown-sorting-model-ipad-buy">
                                        <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="ipad" id="ipad-buy" name="model-ipad-buy"> <label class="form-check-label" for="ipad-buy">iPad</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="ipad-2" id="ipad-2-buy" name="model-ipad-buy"> <label class="form-check-label" for="ipad-2-buy">iPad-2</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-memory-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Об'єм пам'яті</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-memory-buy">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb32-ipad-buy" id="gb32-ipad-buy" name="memory-ipad-buy"> <label class="form-check-label" for="gb32-ipad-buy">32 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64-ipad-buy" id="gb64-ipad-buy" name="memory-ipad-buy"> <label class="form-check-label" for="gb64-ipad-buy">64 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128-ipad-buy" id="gb128-ipad-buy" name="memory-ipad-buy"> <label class="form-check-label" for="gb128-ipad-buy">128 Gb</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="sorting-color-ipad-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Колір</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="sorting-color-ipad-buy">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="red" id="red-ipad-buy" name="color-buy"> <label class="form-check-label" for="red-ipad-buy">red</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="black" id="black-ipad-buy" name="color-buy"> <label class="form-check-label" for="black-ipad-buy">black</label></li>
+                                            {% for ipad in ipads %}
+                                                <li class="form-check custom-radios">
+                                                   <input type="hidden" name="prod_price" value="{{ ipad.price }}">
+                                                   <input type="hidden" name="prod_id" value="{{ ipad.product_id }}">
+                                                   <input class="form-check-input prod_ipad_device" type="radio" value="{{ ipad.model }}" id="ipad_prod{{ ipad.product_id }}" name="model_ipad">
+                                                   <label class="form-check-label" for="ipad_prod{{ ipad.product_id }}">{{ ipad.model }} ( price {{ ipad.price }} )</label>
+                                                </li>
+                                             {% endfor %}
                                        </ul>
                                     </div>
                                  </div>
                               </li>
                            </ul>
+                           <ul class="dropdown-wrapper" id="el_ipad_list"></ul>
                         </div>
+                        <script>
+
+                           $( ".prod_ipad_device" ).click(function(e) {
+                              console.log("IPADS");
+                              var device_name = $(this).closest("li.form-check").find("input[name='model_ipad']").val();
+                              $('#dropdown-sorting-model-ipad-buy').text(device_name);
+                              var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
+                              console.log(device_id);
+                                 $.ajax({
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 dataType: 'json',
+                                 success: function(json) {
+                                   clearAllLists();
+                                   json = json['rows'];
+                                   console.log(json);
+
+                                   let el =[];
+                                   let options_id =[];
+                                $.each(json, function(key,val){
+                                  console.log(key);
+                                  if (!el.includes(val['name_option'])) {
+                                    el.push(val['name_option']);
+                                    options_id.push(val['option_id']);
+
+                                    $( "#el_ipad_list" ).append(
+                                    '<li class="dropdown-wrapper-item"><div class="dropdown block-selector"><button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy-'+val['option_id']+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+val['name_option']+'</button><div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy"><ul class="list-model" id="list_ipad_prod_device_'+val['option_id']+'"></ul></div></div></li>'
+                                    );
+                                  }
+                                   console.log("#"+val['name_option']+"");
+                                   $( "#list_ipad_prod_device_"+val['option_id']+"").append(
+                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input ipad_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="list_ipad_prod_device_'+val['option_value_id']+'" name="list_ipad_prod_device_'+val['option_id']+'"> <label class="form-check-label" for="list_ipad_prod_device_'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
+                                   );
+                                })
+                                let options_value_id ={};
+                                $.each(options_id, function(key, option_id){
+                                  $(document).on('click', '.ipad_device_option'+option_id, function(e) {
+                                  //$( ".prod_device_q" ).click(function(e) {
+                                     //console.log("here");
+                                     var device_name = $(this).closest("li.form-check").find("input[name= list_ipad_prod_device_"+option_id+"]").val();
+                                     var option_value_id = $(this).closest("li.form-check").find("input[name= 'option_value']").val();
+                                     options_value_id[option_id] = option_value_id;
+                                     console.log(options_value_id);
+                                     $('#dropdown-sorting-buy-'+option_id).text(device_name);
+                                     //selected_gb_mac = device_name;
+                                     if(options_id.length == Object.keys(options_value_id).length)
+                                     {
+                                       console.log(true);
+                                       console.log(device_id);
+                                       console.log(Object.values(options_value_id));
+                                       getPrice(device_id,Object.values(options_value_id))
+                                     }
+                                   })
+                                 })
+                                 }
+                              });
+                              //$('#second_step').show();
+                           });
+                        </script>
                      </li>
+                     {% endif %}
+                     {% if macbooks is not empty %}
                      <li class="list-trade-item">
                         <div class="img-imac-trade btn-trade new" data-toggle="collapse" data-target="#collapseMacbookBuy" aria-expanded="false" aria-controls="collapseMacbookBuy"><span>MacBook</span></div>
                         <div class="collapse" id="collapseMacbookBuy">
-                           <ul class="dropdown-wrapper">
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-model-macbook-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-model-macbook-buy">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="macbook-buy" id="macbook-buy" name="model-macbook-buy"> <label class="form-check-label" for="macbook-buy">macbook</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="macbook-2-buy" id="macbook-2-buy" name="model-macbook-buy"> <label class="form-check-label" for="macbook-2-buy">macbook-2</label></li>
-                                       </ul>
+                              <ul class="dropdown-wrapper">
+                                 <li class="dropdown-wrapper-item">
+                                    <div class="dropdown block-selector">
+                                       <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-model-macbook-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель</button>
+                                       <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-model-macbook-buy">
+                                          <ul class="list-model">
+                                             {% for macbook in macbooks %}
+                                                <li class="form-check custom-radios">
+                                                   <input type="hidden" name="prod_price" value="{{ macbook.price }}">
+                                                   <input type="hidden" name="prod_id" value="{{ macbook.product_id }}">
+                                                   <input class="form-check-input prod_mac_device" type="radio" value="{{ macbook.model }}" id="mac_prod{{ macbook.product_id }}" name="model_mac">
+                                                   <label class="form-check-label" for="mac_prod{{ macbook.product_id }}">{{ macbook.model }} ( price {{ macbook.price }} )</label>
+                                                </li>
+                                             {% endfor %}
+                                          </ul>
+                                       </div>
                                     </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-year-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Рік випуску</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-year">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2020-buy" id="2020-buy" name="year-buy"> <label class="form-check-label" for="2020-buy">2020</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="2021-buy" id="2021-buy" name="year-buy"> <label class="form-check-label" for="2021-buy">2021</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-memory-macbook-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Об'єм пам'яті</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-memory-macbook-buy">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb64-macbook-buy" id="gb64-macbook-buy" name="memory-macbook-buy"> <label class="form-check-label" for="gb64-macbook-buy">64 Gb</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gb128-macbook-buy" id="gb128-macbook-buy" name="memory-macbook-buy"> <label class="form-check-label" for="gb128-macbook-buy">128 Gb</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-diagonal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Діагональ</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-diagonal">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="" id="15" name="year-buy"> <label class="form-check-label" for="15">15</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="" id="14" name="14"> <label class="form-check-label" for="14">14</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="sorting-color-macbook-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Колір</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="sorting-color-macbook-buy">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="red" id="red-macbook-buy" name="color-buy"> <label class="form-check-label" for="red-macbook-buy">red</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="black" id="black-macbook-buy" name="color-buy"> <label class="form-check-label" for="black-macbook-buy">black</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                           </ul>
-                        </div>
-                     </li> -->
-                     <!-- <li class="list-trade-item">
+                                 </li>
+                              </ul>
+                              <ul class="dropdown-wrapper" id="el_mac_list"></ul>
+                           </div>
+                           <script>
+
+                           $( ".prod_mac_device" ).click(function(e) {
+                              console.log("MACS");
+                              var device_name = $(this).closest("li.form-check").find("input[name='model_mac']").val();
+                              $('#dropdown-sorting-model-macbook-buy').text(device_name);
+                              var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
+                                 $.ajax({
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 dataType: 'json',
+                                 success: function(json) {
+                                   clearAllLists();
+                                   json = json['rows'];
+                                   console.log(json);
+
+                                   let el =[];
+                                   let options_id =[];
+                                $.each(json, function(key,val){
+                                  console.log(key);
+                                  if (!el.includes(val['name_option'])) {
+                                    el.push(val['name_option']);
+                                    options_id.push(val['option_id']);
+
+                                    $( "#el_mac_list" ).append(
+                                    '<li class="dropdown-wrapper-item"><div class="dropdown block-selector"><button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy-'+val['option_id']+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+val['name_option']+'</button><div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy"><ul class="list-model" id="list_mac_prod_device_'+val['option_id']+'"></ul></div></div></li>'
+                                    );
+                                  }
+                                   console.log("#"+val['name_option']+"");
+                                   $( "#list_mac_prod_device_"+val['option_id']+"").append(
+                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input prod_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="list_mac_prod_device_'+val['option_value_id']+'" name="list_mac_prod_device_'+val['option_id']+'"> <label class="form-check-label" for="list_mac_prod_device_'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
+                                   );
+                                })
+                                let options_value_id ={};
+                                $.each(options_id, function(key, option_id){
+                                  $(document).on('click', '.prod_device_option'+option_id, function(e) {
+                                  //$( ".prod_device_q" ).click(function(e) {
+                                     //console.log("here");
+                                     var device_name = $(this).closest("li.form-check").find("input[name= list_mac_prod_device_"+option_id+"]").val();
+                                     var option_value_id = $(this).closest("li.form-check").find("input[name= 'option_value']").val();
+                                     options_value_id[option_id] = option_value_id;
+                                     console.log(options_value_id);
+                                     $('#dropdown-sorting-buy-'+option_id).text(device_name);
+                                     //selected_gb_mac = device_name;
+                                     if(options_id.length == Object.keys(options_value_id).length)
+                                     {
+                                       console.log(true);
+                                       console.log(device_id);
+                                       console.log(Object.values(options_value_id));
+                                       getPrice(device_id,Object.values(options_value_id))
+                                     }
+                                   })
+                                 })
+                                 }
+                              });
+                              //$('#second_step').show();
+                           });
+                        </script>
+                     </li> 
+                     {% endif %}
+                     {% if applewatches is not empty %}
+                     <li class="list-trade-item">
                         <div class="img-iwatch-trade btn-trade new" data-toggle="collapse" data-target="#collapseWatchBuy" aria-expanded="false" aria-controls="collapseWatchBuy"><span>Apple Watch</span></div>
                         <div class="collapse" id="collapseWatchBuy">
                            <ul class="dropdown-wrapper">
@@ -826,37 +830,81 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-model-watch-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Серія годинника</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-model-watch-buy">
                                        <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="watch-buy" id="watch-buy" name="model-watch-buy"> <label class="form-check-label" for="watch-buy">watch</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="watch-2-buy" id="watch-2-buy" name="model-watch-buy"> <label class="form-check-label" for="watch-2-buy">watch-2</label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item mobile-right">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-watch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Розмір</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-watch">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="" id="watch-11" name=""> <label class="form-check-label" for="watch-11"></label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="watch-2" id="watch-22" name=""> <label class="form-check-label" for="watch-22"></label></li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="dropdown-wrapper-item mobile-right">
-                                 <div class="dropdown block-selector">
-                                    <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-color-watch-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Колір</button>
-                                    <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-color-watch-buy">
-                                       <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="watch-buy" id="red-color" name="model-watch-color"> <label class="form-check-label" for="red-color">red</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="watch-buy" id="black-color" name="model-watch-color"> <label class="form-check-label" for="black-color">black</label></li>
+                                             {% for applewatch in applewatches %}
+                                                <li class="form-check custom-radios">
+                                                   <input type="hidden" name="prod_price" value="{{ applewatch.price }}">
+                                                   <input type="hidden" name="prod_id" value="{{ applewatch.product_id }}">
+                                                   <input class="form-check-input prod_applewatch_device" type="radio" value="{{ applewatch.model }}" id="applewatch_prod{{ applewatch.product_id }}" name="model_applewatch">
+                                                   <label class="form-check-label" for="applewatch_prod{{ applewatch.product_id }}">{{ applewatch.model }} ( price {{ applewatch.price }} )</label>
+                                                </li>
+                                             {% endfor %}
                                        </ul>
                                     </div>
                                  </div>
                               </li>
                            </ul>
+                           <ul class="dropdown-wrapper" id="el_applewatch_list"></ul>
                         </div>
-                     </li> -->
+                        <script>
+                           $( ".prod_applewatch_device" ).click(function(e) {
+                              console.log("Applewatch");
+                              var device_name = $(this).closest("li.form-check").find("input[name='model_applewatch']").val();
+                              $('#dropdown-sorting-model-watch-buy').text(device_name);
+
+                              var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
+                                 $.ajax({
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 dataType: 'json',
+                                 success: function(json) {
+                                   clearAllLists();
+                                   json = json['rows'];
+                                   console.log(json);
+
+                                   let el =[];
+                                   let options_id =[];
+                                $.each(json, function(key,val){
+                                  console.log(key);
+                                  if (!el.includes(val['name_option'])) {
+                                    el.push(val['name_option']);
+                                    options_id.push(val['option_id']);
+
+                                    $( "#el_applewatch_list" ).append(
+                                    '<li class="dropdown-wrapper-item"><div class="dropdown block-selector"><button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy-'+val['option_id']+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+val['name_option']+'</button><div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy"><ul class="list-model" id="list_applewatch_prod_device_'+val['option_id']+'"></ul></div></div></li>'
+                                    );
+                                  }
+                                   console.log("#"+val['name_option']+"");
+                                   $( "#list_applewatch_prod_device_"+val['option_id']+"").append(
+                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input prod_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="list_applewatch_prod_device_'+val['option_value_id']+'" name="list_applewatch_prod_device_'+val['option_id']+'"> <label class="form-check-label" for="list_applewatch_prod_device_'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
+                                   );
+                                })
+                                let options_value_id ={};
+                                $.each(options_id, function(key, option_id){
+                                  $(document).on('click', '.prod_device_option'+option_id, function(e) {
+                                  //$( ".prod_device_q" ).click(function(e) {
+                                     //console.log("here");
+                                     var device_name = $(this).closest("li.form-check").find("input[name= list_applewatch_prod_device_"+option_id+"]").val();
+                                     var option_value_id = $(this).closest("li.form-check").find("input[name= 'option_value']").val();
+                                     options_value_id[option_id] = option_value_id;
+                                     console.log(options_value_id);
+                                     $('#dropdown-sorting-buy-'+option_id).text(device_name);
+                                     //selected_gb_mac = device_name;
+                                     if(options_id.length == Object.keys(options_value_id).length)
+                                     {
+                                       console.log(true);
+                                       console.log(device_id);
+                                       console.log(Object.values(options_value_id));
+                                       getPrice(device_id,Object.values(options_value_id))
+                                     }
+                                   })
+                                 })
+                                 }
+                              });
+                              //$('#second_step').show();
+                           });
+                        </script>
+                     </li>
+                     {% endif %}
                   </ul>
                   <!-- <ul class="list-btn-trade">
                      <li class="list-trade-item">
@@ -1103,6 +1151,47 @@
                      //$( "#final_text" ).text( "Виберіть девайс який хотіли б продати" );
                   });
 
+                  function clearAllLists(){
+                     $( "#el_list" ).empty();
+                     $( "#el_ipad_list" ).empty();
+                     $( "#el_mac_list" ).empty();
+                     $( "#el_applewatch_list" ).empty();
+                  }
+
+               </script>
+               <script>
+                  function getPrice(model, options)
+                  {
+                     $.ajax({
+                        //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                        url: 'index.php?route=information/tradein/getDevicePriceProd&prod_device_id='+model+'&device_options[]=' +options,
+                        dataType: 'json',
+                        success: function(json) {
+                           json = json['rows'];
+                           console.log(json);
+                        //console.log(json['rows'][0]['device_discount']);
+                           let el =[];
+                           let price = 0;
+                           $.each(json, function(key,val){
+                              console.log(val);
+                              if (!el.includes(val['model_price'])) {
+                              el.push(val['model_price']);
+                              price += Number(val['model_price']);
+                              console.log(price);
+                              }
+                              price += Number(val['option_price']);
+                        })
+                        $( "#right_price_result" ).text( "Вартість складає до "+price.toFixed(0)+"грн");
+                        var main_price_uah = price.toFixed(0);
+                        var main_price_usd = (price / 27).toFixed(0);
+                        updateNewPriceText(main_price_uah, main_price_usd);
+                        console.log(main_price_uah, main_price_usd);
+                        //updateTextPrice(price);
+                        }
+                     });
+                     //alert(selected_model_mac, selected_gb_mac, selected_year_mac);
+
+                  }
                </script>
             </div>
          </div>
