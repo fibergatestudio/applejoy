@@ -1132,7 +1132,8 @@
                         var diff_uah = new_price - old_price;
                         $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
                      } else {
-                        alert("Виберіть бажаний девайс");
+                        //alert("Виберіть бажаний девайс");
+                        $('#modalChooseDevice').modal('show'); 
                      }
                      //}
                   }
@@ -1157,7 +1158,8 @@
                         var diff_uah = new_price - old_price;
                         $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
                      } else {
-                        alert("Виберіть ваш девайс");
+                        //alert("Виберіть ваш девайс");
+                        $('#modalChooseYourDevice').modal('show'); 
                      }
                   }
                   // Дейвайсы на сайте
@@ -1221,6 +1223,45 @@
             </div>
          </div>
       </section>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+      <!-- Modal -->
+      <div class="modal" id="modalChooseYourDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            Виберіть ваш девайс
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+         </div>
+      </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal" id="modalChooseDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+               Виберіть бажаний девайс
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+         </div>
+      </div>
+      </div>
       <section class="section-text container">
          <span class="title-text">Обмін — це вигідно, безпечно і зручно!</span>
          <p>Після щорічної презентації компанії Apple вас не покидає думка, що терміново потрібно оновити свій арсенал яблучних гаджетів? Ваш iPhone, iPad, MacBook, Apple Watch значно застаріли і вже не підтримують останні оновлення системи й топові додатки? І в той самий момент у вас немає часу займатися продажем старого девайса? Команда пропонує швидкий і зручний спосіб — програму обміну техніки Apple Trade IN. — Це безпечно. Забудьте про продаж або купівлю гаджетів з рук незнайомця в холодний осінній вечір :) Затишний магазин-салон, професійний і дружний колектив консультантів — процес обміну буде на всі 100% безпечним і вигідним. — Це швидко. Залежно від моделі процес оцінки та діагностики займе від однієї до трьох годин. За цей час ми почастуємо вас кавою і допоможемо підібрати новий пристрій і оригінальні аксесуари для нього. — Це вигідно. Оцінка пристроїв завжди актуальна для Вас. Економія становить до 80% від вартості нового пристрою. Це вигідніше не тільки в сенсі вартості, але і значно економить ваш час і зусилля. Якщо ще залишилися сумніви — не варто сумніватися. Trade IN — це дійсно вигідно, адже це значна економія. Круто, чи не так?</p>
