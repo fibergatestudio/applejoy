@@ -600,6 +600,8 @@
                               $('.prod_mac_device').attr('checked', false);
                               $('.prod_applewatch_device').attr('checked', false);
                               $('.prod_by_iphone_device').attr('checked', false);
+                              $('.prod_gadget_device').attr('checked', false);
+                              $('.prod_air_pod_device').attr('checked', false);
 
                               var device_name = $(this).closest("li.form-check").find("input[name='model-buy']").val();
                               $('#dropdown-sorting-model-buy').text(device_name);
@@ -694,6 +696,8 @@
                               $('.prod_mac_device').attr('checked', false);
                               $('.prod_applewatch_device').attr('checked', false);
                               $('.prod_by_iphone_device').attr('checked', false);
+                              $('.prod_gadget_device').attr('checked', false);
+                              $('.prod_air_pod_device').attr('checked', false);
 
                               var device_name = $(this).closest("li.form-check").find("input[name='model_ipad']").val();
                               $('#dropdown-sorting-model-ipad-buy').text(device_name);
@@ -787,6 +791,8 @@
                               //$('.prod_mac_device').attr('checked', false);
                               $('.prod_applewatch_device').attr('checked', false);
                               $('.prod_by_iphone_device').attr('checked', false);
+                              $('.prod_gadget_device').attr('checked', false);
+                              $('.prod_air_pod_device').attr('checked', false);
 
                               var device_name = $(this).closest("li.form-check").find("input[name='model_mac']").val();
                               $('#dropdown-sorting-model-macbook-buy').text(device_name);
@@ -876,6 +882,8 @@
                               $('.prod_mac_device').attr('checked', false);
                               //$('.prod_applewatch_device').attr('checked', false);
                               $('.prod_by_iphone_device').attr('checked', false);
+                              $('.prod_gadget_device').attr('checked', false);
+                              $('.prod_air_pod_device').attr('checked', false);
                               
                               var device_name = $(this).closest("li.form-check").find("input[name='model_applewatch']").val();
                               $('#dropdown-sorting-model-watch-buy').text(device_name);
@@ -970,6 +978,9 @@
                               $('.prod_mac_device').attr('checked', false);
                               $('.prod_applewatch_device').attr('checked', false);
                               //$('.prod_by_iphone_device').attr('checked', false);
+                              $('.prod_gadget_device').attr('checked', false);
+                              $('.prod_air_pod_device').attr('checked', false);
+
                               var device_name = $(this).closest("li.form-check").find("input[name='model_by_iphone']").val();
                               $('#dropdown-sorting-model-old-buy').text(device_name);
 
@@ -1028,7 +1039,8 @@
                         </script>
                      </li> 
                      {% endif %}
-                     <!-- <li class="list-trade-item">
+                     {% if gadgets is not empty %}
+                     <li class="list-trade-item">
                         <div class="img-gadgets-trade btn-trade new" data-toggle="collapse" data-target="#collapseGadgetBuy" aria-expanded="false" aria-controls="collapseGadgetBuy"><span>Гаджети</span></div>
                         <div class="collapse" id="collapseGadgetBuy">
                            <ul class="dropdown-wrapper">
@@ -1037,16 +1049,91 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-gadget-model-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-gadget-model-buy">
                                        <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gadget-model1-buy" id="gadget-model1-buy" name="gadget-model-buy"> <label class="form-check-label" for="gadget-model1-buy">Модель1</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gadget-model2-buy" id="gadget-model2-buy" name="gadget-model-buy"> <label class="form-check-label" for="gadget-model2-buy">Модель2</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="gadget-model3-buy" id="gadget-model3-buy" name="gadget-model-buy"> <label class="form-check-label" for="gadget-model3-buy">Модель3</label></li>
+                                          {% for gadget in gadgets %}
+                                             <li class="form-check custom-radios">
+                                                <input type="hidden" name="prod_price" value="{{ gadget.price }}">
+                                                <input type="hidden" name="prod_id" value="{{ gadget.product_id }}">
+                                                <input class="form-check-input prod_gadget_device" type="radio" value="{{ gadget.model }}" id="gadget{{ gadget.product_id }}" name="model_gadget">
+                                                <label class="form-check-label" for="gadget{{ gadget.product_id }}">{{ gadget.model }} ( price {{ gadget.price }} )</label>
+                                             </li>
+                                          {% endfor %}
                                        </ul>
                                     </div>
                                  </div>
                               </li>
                            </ul>
+                           <ul class="dropdown-wrapper" id="el_gadget_list"></ul>
                         </div>
+                        <script>
+                           $( ".prod_gadget_device" ).click(function(e) {
+                              console.log("gadget");
+                              $('.prod_device').attr('checked', false);
+                              $('.prod_ipad_device').attr('checked', false);
+                              $('.prod_mac_device').attr('checked', false);
+                              $('.prod_applewatch_device').attr('checked', false);
+                              $('.prod_by_iphone_device').attr('checked', false);
+                              //$('.prod_gadget_device').attr('checked', false);
+                              $('.prod_air_pod_device').attr('checked', false);
+
+                              var device_name = $(this).closest("li.form-check").find("input[name='model_gadget']").val();
+                              $('#dropdown-gadget-model-buy').text(device_name);
+
+                              var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
+                                 $.ajax({
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 dataType: 'json',
+                                 success: function(json) {
+                                   clearAllLists();
+                                   json = json['rows'];
+                                   console.log(json);
+
+                                   let el =[];
+                                   let options_id =[];
+                                $.each(json, function(key,val){
+                                  console.log(key);
+                                  if (!el.includes(val['name_option'])) {
+                                    el.push(val['name_option']);
+                                    options_id.push(val['option_id']);
+
+                                    $( "#el_gadget_list" ).append(
+                                    '<li class="dropdown-wrapper-item"><div class="dropdown block-selector"><button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy-'+val['option_id']+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+val['name_option']+'</button><div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy"><ul class="list-model" id="list_gadget_device_'+val['option_id']+'"></ul></div></div></li>'
+                                    );
+                                  }
+                                   console.log("#"+val['name_option']+"");
+                                   $( "#list_gadget_device_"+val['option_id']+"").append(
+                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input prod_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="list_gadget_device_'+val['option_value_id']+'" name="list_gadget_device_'+val['option_id']+'"> <label class="form-check-label" for="list_gadget_device_'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
+                                   );
+                                })
+                                let options_value_id ={};
+                                $.each(options_id, function(key, option_id){
+                                  $(document).on('click', '.prod_device_option'+option_id, function(e) {
+                                  //$( ".prod_device_q" ).click(function(e) {
+                                     //console.log("here");
+                                     var device_name = $(this).closest("li.form-check").find("input[name= list_gadget_device_"+option_id+"]").val();
+                                     var option_value_id = $(this).closest("li.form-check").find("input[name= 'option_value']").val();
+                                     options_value_id[option_id] = option_value_id;
+                                     console.log(options_value_id);
+                                     $('#dropdown-sorting-buy-'+option_id).text(device_name);
+                                     //selected_gb_mac = device_name;
+                                     if(options_id.length == Object.keys(options_value_id).length)
+                                     {
+                                       console.log(true);
+                                       console.log(device_id);
+                                       console.log(Object.values(options_value_id));
+                                       getPrice(device_id,Object.values(options_value_id))
+                                     }
+                                   })
+                                 })
+                                 }
+                              });
+                              //$('#second_step').show();
+                           });
+
+                        </script>
                      </li>
+                     {% endif %}
+                     {% if air_pods is not empty %}
                      <li class="list-trade-item">
                         <div class="img-ipods-trade btn-trade new" data-toggle="collapse" data-target="#collapseIpodsBuy" aria-expanded="false" aria-controls="collapseIpodsBuy"><span>Air Pods</span></div>
                         <div class="collapse" id="collapseIpodsBuy">
@@ -1056,17 +1143,91 @@
                                     <button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-ipods-model-buy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Модель пристрою</button>
                                     <div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-ipods-modal-buy">
                                        <ul class="list-model">
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="air-pods-1" id="air-pods-1-buy" name="model-ipods-buy"> <label class="form-check-label" for="air-pods-1-buy">Air Pods</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="air-pods-2" id="air-pods-2-buy" name="model-ipods-buy"> <label class="form-check-label" for="air-pods-2-buy">Air Pods 2</label></li>
-                                          <li class="form-check custom-radios"><input class="form-check-input" type="radio" value="air-pods-pro" id="air-pods-pro-buy" name="model-ipods-buy"> <label class="form-check-label" for="air-pods-pro-buy">Air Pods Pro</label></li>
+                                          {% for air_pod in air_pods %}
+                                             <li class="form-check custom-radios">
+                                                <input type="hidden" name="prod_price" value="{{ air_pod.price }}">
+                                                <input type="hidden" name="prod_id" value="{{ air_pod.product_id }}">
+                                                <input class="form-check-input prod_air_pod_device" type="radio" value="{{ air_pod.model }}" id="air_pod{{ air_pod.product_id }}" name="model_air_pod">
+                                                <label class="form-check-label" for="air_pod{{ air_pod.product_id }}">{{ air_pod.model }} ( price {{ air_pod.price }} )</label>
+                                             </li>
+                                          {% endfor %}
                                        </ul>
                                     </div>
                                  </div>
                               </li>
                            </ul>
+                           <ul class="dropdown-wrapper" id="el_air_pod_list"></ul>
                         </div>
+                        <script>
+                           $( ".prod_air_pod_device" ).click(function(e) {
+                              console.log("air pods");
+                              $('.prod_device').attr('checked', false);
+                              $('.prod_ipad_device').attr('checked', false);
+                              $('.prod_mac_device').attr('checked', false);
+                              $('.prod_applewatch_device').attr('checked', false);
+                              $('.prod_by_iphone_device').attr('checked', false);
+                              $('.prod_gadget_device').attr('checked', false);
+                              //$('.prod_air_pod_device').attr('checked', false);
+
+                              var device_name = $(this).closest("li.form-check").find("input[name='model_air_pod']").val();
+                              $('#dropdown-ipods-model-buy').text(device_name);
+
+                              var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
+                                 $.ajax({
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 dataType: 'json',
+                                 success: function(json) {
+                                   clearAllLists();
+                                   json = json['rows'];
+                                   console.log(json);
+
+                                   let el =[];
+                                   let options_id =[];
+                                $.each(json, function(key,val){
+                                  console.log(key);
+                                  if (!el.includes(val['name_option'])) {
+                                    el.push(val['name_option']);
+                                    options_id.push(val['option_id']);
+
+                                    $( "#el_air_pod_list" ).append(
+                                    '<li class="dropdown-wrapper-item"><div class="dropdown block-selector"><button class="btn btn-selector icon-arrow-select" type="button" id="dropdown-sorting-buy-'+val['option_id']+'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+val['name_option']+'</button><div class="dropdown-menu rounded-0 keep-open" aria-labelledby="dropdown-sorting-buy"><ul class="list-model" id="list_air_pod_device_'+val['option_id']+'"></ul></div></div></li>'
+                                    );
+                                  }
+                                   console.log("#"+val['name_option']+"");
+                                   $( "#list_air_pod_device_"+val['option_id']+"").append(
+                                   '<li class="form-check custom-radios"><input type="hidden" name="option_value" value="'+val['option_value_id']+'"> <input class="form-check-input prod_device_option'+val['option_id']+'" type="radio" value="'+val['name_value']+'" id="list_air_pod_device_'+val['option_value_id']+'" name="list_air_pod_device_'+val['option_id']+'"> <label class="form-check-label" for="list_air_pod_device_'+val['option_value_id']+'">'+val['name_value']+'</label></li>'
+                                   );
+                                })
+                                let options_value_id ={};
+                                $.each(options_id, function(key, option_id){
+                                  $(document).on('click', '.prod_device_option'+option_id, function(e) {
+                                  //$( ".prod_device_q" ).click(function(e) {
+                                     //console.log("here");
+                                     var device_name = $(this).closest("li.form-check").find("input[name= list_air_pod_device_"+option_id+"]").val();
+                                     var option_value_id = $(this).closest("li.form-check").find("input[name= 'option_value']").val();
+                                     options_value_id[option_id] = option_value_id;
+                                     console.log(options_value_id);
+                                     $('#dropdown-sorting-buy-'+option_id).text(device_name);
+                                     //selected_gb_mac = device_name;
+                                     if(options_id.length == Object.keys(options_value_id).length)
+                                     {
+                                       console.log(true);
+                                       console.log(device_id);
+                                       console.log(Object.values(options_value_id));
+                                       getPrice(device_id,Object.values(options_value_id))
+                                     }
+                                   })
+                                 })
+                                 }
+                              });
+                              //$('#second_step').show();
+                           });
+
+                        </script>
                      </li>
-                     <li class="list-trade-item">
+                     {% endif %}
+                     <!-- <li class="list-trade-item">
                         <div class="img-other-trade btn-trade new" data-toggle="collapse" data-target="#collapseOtherBuy" aria-expanded="false" aria-controls="collapseOtherBuy"><span>Інше</span></div>
                         <div class="collapse" id="collapseOtherBuy">
                            <ul class="dropdown-wrapper">

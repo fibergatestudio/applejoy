@@ -149,9 +149,37 @@ class ControllerInformationTradein extends Controller {
 				}
 			}
 		}
+		// GADGETs
+		$data['gadgets'] = [];
+		$macbooks = $this->getProdsByCat("Гаджеты");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['gadgets'], $mac);
+				}
+			}
+		}
+
+		// AIRPODs
+		$data['air_pods'] = [];
+		$macbooks = $this->getProdsByCat("AirPods");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['air_pods'], $mac);
+				}
+			}
+		}
+
 
 		// echo "<pre>";
-		// var_dump($data['ipads']);
+		// var_dump($data['air_pods']);
 		// echo "</pre>";
 
 		// All the necessary page elements
