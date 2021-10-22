@@ -179,15 +179,21 @@ class ControllerAccountWishList extends Controller {
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-
+
+    $this->load->model('account/wishlist');
 		if ($product_info) {
 			if ($this->customer->isLogged()) {
 				// Edit customers cart
-				$this->load->model('account/wishlist');
 				$this->model_account_wishlist->deleteWishlist($product_id);
 			}
 		}
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$results = $this->model_account_wishlist->getWishlist();
+		if(empty($results)){
+			echo '1';
+			return false;
+		} else {
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+		}
 	}
 }
