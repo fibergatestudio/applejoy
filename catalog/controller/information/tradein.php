@@ -136,6 +136,20 @@ class ControllerInformationTradein extends Controller {
 			}
 		}
 
+		// BY IPHONEs
+		$data['by_iphones'] = [];
+		$macbooks = $this->getProdsByCat("Б/у iPhone");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['by_iphones'], $mac);
+				}
+			}
+		}
+
 		// echo "<pre>";
 		// var_dump($data['ipads']);
 		// echo "</pre>";
