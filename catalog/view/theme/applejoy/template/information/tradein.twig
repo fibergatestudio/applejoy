@@ -549,7 +549,7 @@
                            });
                         </script>
                      </li>
-                     <li class="list-trade-item">
+                     <!-- <li class="list-trade-item">
                         <div class="img-other-trade btn-trade" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther"><span>Інше</span></div>
                         <div class="collapse" id="collapseOther">
                            <ul class="dropdown-wrapper">
@@ -558,7 +558,7 @@
                               </li>
                            </ul>
                         </div>
-                     </li>
+                     </li> -->
                   </ul>
                   <p class="text-result" id="left_price_result"></p> <!-- Вартість iPhone 12 mini (128GB) складає до 840 $ -->
                </div>
@@ -569,7 +569,7 @@
                      {% if iphones is not empty %}
                      <li class="list-trade-item">
                         <div class="img-iphone-trade btn-trade new" data-toggle="collapse" data-target="#collapseIphoneBuy" aria-expanded="false" aria-controls="collapseIphoneBuy"><span>iPhone</span></div>
-                        <div class="collapse" id="collapseIphoneBuy">
+                        <div class="collapse multi-collapse" id="collapseIphoneBuy">
                            <ul class="dropdown-wrapper">
                               <li class="dropdown-wrapper-item">
                                  <div class="dropdown block-selector">
@@ -595,6 +595,10 @@
 
                            $( ".prod_device" ).click(function(e) {
                               console.log("IPHONE");
+                              //$('.prod_device').attr('checked', false);
+                              $('.prod_ipad_device').attr('checked', false);
+                              $('.prod_mac_device').attr('checked', false);
+                              $('.prod_applewatch_device').attr('checked', false);
                               var device_name = $(this).closest("li.form-check").find("input[name='model-buy']").val();
                               $('#dropdown-sorting-model-buy').text(device_name);
 
@@ -653,8 +657,10 @@
                      {% endif %}
                      {% if ipads is not empty %}
                      <li class="list-trade-item">
-                        <div class="img-ipad-trade btn-trade new" data-toggle="collapse" data-target="#collapseIpadBuy" aria-expanded="false" aria-controls="collapseIpadBuy"><span>iPad</span></div>
-                        <div class="collapse" id="collapseIpadBuy">
+                        <div class="img-ipad-trade btn-trade new" data-toggle="collapse" data-target="#collapseIpadBuy" aria-expanded="false" aria-controls="collapseIpadBuy">
+                           <span>iPad</span>
+                        </div>
+                        <div class="collapse multi-collapse" id="collapseIpadBuy">
                            <ul class="dropdown-wrapper">
                               <li class="dropdown-wrapper-item">
                                  <div class="dropdown block-selector">
@@ -680,6 +686,12 @@
 
                            $( ".prod_ipad_device" ).click(function(e) {
                               console.log("IPADS");
+
+                              $('.prod_device').attr('checked', false);
+                              //$('.prod_ipad_device').attr('checked', false);
+                              $('.prod_mac_device').attr('checked', false);
+                              $('.prod_applewatch_device').attr('checked', false);
+
                               var device_name = $(this).closest("li.form-check").find("input[name='model_ipad']").val();
                               $('#dropdown-sorting-model-ipad-buy').text(device_name);
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
@@ -733,6 +745,7 @@
                               });
                               //$('#second_step').show();
                            });
+
                         </script>
                      </li>
                      {% endif %}
@@ -765,6 +778,12 @@
 
                            $( ".prod_mac_device" ).click(function(e) {
                               console.log("MACS");
+
+                              $('.prod_device').attr('checked', false);
+                              $('.prod_ipad_device').attr('checked', false);
+                              //$('.prod_mac_device').attr('checked', false);
+                              $('.prod_applewatch_device').attr('checked', false);
+
                               var device_name = $(this).closest("li.form-check").find("input[name='model_mac']").val();
                               $('#dropdown-sorting-model-macbook-buy').text(device_name);
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
@@ -848,6 +867,10 @@
                         <script>
                            $( ".prod_applewatch_device" ).click(function(e) {
                               console.log("Applewatch");
+                              $('.prod_device').attr('checked', false);
+                              $('.prod_ipad_device').attr('checked', false);
+                              $('.prod_mac_device').attr('checked', false);
+                              //$('.prod_applewatch_device').attr('checked', false);
                               var device_name = $(this).closest("li.form-check").find("input[name='model_applewatch']").val();
                               $('#dropdown-sorting-model-watch-buy').text(device_name);
 
@@ -902,6 +925,7 @@
                               });
                               //$('#second_step').show();
                            });
+
                         </script>
                      </li>
                      {% endif %}
@@ -1024,6 +1048,7 @@
                      </li>
                   </ul> -->
                   <p class="text-result" id="right_price_result"></p> <!-- Вартість iPhone 12 Pro Max (128GB) складає до 1 140 $ -->
+
                </div>
                <div class="block-images">
                   <div class="wrapper-img"><img src="/catalog/view/theme/applejoy/template/html/images/main-images-trade.aa2e7581.webp" alt="image" class="img"></div>
@@ -1107,7 +1132,8 @@
                         var diff_uah = new_price - old_price;
                         $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
                      } else {
-                        alert("Виберіть бажаний девайс");
+                        //alert("Виберіть бажаний девайс");
+                        $('#modalChooseDevice').modal('show'); 
                      }
                      //}
                   }
@@ -1132,7 +1158,8 @@
                         var diff_uah = new_price - old_price;
                         $( "#final_text" ).text( "Вітаємо, Ваша економія складає " + old_price + " грн" );
                      } else {
-                        alert("Виберіть ваш девайс");
+                        //alert("Виберіть ваш девайс");
+                        $('#modalChooseYourDevice').modal('show'); 
                      }
                   }
                   // Дейвайсы на сайте
@@ -1196,6 +1223,45 @@
             </div>
          </div>
       </section>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+      <!-- Modal -->
+      <div class="modal" id="modalChooseYourDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            Виберіть ваш девайс
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+         </div>
+      </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal" id="modalChooseDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+               Виберіть бажаний девайс
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+         </div>
+      </div>
+      </div>
       <section class="section-text container">
          <span class="title-text">Обмін — це вигідно, безпечно і зручно!</span>
          <p>Після щорічної презентації компанії Apple вас не покидає думка, що терміново потрібно оновити свій арсенал яблучних гаджетів? Ваш iPhone, iPad, MacBook, Apple Watch значно застаріли і вже не підтримують останні оновлення системи й топові додатки? І в той самий момент у вас немає часу займатися продажем старого девайса? Команда пропонує швидкий і зручний спосіб — програму обміну техніки Apple Trade IN. — Це безпечно. Забудьте про продаж або купівлю гаджетів з рук незнайомця в холодний осінній вечір :) Затишний магазин-салон, професійний і дружний колектив консультантів — процес обміну буде на всі 100% безпечним і вигідним. — Це швидко. Залежно від моделі процес оцінки та діагностики займе від однієї до трьох годин. За цей час ми почастуємо вас кавою і допоможемо підібрати новий пристрій і оригінальні аксесуари для нього. — Це вигідно. Оцінка пристроїв завжди актуальна для Вас. Економія становить до 80% від вартості нового пристрою. Це вигідніше не тільки в сенсі вартості, але і значно економить ваш час і зусилля. Якщо ще залишилися сумніви — не варто сумніватися. Trade IN — це дійсно вигідно, адже це значна економія. Круто, чи не так?</p>
