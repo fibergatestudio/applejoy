@@ -1,3 +1,3 @@
-<?php
-
-include(DIR_LANGUAGE . 'ru/extension/module/ocfilter.php');
+<?php
+
+include_once(DIR_LANGUAGE . 'ru-ru/extension/module/ocfilter.php');
