@@ -1,14 +1,14 @@
 {{ header }}
 
 <div class="main-page page-catalog">
-  <nav aria-label="breadcrumb" class="container block-breadcrumb">
+            <nav aria-label="breadcrumb" class="container block-breadcrumb">
                 <ol class="breadcrumb">
                   {% for breadcrumb in breadcrumbs %}
                     <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
                   {% endfor %}
                 </ol>
             </nav>
-   <div class="container">
+          <div class="container">
                 <div class="main-catalog-top">
                     <h1 class="title-section title-section-2 pb-md-0">MacBook</h1>
                     <div class="block-filter-product">
@@ -33,8 +33,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="main-catalog">
-                    <div class="active-filter">
+                <div class="main-catalog" style="position: absolute;">
+                    <!-- <div class="active-filter">
                         <ul class="list-active-filter line-bottom">
                             <li>
                                 <span class="name-item-filter">Модель:</span>
@@ -55,8 +55,8 @@
                             </li>
                         </ul>
                         <button class="btn btn-custom-project-2 my-3">Очистити фільтр</button>
-                    </div>
-                    <div class="collapse" id="filter-collapse">
+                    </div> -->
+                    <!-- <div class="collapse" id="filter-collapse">
                         <div class="filter-catalog">
                             <div class="block-filter-price">
                                 <div>
@@ -369,7 +369,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="wrapper-list-catalog">
                         {% if products %}
                         <ul class="list-catalog-product">
@@ -430,6 +430,7 @@
                         {{ pagination }}
                     </div>
                 </div>
+                  {{ column_left }}
             </div>
 </div>
 {{ footer }} 
