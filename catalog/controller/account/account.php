@@ -530,5 +530,21 @@ class ControllerAccountAccount extends Controller {
 
 		$this->response->setOutput($this->load->view('account/wishlist_modal', $data));
 	}
+
+	public function empty_wishlist_modal(){
+		$this->load->language('account/account');
+		$this->load->language('account/wishlist');
+		$this->load->model('account/wishlist');
+		$data['msg_empty'] = $this->language->get('msg_empty_wishlist');
+		$data["wishlist_text"] = $this->language->get('wishlist_text');
+		$data['action_continue'] = $this->url->link('account/account', '', true);
+		$data["text_sku"] = $this->language->get('text_sku');
+		$data["msg_empty_wishlist"] = $this->language->get('msg_empty_wishlist');
+		$data["msg_link_continue_wishlist"] = $this->language->get('msg_link_continue_wishlist');
+		$data['home'] = $this->url->link('common/home');
+		$data["msg_continue_btn"] = $this->language->get('btn_follow_account');
+		$data['products'] = [];
+		$this->response->setOutput($this->load->view('account/wishlist_modal', $data));
+	}
 
 }

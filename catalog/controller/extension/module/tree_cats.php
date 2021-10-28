@@ -77,7 +77,8 @@ class ControllerExtensionModuleTreeCats extends Controller {
 		$data["tel_link"] = preg_replace('/[^0-9]/', '', nl2br($this->config->get('config_telephone')));
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['vacancies_href'] = $this->url->link('custompage/vacancies');
-		$data['trade_in_href'] = $this->url->link('custompage/trade-in');
+		$data['feedback_href'] = $this->url->link('information/feedback');
+		$data['trade_in_href'] = $this->url->link('information/tradein');
 		$data['repairs_href'] = $this->url->link('repair/repair');
 		$data['blog_href'] = $this->url->link('extension/blog/blog_list');
 

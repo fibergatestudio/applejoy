@@ -24,7 +24,7 @@
          <ul class="main-nav navbar-nav">
             <li class="nav-item menu-hover"><a class="nav-link" href="tel:+38{{ tel_link }}"><i class="icon icon-phone-purple"></i> <span>{{ telephone }}</span></a></li>
             <li class="nav-item mt-2"><a class="nav-link fw-400" href="#"><i class="icon icon-clockwise"></i> <span>{{ open }}</span></a></li>
-            <li class="nav-item mb-2"><a class="nav-link fw-400" href="#"><i class="icon instagram-purple"></i> <span>apple_joy_kyiv</span></a></li>
+            <li class="nav-item mb-2"><a class="nav-link fw-400" href="https://www.instagram.com/apple_joy_kyiv"><i class="icon instagram-purple"></i> <span>apple_joy_kyiv</span></a></li>
             {{ mobil_lang }}
          </ul>
       </div>
@@ -111,10 +111,10 @@
                <div class="item-block-function" data-toggle="collapse" data-target="#search-collapse" aria-expanded="false" aria-controls="search-collapse"><span class="icon icon-loupe"></span></div>
                <div class="collapse popup-collapse" id="search-collapse">
                   <div class="container">
-                     <form class="form-inline my-2 my-lg-0">
+                     <form class="form-inline my-2 my-lg-0" id="search">
                         <div class="input-group mb-2">
                            <div class="input-group-prepend"><button class="btn btn-outline-secondary" type="button"><i class="icon icon-loupe-2"></i></button></div>
-                           <input class="form-control" placeholder="Пошук">
+                           <input class="form-control" name="search" placeholder="Пошук">
                         </div>
                      </form>
                      <div class="popup-collapse-close" data-toggle="collapse" data-target="#search-collapse" aria-expanded="false" aria-controls="search-collapse"><i class="icon icon-quit"></i></div>
@@ -141,7 +141,7 @@
                <li class="nav-item"><a class="nav-link" href="{{ repairs_href }}">{{ repairs }}</a></li>
                <li class="nav-item"><a class="nav-link" href="{{ blog_href }}">{{ text_blog }}</a></li>
                <li class="nav-item"><a class="nav-link" href="{{ vacancies_href }}">{{ text_vacansion }}</a></li>
-               <li class="nav-item"><a class="nav-link" href="#">{{ text_review }}</a></li>
+               <li class="nav-item"><a class="nav-link" href="{{ feedback_href }}">{{ text_review }}</a></li>
                <li class="nav-item"><a class="nav-link" href="{{ contact }}">{{ btn_contact }}</a></li>
             </ul>
             <ul class="d-none d-lg-flex menu-contact">
@@ -159,7 +159,7 @@
                {% else %}
                <li class="icon icon-user" data-toggle="modal" data-target="#Modal-login"></li>
                {% endif  %}
-               <li class="icon icon-instagram-header"><a href="#"></a></li>
+               <li class="icon icon-instagram-header" onclick="window.open('https://www.instagram.com/apple_joy_kyiv', '_blank');"></li>
                {{ language }}
             </ul>
             <ul class="d-none d-lg-flex navbar-nav menu-production">

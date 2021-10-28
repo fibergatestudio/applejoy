@@ -72,19 +72,6 @@ class ControllerInformationTradein extends Controller {
 		$data['prod_devices'] = [];
         $all_prods = $this->getAllProds();
 
-		$data['macbooks'] = [];
-		$macbooks = $this->getProdsByCat("MacBook");
-		foreach($macbooks as $macbook){
-
-			foreach($macbook->rows as $mac){
-				array_push($data['macbooks'], $mac);
-			}
-			
-		}
-		// echo "<pre>";
-		// var_dump($macbooks);
-		// echo "</pre>";
-
 		foreach($all_prods->rows as $prod){
 			array_push($data['prod_devices'], $prod);
 
@@ -94,9 +81,105 @@ class ControllerInformationTradein extends Controller {
 			//$product_id
 			//ocjw_product_option
 		}
-		//var_dump($data["prod_devices"]);
+		// IPHONEs
+		$data['iphones'] = [];
+		$macbooks = $this->getProdsByCat("Iphone");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['iphones'], $mac);
+				}
+			}
+		}
+		// IPADs
+		$data['ipads'] = [];
+		$macbooks = $this->getProdsByCat("Ipad");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['ipads'], $mac);
+				}
+			}
+		}
+
+		// MACBOOKs
+		$data['macbooks'] = [];
+		$macbooks = $this->getProdsByCat("MacBook");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['macbooks'], $mac);
+				}
+			}
+		}
+
+		// APPLEWATCHEs
+		$data['applewatches'] = [];
+		$macbooks = $this->getProdsByCat("Apple Watch");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['applewatches'], $mac);
+				}
+			}
+		}
+
+		// BY IPHONEs
+		$data['by_iphones'] = [];
+		$macbooks = $this->getProdsByCat("Б/у iPhone");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['by_iphones'], $mac);
+				}
+			}
+		}
+		// GADGETs
+		$data['gadgets'] = [];
+		$macbooks = $this->getProdsByCat("Гаджеты");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['gadgets'], $mac);
+				}
+			}
+		}
+
+		// AIRPODs
+		$data['air_pods'] = [];
+		$macbooks = $this->getProdsByCat("AirPods");
+		$arr_true = [];
+		foreach($macbooks as $macbook){
+			foreach($macbook->rows as $mac){
+				//var_dump($mac['product_id']);
+				if(!in_array($mac['product_id'], $arr_true)){
+					array_push($arr_true, $mac['product_id']);
+					array_push($data['air_pods'], $mac);
+				}
+			}
+		}
+
+
 		// echo "<pre>";
-		// var_dump($all_prods);
+		// var_dump($data['air_pods']);
 		// echo "</pre>";
 
 		// All the necessary page elements
