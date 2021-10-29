@@ -1,6 +1,24 @@
-<div id="search" class="input-group">
+<div class="menu-search-block dropdown-main-item">
+               <div class="item-block-function" data-toggle="collapse" data-target="#search-collapse" aria-expanded="false" aria-controls="search-collapse"><span class="icon icon-loupe"></span></div>
+               <div class="collapse popup-collapse" id="search-collapse">
+                  <div class="container">
+                     
+
+                  <!-- 	<div id="search" class="input-group">
   <input type="text" name="search" value="{{ search }}" placeholder="{{ text_search }}" class="form-control input-lg" />
   <span class="input-group-btn">
     <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
   </span>
-</div>
+</div> -->
+                  	
+
+                     <form class="form-inline my-2 my-lg-0" id="search">
+                        <div class="input-group mb-2">
+                           <div class="input-group-prepend"><button class="btn btn-outline-secondary" type="button"><i class="icon icon-loupe-2"></i></button></div>
+                           <input class="form-control" name="search" placeholder="{{ text_search }}">
+                        </div>
+                     </form>
+                     <div class="popup-collapse-close" data-toggle="collapse" data-target="#search-collapse" aria-expanded="false" aria-controls="search-collapse"><i class="icon icon-quit"></i></div>
+                  </div>
+               </div>
+            </div>

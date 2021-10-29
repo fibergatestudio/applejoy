@@ -82,6 +82,9 @@ class ControllerExtensionModuleTreeCats extends Controller {
 		$data['repairs_href'] = $this->url->link('repair/repair');
 		$data['blog_href'] = $this->url->link('extension/blog/blog_list');
 
+		// Search
+		$data['search_home'] = $this->load->controller('common/search');
+
 		return $this->load->view('extension/module/cats_template', $data);
 
 
