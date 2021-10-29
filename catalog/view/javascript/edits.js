@@ -271,7 +271,8 @@ function mini_remove(cart_id, quantity){
 	{
 		if ( $('#Modal-product-in-cart').hasClass('show') )
 		{
-			$('#Modal-product-in-cart').modal('hide');
+			//$('#Modal-product-in-cart').modal('hide');
+			// ========>>>
 			$('#Modal-product-in-cart').on('hidden.bs.modal', function (e) {
   			$('body').removeClass('modal-open');
 				$('.modal-backdrop').remove();
