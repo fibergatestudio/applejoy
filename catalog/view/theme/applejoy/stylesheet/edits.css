@@ -34,3 +34,14 @@ div.error-phone, div.error-checkbox{
 #orders .collapse:not(.in) {
 	display: none;
 }
+
+.block-filter-product-desktop li a {
+	text-decoration: none;
+    color: #393177;
+}
+
+.block-filter-product-desktop li a.active {
+	text-decoration: none;
+    color: #393177;
+    font-weight: 500;
+}
