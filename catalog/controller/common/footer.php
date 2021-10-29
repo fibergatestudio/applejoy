@@ -275,6 +275,8 @@ class ControllerCommonFooter extends Controller {
 		$data['open'] = nl2br($this->config->get('config_open'));
 
 
+		$data['social_login'] = $this->load->controller('extension/module/social_login');
+
 
 		return $this->load->view('common/footer', $data);
 
