@@ -141,18 +141,13 @@ $(document).ready(function() {
 	});
 
 
-	// Push enter key
+	// Form submit
 	
-	$('#search input[name=\'search\']').on('keydown', function(e) {
+	$('#search').on('submit', function(e){
+		e.preventDefault();
 
-		if (e.keyCode == 13) {
-
-			$('#search input[name=\'search\']').parent().find('button').trigger('click');
-
-		}
-
+		$('#search input[name=\'search\']').parent().find('button').trigger('click');
 	});
-
 
 
 	// Menu
