@@ -262,7 +262,7 @@ function updateFacebookBusinessExtensionSettings(data) {
 function deleteSettings() {
     return new Promise(function(resolve, reject) {
         $.ajax({
-          url: 'index.php?route=extension/module/facebook_business/deleteSettings&user_token=' + window.facebookAdsToolboxConfig.token_string,
+          url: '/index.php?route=extension/module/facebook_business/deleteSettings&user_token=' + window.facebookAdsToolboxConfig.token_string,
           type: 'post',
           success: function(json) {
             if(!json || !json.success) {

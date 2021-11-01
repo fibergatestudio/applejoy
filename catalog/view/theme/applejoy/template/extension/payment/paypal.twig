@@ -359,7 +359,7 @@ function setupPayPal() {
 				
 				$.ajax({
 					method: 'post',
-					url: 'index.php?route=extension/payment/paypal/createOrder',
+					url: '/index.php?route=extension/payment/paypal/createOrder',
 					data: '',
 					dataType: 'json',
 					async: false,
@@ -382,7 +382,7 @@ function setupPayPal() {
 				
 				$.ajax({
 					method: 'post',
-					url: 'index.php?route=extension/payment/paypal/approveOrder',
+					url: '/index.php?route=extension/payment/paypal/approveOrder',
 					data: {'order_id': data.orderID},
 					dataType: 'json',
 					async: false,
@@ -457,7 +457,7 @@ function setupPayPal() {
 					
 					$.ajax({
 						method: 'post',
-						url: 'index.php?route=extension/payment/paypal/createOrder',
+						url: '/index.php?route=extension/payment/paypal/createOrder',
 						data: '',
 						dataType: 'json',
 						async: false,
@@ -562,7 +562,7 @@ function setupPayPal() {
 						
 							$.ajax({
 								method: 'post',
-								url: 'index.php?route=extension/payment/paypal/approveOrder',
+								url: '/index.php?route=extension/payment/paypal/approveOrder',
 								data: {'payload': JSON.stringify(payload)},
 								dataType: 'json',
 								async: false,
