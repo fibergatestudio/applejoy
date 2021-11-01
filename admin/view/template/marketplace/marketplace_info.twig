@@ -160,7 +160,7 @@ $('#button-opencart').on('click', function(e) {
 	$('#modal-opencart').remove();
 	
 	$.ajax({
-		url: '/index.php?route=marketplace/api&user_token={{ user_token }}',
+		url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-opencart').button('loading');
@@ -218,7 +218,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	var element = this;
 
 	$.ajax({
-		url: '/index.php?route=marketplace/marketplace/purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace/purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
 		type: 'post',
 		data: $('input[name=\'pin\']'),
 		dataType: 'json',
@@ -261,7 +261,7 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: '/index.php?route=marketplace/marketplace/download&user_token={{ user_token }}&extension_id={{ extension_id }}&extension_download_id=' + $(this).attr('data-install'),
+		url: 'index.php?route=marketplace/marketplace/download&user_token={{ user_token }}&extension_id={{ extension_id }}&extension_download_id=' + $(this).attr('data-install'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -343,7 +343,7 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: '/index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_install_id=' + $(this).attr('data-uninstall'),
+		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_install_id=' + $(this).attr('data-uninstall'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -383,7 +383,7 @@ $('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={
 // Add comment
 $('#button-comment').on('click', function() {
 	$.ajax({
-		url: '/index.php?route=marketplace/marketplace/addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace/addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
