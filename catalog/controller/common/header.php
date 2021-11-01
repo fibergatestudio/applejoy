@@ -166,6 +166,14 @@ class ControllerCommonHeader extends Controller {
 
                 $data["tree_cats"] = $tree_cats;
 
+				$canonical = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+				if(isset($this->request->get['gclid'] ) || isset($this->request->get['utm_medium'] ) || isset($this->request->get['utm_source'] ) || isset($this->request->get['utm_campaign'] ) || isset($this->request->get['utm_content'] ) || isset($this->request->get['utm_term'] ) || isset($this->request->get['_openstat'] )){
+					
+					$pageURL = (isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
+    				$pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+					$canonical = explode( '?', $pageURL )[0];
+				}
+				$data['canonical'] = $canonical;
 				//echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 
 
