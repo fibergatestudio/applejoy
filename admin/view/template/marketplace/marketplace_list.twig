@@ -160,7 +160,7 @@ $('#button-opencart').on('click', function(e) {
 	$('#modal-opencart').remove();
 	
 	$.ajax({
-		url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
+		url: '/index.php?route=marketplace/api&user_token={{ user_token }}',
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-opencart').button('loading');

@@ -18,7 +18,7 @@
         <ul class="list-category-repair">
           {% for category in categories %}
               <li class="item-list-category-repair">
-            <a href="index.php?route=repair/category&id={{category.category_id}}" class="block-img"><img src="{{category.image}}" alt="image-phone" class="img-product img-fluid"> </a><a href="index.php?route=repair/category&id={{category.category_id}}" class="name-category-repair"><span class="name">{{category.name}}</span></a></li>
+            <a href="/index.php?route=repair/category&id={{category.category_id}}" class="block-img"><img src="/{{category.image}}" alt="image-phone" class="img-product img-fluid"> </a><a href="index.php?route=repair/category&id={{category.category_id}}" class="name-category-repair"><span class="name">{{category.name}}</span></a></li>
           {% endfor %}
         </ul>
         <button class="btn btn-custom-project" data-toggle="modal" data-target="#Modal-repair">{{text_order_repair}}</button>
@@ -45,7 +45,7 @@
   </section>
   <section class="section-delivery">
     <div class="container wrapper-section-delivery">
-      <div class="block-2"><img src="catalog/view/theme/applejoy/template/html/images/img-delivery.8f6b382b.webp" alt="image" class="img-delivery"></div>
+      <div class="block-2"><img src="/catalog/view/theme/applejoy/template/html/images/img-delivery.8f6b382b.webp" alt="image" class="img-delivery"></div>
       <div class="block-1"><span class="fw-700">{{text_delivery}}</span>
         <p>{{text_delivery_details}}</p>
         <button class="btn btn-custom-project-2" data-toggle="modal" data-target="#Modal-delivery-nova-poshta">{{text_get_delivery}}</button>
