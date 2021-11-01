@@ -1,0 +1,709 @@
+{# microdatapro 7.0  #}
+{{ header }}{{ column_left }}
+<div id="content">
+	<script>
+		$(document).ready(function(){
+			$('#form-microdatapro input[type="checkbox"]').wrap('<label class="swl"></label>').after('<span></span>');
+		});
+	</script>
+	<style>
+		.swl input[type="checkbox"] {position: absolute;z-index: -1;opacity: 0;margin: 10px 0 0 20px;}
+		.swl input[type="checkbox"] + span {position: relative;padding: 0 0 0 60px;cursor: pointer;}
+		.swl input[type="checkbox"] + span:before {content: '';position: absolute;top: 1px;left: 0;width: 50px;height: 26px;border-radius: 13px;background: #CDD1DA;box-shadow: inset 0 2px 3px rgba(0,0,0,.2);transition: .2s;}
+		.swl input[type="checkbox"] + span:after {content: '';position: absolute;top: 3px;left: 2px;width: 22px;height: 22px;border-radius: 10px;background: #FFF;box-shadow: 0 2px 5px rgba(0,0,0,.3);transition: .2s;}
+		.swl input[type="checkbox"]:checked + span:before {background:#9FD468;}
+		.swl input[type="checkbox"]:checked + span:after {left: 26px;}
+		.swl input[type="checkbox"]:focus + span:before {box-shadow: inset 0 2px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(255,255,0,.7);}
+	</style>
+	<style>
+		small + .alert-info{padding:15px 0;display:block;margin-bottom:15px;}
+		#success_up{float:right;}
+		#success_up i{font-size:34px;color:#00b32d;margin-top:-8px;animation:great 0.5s infinite;}
+		.or:last-child{display:none;}
+		#dia h3{margin-top:20px;font-size:19px;}
+		#dia h3:hover{cursor:pointer;color:#14628c;}
+		.mod_detail{margin-left: 11px;padding-left: 8px;border-left: 2px solid #777;}
+		.file_item{margin-bottom:5px;margin-left:5px;}
+		.file_item:hover{cursor:pointer;color:#14628c;}
+		.active_item{color:#14628c;}
+		.last_in_block{padding-bottom:13px;margin-bottom:14px;border-bottom:1px solid #eee;}
+		.counter_files{position: absolute;margin: 9px 0 0 -19px;background: #fff;border-radius: 50%;display: inline-block;width: 20px;height: 20px;text-align: center;border: 1px solid #777;line-height: 18px;}
+		.service_info{border:1px dashed #14628c;padding:10px;font-size:13px;line-height:20px;margin-top:25px;}
+		.service_info h4{font-weight:600;}
+		.mbn{margin-bottom:0;}
+		#module_microdatapro_category_syntax .form-group{margin-left:0;margin-right:0;}
+		@keyframes great{0%{font-size:34px;margin-top: -8px;}50%{font-size:26px;margin-top: -4px;}100%{font-size:34px;margin-top: -8px;}}
+	</style>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-microdatapro" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+			</div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+				{% if success %}
+					<span id="success_up"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+					<script>
+						setTimeout(function(){
+							$('#success_up').fadeOut('300');
+						}, 2000);
+					</script>
+				{% endif %}
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-microdatapro" class="form-horizontal">
+				{% if not module_microdatapro_license_key %}
+					<div style="font-size:22px;text-align:center;">{{ text_no_active }}</div>
+					<div class="text-center"><iframe width="560" height="315" src="https://www.youtube.com/embed/eN-XwbwTETY" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></div>
+				{% else %}
+					<div class="form-group">
+            <div class="col-sm-5">
+							<h3 style="display:inline-block;line-height:30px;vertical-align:top;margin-right:15px;">{{ text_microdata_status }} MicrodataPro:</h3>
+							<input onchange="$('#module_microdatapro_all').slideToggle(300);" type="checkbox" name="module_microdatapro_status" {% if module_microdatapro_status %}checked="checked"{% endif %} value="1" class="form-control" />
+						</div>
+						<div class="col-sm-7">
+							<div class="alert alert-warning" role="alert" style="margin-bottom:0px;margin-top:-15px;">
+								Пожалуйста, перед тем как написать в поддержку, посмотрите популярные вопросы/ответы <a href="https://microdata.pro/faq/" title="Откроектся в новом окне" target="_blank" data-toggle="tooltip">https://microdata.pro/faq/</a>. В 90% случаев вы найдете там ответ. Поддержка: info@microdata.pro
+							</div>
+						</div>
+          </div>
+					<div id="module_microdatapro_all" {% if not module_microdatapro_status %}style="display:none;"{% endif %}>
+
+					<ul class="nav nav-tabs" role="tablist">
+						{% if not count_errors%}
+				    	<li><a href="#dia" aria-controls="home" role="tab" data-toggle="tab">{{ text_diagnostic }}</a></li>
+						{% else %}
+							<li class="active"><a href="#dia" aria-controls="home" role="tab" data-toggle="tab">{{ text_diagnostic_e }} (<span style="color:#ff0000;">{{ count_errors }}</span>)</a></li>
+						{% endif %}
+				    <li {% if not count_errors%}class="active"{% endif %}><a href="#company" aria-controls="home" role="tab" data-toggle="tab">{{ text_company }}</a></li>
+				    <li><a href="#product" aria-controls="profile" role="tab" data-toggle="tab">{{ text_product_page }}</a></li>
+				    <li><a href="#social" aria-controls="messages" role="tab" data-toggle="tab">{{ text_social }}</a></li>
+				    <li><a href="#other" aria-controls="settings" role="tab" data-toggle="tab">{{ text_other }}</a></li>
+				    <li><a href="#info" aria-controls="settings" role="tab" data-toggle="tab">{{ text_information }}</a></li>
+				  </ul>
+				  <div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade {% if count_errors%}in active{% endif %}" id="dia" style="padding-left:15px;">
+							<p><h4 style="font-weight:700;">{{ text_for_work }}</h4></p>
+							<div class="mod_status">
+								{% if not mod_errors%}
+									<h3 class="h3_more_info">1) <i style="color:#00b32d;" class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ text_succ_mod }} <a href="#" class="mod_more_info" title="{{ text_click_view }}"><i class="fa fa-question-circle" aria-hidden="true"></i></a></h3>
+								{% else %}
+									<h3 class="h3_more_info">1) <i style="color:#ff0000;" class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{ text_err_mod }} <span style="color:#ff0000;">{{ mod_errors }}</span>)</h3>
+								{% endif %}
+								<div class="mod_detail" style="display:none;">
+									{% set counter_files = 1 %}
+									{% for file, file_data in mod_files %}
+										<div class="counter_files">{{ counter_files }}</div>
+										{% if file_data.status %}
+											<div class="file_item">{{ text_file_original }} <span style="font-weight:600;">{{ file }}</span> <span style="color:#00b32d;">{{ text_modok }}</span> <a href="#" class="why_mod"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+												<div style="display:none; padding:10px;border:1px dashed #777;color:#111;">
+													 {{ text_in_file }} <b>{{ file }}</b><br>
+													 {{ text_find_string }} <b>{{ file_data.string|e }}</b><br>
+													 {{ text_code_in_file }} <b>storage/modification/{{ file }}</b>
+												</div>
+											</div>
+										{% else %}  {# если нет привязки  #}
+											<div class="file_item" style="color:#ff0000;">
+												<span>{{ text_opencart_file }} {{ file }} {{ text_none_mode }}</span> <a href="#" class="why_mod">{{ text_why_mod }}</a>
+												<div style="display:none; padding:10px;border:1px dashed #ff0000;color:#111;">
+													 {{ text_in_file_strong }} <b>{{ file }}</b><br>
+													 <p class="mbn">{{ text_start_string }}
+														 {% for file_string in file_data %}
+														 	<b>{{ file_string|e }}</b>  <span class="or">{{ text_or }}</span>
+													 	 {% endfor %}
+												 	 </p>
+													 {{ text_support_text }}
+												</div>
+											</div>
+										 {% endif %}
+										 {% set counter_files = counter_files + 1 %}
+
+										{% if file_data.ocmod %} {# если в модификаторах есть  #}
+											<div class="file_item last_in_block">{{ text_module_in_file }} <span style="font-weight:600;">{{ "storage/modification/" ~ file }}</span> <span style="color:#00b32d;">{{ text_installed }}</span> <a href="#" class="why_mod"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+												<div style="display:none; padding:10px;border:1px dashed #777;color:#111;">
+													 {{ text_in_file }} <b>storage/modification/{{ file }}</b><br>
+													 {{ text_added_code_before }} <b>{{ file_data.string|e }}</b><br>
+														<blockquote>
+														 <small>//microdatapro {{ mirodatapro_version }} start</small>
+														 {{ text_module_code }}<br>
+														 <small>//microdatapro {{ mirodatapro_version }} end</small>
+														</blockquote>
+												</div>
+											</div>
+										{% else %}  {# если нет в модификаторах  #}
+											<div class="file_item last_in_block" style="color:#ff0000;">
+												<span>{{ text_module_in_file }} {{ "storage/modification/" ~ file }} {{ text_not_installed }}</span> <a href="#" class="why_mod">{{ text_what_to_do }}</a>
+												<div style="display:none; padding:10px;border:1px dashed #ff0000;color:#111;">
+													 {{ text_if_in_orig }} <b>{{ file }}</b> {{ text_all_good }}
+												</div>
+											</div>
+										{% endif %}
+									 {% endfor %}
+									{% set counter_files = counter_files + 1 %}
+									{{ text_for_good_work }}
+								</div>
+							</div>
+
+							{% if not old_microdata%}
+								<h3 class="h3_more_info" id="old_h3_title">2) <i style="color:#00b32d;" class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ text_old_microdata_not_find }} <a href="#" class="mod_more_info" title="{{ text_click_view }}"><i class="fa fa-question-circle" aria-hidden="true"></i></a></h3>
+								<div class="mod_detail" style="display:none;">
+									{{ text_old_info }}
+								</div>
+							{% else %}
+								<h3 class="h3_more_info" id="old_h3_title">2) <i style="color:#ff0000;" class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{ text_old_microdata_find }} (<span style="color:#ff0000;">{{ old_count }}</span>) {{ text_recoment_clear }} <a href="#" class="mod_more_info" title="{{ text_click_view }}"><i class="fa fa-question-circle" aria-hidden="true"></i></a></h3>
+								<div class="mod_detail" style="display:none;">
+									<div class="alert alert-danger" id="old_microdata_block">
+									  <strong>{{ text_old_microdata }}</strong>
+										<ul style="margin:10px 0;">
+											{% for file in old_microdata %}
+												<li>{{ file }}</li>
+											{% endfor %}
+										</ul>
+										<button id="clear_old" data-loading-text="{{ text_clear }} <i class='fa fa-spinner fa-spin'></i>" type="button" class="btn btn-primary btn-sm">{{ text_clear }}</button>
+									</div>
+									{{ text_cleared_info }}
+								</div>
+							{% endif %}
+							{% if other_modules%}
+								<h3 class="h3_more_info">3) <i style="color:#ff0000;" class="fa fa-thumbs-o-down" aria-hidden="true"></i> {{ text_other_modules_find }} <a href="#" class="mod_more_info" title="{{ text_click_view }}"><i class="fa fa-question-circle" aria-hidden="true"></i></a></h3>
+								<div class="mod_detail" style="display:none;">
+									{{ text_other_modules_info }}
+								</div>
+							{% else %}
+								<h3 class="h3_more_info">3) <i style="color:#00b32d;" class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ text_other_modules_not_find }} <a href="#" class="mod_more_info" title="{{ text_click_view }}"><i class="fa fa-question-circle" aria-hidden="true"></i></a></h3>
+								<div class="mod_detail" style="display:none;">
+									{{ text_not_other_modules_info }}
+								</div>
+							{% endif %}
+
+							<h3 class="h3_more_info">4) <i style="color:#14628c;" class="fa fa-check-square-o" aria-hidden="true"></i> {{ text_google_check }}</h3>
+							<div class="mod_detail" style="display:none;">
+								{{ text_link_check }}
+								<ul>
+									<li><a href="https://search.google.com/structured-data/testing-tool?hl=ru#url={{ link_main }}" target="_blank" title="{{ text_in_new_tab }}">{{ text_main_page }} <i class="fa fa-external-link" aria-hidden="true"></i></a></li>
+									{% if link_category %}
+										<li><a href="https://search.google.com/structured-data/testing-tool?hl=ru#url={{ link_category }}" target="_blank" title="{{ text_in_new_tab }}">{{ text_category_page }} <i class="fa fa-external-link" aria-hidden="true"></i></a></li>
+									{% else %}
+										{{ text_empty_category }}
+									{% endif %}
+									{% if link_product %}
+										<li><a href="https://search.google.com/structured-data/testing-tool?hl=ru#url={{ link_product }}" target="_blank" title="{{ text_in_new_tab }}">{{ text_product_page }} <i class="fa fa-external-link" aria-hidden="true"></i></a></li>
+									{% else %}
+										{{ text_empty_product }}
+									{% endif %}
+									{% if link_manufacturer %}
+										<li><a href="https://search.google.com/structured-data/testing-tool?hl=ru#url={{ link_manufacturer }}" target="_blank" title="{{ text_in_new_tab }}">{{ text_manufacturer_page }} <i class="fa fa-external-link" aria-hidden="true"></i></a></li>
+									{% else %}
+										{{ text_empty_brand }}
+									{% endif %}
+									{% if link_information %}
+										<li><a href="https://search.google.com/structured-data/testing-tool?hl=ru#url={{ link_information }}" target="_blank" title="{{ text_in_new_tab }}">{{ text_info_page }} <i class="fa fa-external-link" aria-hidden="true"></i></a></li>
+									{% else %}
+										{{ text_empty_info }}
+									{% endif %}
+								</ul>
+								{{ text_google_validator }}
+							</div>
+							<script>
+								$('.refresh').on('click', function(e){
+									e.preventDefault();
+									$(this).after('<i style="margin-left:5px;color:red;" class="fa fa-spinner fa-spin tmp_spin" aria-hidden="true"></i>');
+									$.post('index.php?route=extension/modification/refresh&user_token={{ user_token }}').done(function(data) {
+											alert("{{ text_mod_cleared }}");
+											location.reload();
+									});
+								});
+								$('.h3_more_info').on('click', function(e){
+									e.preventDefault();
+									$(this).toggleClass('active_item');
+									$(this).next('.mod_detail').slideToggle('200');
+								});
+								$('.file_item').on('click', function(e){
+									e.preventDefault();
+									$(this).toggleClass('active_item');
+									$(this).find('div').slideToggle('200');
+								});
+							</script>
+							<div class="service_info">
+								{{ text_information_big }}
+							</div>
+						</div>
+				    <div role="tabpanel" class="tab-pane fade {% if not count_errors%}in active{% endif %}" id="company">
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting1" target="_blank" >{{ text_microdata_status }}</a></label>
+		            <div class="col-sm-10">
+									<input onchange="$('#module_microdatapro_store').slideToggle(300);" type="checkbox" name="module_microdatapro_company" {% if module_microdatapro_company %}checked="checked"{% endif %} value="1" class="form-control" />
+		            </div>
+		          </div>
+							<div id="module_microdatapro_store" {% if not module_microdatapro_company %}style="display:none;"{% endif %}>
+
+							<div class="alert alert-warning" role="alert">
+								Внимание! Указывая данные здесь вы должны быть уверены что посетитель это также видит на страницах сайта.<br>Если этого нет на сайте, лучше выключить разметку магазина или добавить информацию на сайт.<br>Также помните что Адрес надо вводить в формате <b>координаты//Город, Страна//Адрес//Почтовый код</b>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting2" target="_blank" >{{ text_company_syntax }}</a></label>
+								<div class="col-sm-10">
+									<select name="module_microdatapro_company_syntax" class="form-control">
+										<option value="all" {% if module_microdatapro_company_syntax  == "all" %}selected="selected"{% endif %}>{{ text_company_syntax_all }}</option>
+										<option value="ld" {% if module_microdatapro_company_syntax  ==  "ld" %}selected="selected"{% endif %}>{{ text_company_syntax_ld }}</option>
+										<option value="md" {% if module_microdatapro_company_syntax  ==  "md" %}selected="selected"{% endif %}>{{ text_company_syntax_md }}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_store_type_h }}" target="_blank" href="https://microdata.pro/about/settings-7-0#setting3">{{ text_store_type }}</a></label>
+		            <div class="col-sm-10">
+									<select name="module_microdatapro_store_type" class="form-control">
+									  <option value="" {% if module_microdatapro_store_type  ==  '' %}selected="selected"{% endif %}>{{ text_select }}</option>
+										 {% for st in store_types %}
+									    <option value="{{ st.id }}" {% if module_microdatapro_store_type  ==  st.id %}selected="selected"{% endif %}>{{ st.name }}</option>
+										 {% endfor %}
+									</select>
+		            </div>
+		          </div>
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_config_hcard_h }}" href="https://microdata.pro/about/settings-7-0#setting4" target="_blank">{{ text_config_hcard }}</a></label>
+		            <div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_hcard" {% if module_microdatapro_hcard %}checked="checked"{% endif %} value="1" class="form-control" />
+		            </div>
+		          </div>
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting5" target="_blank">{{ text_email }}</a></label>
+		            <div class="col-sm-10">
+									<input name="module_microdatapro_email" placeholder="{{ email }}" value="{{ module_microdatapro_email }}" class="form-control">
+		            </div>
+		          </div>
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting6" target="_blank">{{ text_oh }}</a></label>
+		            <div class="col-sm-10" style="padding-left:0;padding-right:0;">
+									<div class="col-sm-1" style="width:14.28%;"><div>{{ text_monday }}</div><div><input class="form-control" type="text" name="module_microdatapro_oh_1" value="{{ module_microdatapro_oh_1 }}" placeholder="10:00-20:00"></div></div>
+									<div class="col-sm-1" style="width:14.28%;"><div>{{ text_tuesday }}</div><div><input class="form-control" type="text" name="module_microdatapro_oh_2" value="{{ module_microdatapro_oh_2 }}" placeholder="10:00-20:00"></div></div>
+									<div class="col-sm-1" style="width:14.28%;"><div>{{ text_wednesday }}</div><div><input class="form-control" type="text" name="module_microdatapro_oh_3" value="{{ module_microdatapro_oh_3 }}" placeholder="10:00-20:00"></div></div>
+									<div class="col-sm-1" style="width:14.28%;"><div>{{ text_thursday }}</div><div><input class="form-control" type="text" name="module_microdatapro_oh_4" value="{{ module_microdatapro_oh_4 }}" placeholder="10:00-20:00"></div></div>
+									<div class="col-sm-1" style="width:14.28%;"><div>{{ text_friday }}</div><div><input class="form-control" type="text" name="module_microdatapro_oh_5" value="{{ module_microdatapro_oh_5 }}" placeholder="10:00-20:00"></div></div>
+									<div class="col-sm-1" style="width:14.28%;"><div>{{ text_saturday }}</div><div><input class="form-control" type="text" name="module_microdatapro_oh_6" value="{{ module_microdatapro_oh_6 }}" placeholder="10:00-18:00"></div></div>
+									<div class="col-sm-1" style="width:14.28%;"><div>{{ text_sunday }}</div><div><input class="form-control" type="text" name="module_microdatapro_oh_7" value="{{ module_microdatapro_oh_7 }}" placeholder="10:00-18:00"></div></div>
+								</div>
+		          </div>
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_entry_telephone_h }}" href="https://microdata.pro/about/settings-7-0#setting7" target="_blank">{{ text_entry_telephone }}</a></label>
+		            <div class="col-sm-10">
+									<textarea name="module_microdatapro_phones" placeholder="+12-345-678-90-00,+34-555-678-11-11" class="form-control">{{ module_microdatapro_phones }}</textarea>
+									{% if stores %}
+										{% for store in stores %}
+											<span class="placeholder_name">{{ store.name }}</span>
+											<textarea name="module_microdatapro_phones{{ store.store_id }}" placeholder="+12-345-678-90-00,+34-555-678-11-11" class="form-control">{{ store.module_microdatapro_phones }}</textarea>
+										{% endfor %}
+									{% endif %}
+		            </div>
+		          </div>
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_entry_group_h }}" href="https://microdata.pro/about/settings-7-0#setting8" target="_blank">{{ text_entry_group }}</a></label>
+		            <div class="col-sm-10">
+									<textarea name="module_microdatapro_groups" placeholder="https://facebook.com/group, https://twitter.com/group" class="form-control">{{ module_microdatapro_groups }}</textarea>
+									{% if stores %}
+										{% for store in stores %}
+											<span class="placeholder_name">{{ store.name }}</span>
+											<textarea name="module_microdatapro_groups{{ store.store_id }}" placeholder="https://facebook.com/group, https://twitter.com/group" class="form-control">{{ store.module_microdatapro_groups }}</textarea>
+										{% endfor %}{% endif %}
+
+		            </div>
+		          </div>
+							<div class="form-group">
+						    <label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_entry_address_h }}" href="https://microdata.pro/about/settings-7-0#setting9" target="_blank">{{ text_entry_address }}</a></label>
+						    <div class="col-sm-10">
+									<textarea name="module_microdatapro_locations" placeholder="50.501090;30.496714//Москва, Россия//ул. Гагарина 54//012345" class="form-control">{{ module_microdatapro_locations }}</textarea>
+									{% if stores %}
+										{% for store in stores %}
+											<span class="placeholder_name">{{ store.name }}</span>
+											<textarea name="module_microdatapro_locations{{ store.store_id }}" placeholder="50.501090;30.496714//Москва, Россия//ул. Гагарина 54//012345" class="form-control">{{ store.module_microdatapro_locations }}</textarea>
+										{% endfor %}
+									{% endif %}
+						    </div>
+						  </div>
+							<div class="form-group">
+						    <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting10" target="_blank" data-toggle="tooltip" title="{{ text_entry_map_h }}">{{ text_entry_map }}</a></label>
+						    <div class="col-sm-10">
+									<textarea name="module_microdatapro_map" placeholder="https://www.google.com/maps/@48.605665,11.6267341,5z?hl=ru" class="form-control">{{ module_microdatapro_map }}</textarea>
+									{% if stores %}
+										{% for store in stores %}
+											<span class="placeholder_name">{{ store.name }}</span>
+											<textarea name="module_microdatapro_map{{ store.store_id }}" placeholder="https://www.google.com/maps/@48.605665,11.6267341,5z?hl=ru" class="form-control">{{ store.module_microdatapro_map }}</textarea>
+										{% endfor %}
+									{% endif %}
+						    </div>
+						  </div>
+						  </div>
+						</div>
+				    <div role="tabpanel" class="tab-pane fade" id="product">
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting1" target="_blank">{{ text_microdata_status }}</a></label>
+		            <div class="col-sm-10">
+									<input onchange="$('#module_microdatapro_product_block').slideToggle(300);" type="checkbox" name="module_microdatapro_product" {% if module_microdatapro_product %}checked="checked"{% endif %} value="1" class="form-control" />
+		            </div>
+		          </div>
+							<div id="module_microdatapro_product_block" {% if not module_microdatapro_product %}style="display:none;"{% endif %}>
+
+							<div class="alert alert-warning" role="alert">
+							  Если вам тяжело разобраться, лучше обратитесь к автору модуля info@microdata.pro. Он все настроит правильно и проверит работу MicrodataPro. Если будут какие-то сложности автор все может сделать. По цене это очень доступно (всего 300RUB) но вы секономите время и у вас будет правильно работать модуль.
+							</div>
+
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting2" target="_blank" >{{ text_syntax }}</a></label>
+		            <div class="col-sm-10">
+									<select name="module_microdatapro_product_syntax" class="form-control">
+										<option value="all" {% if module_microdatapro_product_syntax  ==  'all'%}selected="selected"{% endif %}>{{ text_company_syntax_all }}</option>
+										<option value="ld" {% if module_microdatapro_product_syntax  ==  'ld'%}selected="selected"{% endif %}>{{ text_company_syntax_ld }}</option>
+										<option value="md" {% if module_microdatapro_product_syntax  ==  'md'%}selected="selected"{% endif %}>{{ text_company_syntax_md }}</option>
+									</select>
+								</div>
+		          </div>
+							<div class="form-group">
+							  <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting11" target="_blank" >{{ text_breadcrumb }}</a></label>
+							  <div class="col-sm-10">
+							    <input type="checkbox" name="module_microdatapro_product_breadcrumb" {% if module_microdatapro_product_breadcrumb %}checked="checked"{% endif %} value="1" class="form-control" />
+							  </div>
+							</div>
+							<div class="form-group">
+							  <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting12" target="_blank" >{{ text_hide_price }}</a></label>
+							  <div class="col-sm-10">
+							    <input type="checkbox" name="module_microdatapro_hide_price" {% if module_microdatapro_hide_price %}checked="checked"{% endif %} value="1" class="form-control" />
+							  </div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting13" target="_blank" data-toggle="tooltip" title="{{ text_other_data_h }}">sku</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_sku" {% if module_microdatapro_sku %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting13" target="_blank" data-toggle="tooltip" title="{{ text_other_data_h }}">upc</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_upc" {% if module_microdatapro_upc %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting13" target="_blank" data-toggle="tooltip" title="{{ text_other_data_h }}">ean</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_ean" {% if module_microdatapro_ean %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting13" target="_blank" data-toggle="tooltip" title="{{ text_other_data_h }}">mpn</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_mpn" {% if module_microdatapro_mpn %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting13" target="_blank" data-toggle="tooltip" title="{{ text_other_data_h }}">isbn</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_isbn" {% if module_microdatapro_isbn %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting14" target="_blank">{{ text_reviews }}</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_product_reviews" {% if module_microdatapro_product_reviews %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting15" target="_blank">{{ text_related }}</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_product_related" {% if module_microdatapro_product_related %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting16" target="_blank">{{ text_attribute }}</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_product_attribute" {% if module_microdatapro_product_attribute %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting17" target="_blank">{{ text_gallery }}</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_product_gallery" {% if module_microdatapro_product_gallery %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting18" target="_blank" data-toggle="tooltip" title="{{ text_in_stock_h }}">{{ text_in_stock }}</a></label>
+								<div class="col-sm-10">
+									<input type="checkbox" name="module_microdatapro_product_in_stock" {% if module_microdatapro_product_in_stock %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_in_stock_status_h }}" href="https://microdata.pro/about/settings-7-0#setting19" target="_blank" >{{ text_in_stock_status }}</a></label>
+								<div class="col-sm-10">
+									<select name="module_microdatapro_in_stock_status_id" class="form-control">
+										<option value="0" {% if not stock_status_id %}selected="selected"{% endif %}>---</option>
+							      {% for stock_status in stock_statuses %}
+											{% if stock_status.stock_status_id == stock_status_id %}
+								      	<option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+								      {% else %}
+								      	<option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+											{% endif %}
+										{% endfor %}
+
+									</select>
+								</div>
+							</div>
+							</div>
+						</div>
+				    <div role="tabpanel" class="tab-pane fade" id="social">
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_opengraph_h }}" href="https://microdata.pro/about/settings-7-0#setting20" target="_blank">{{ text_opengraph }}</a></label>
+								<div class="col-sm-10">
+									<input onchange="$('#module_microdatapro_opengraph').slideToggle(300);" type="checkbox" name="module_microdatapro_opengraph" {% if module_microdatapro_opengraph %}checked="checked"{% endif %} value="1" class="form-control" />
+								</div>
+							</div>
+							<div id="module_microdatapro_opengraph" {% if not module_microdatapro_opengraph %}style="display:none;"{% endif %}>
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_meta_desc_h }}" href="https://microdata.pro/about/settings-7-0#setting21" target="_blank">{{ text_meta_desc }}</a></label>
+									<div class="col-sm-10">
+										<input type="checkbox" name="module_microdatapro_opengraph_meta" {% if module_microdatapro_opengraph_meta %}checked="checked"{% endif %} value="1" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting22" data-toggle="tooltip" title="{{ text_profile_id_desc }}" target="_blank">{{ text_profile_id }}</a></label>
+									<div class="col-sm-10">
+										<input type="text" name="module_microdatapro_profile_id" value="{{ module_microdatapro_profile_id }}" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting23" data-toggle="tooltip" title="{{ text_age_group_desc }}" target="_blank">{{ text_age_group }}</a></label>
+									<div class="col-sm-10">
+										<select name="module_microdatapro_age_group" class="form-control">
+											<option {% if module_microdatapro_age_group  ==  "" %}selected="selected"{% endif %} value="">{{ text_age_default }}</option>
+											<option {% if module_microdatapro_age_group  ==  "kids" %}selected="selected"{% endif %} value="kids">{{ text_age_children }}</option>
+											<option {% if module_microdatapro_age_group  ==  "adult" %}selected="selected"{% endif %} value="adult">{{ text_age_adult }}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting24" data-toggle="tooltip" title="{{ text_target_gender_desc }}" target="_blank">{{ text_target_gender }}</a></label>
+									<div class="col-sm-10">
+										<select name="module_microdatapro_target_gender" class="form-control">
+											<option {% if module_microdatapro_target_gender  ==  "" %}selected="selected"{% endif %} value="">{{ text_select }}</option>
+											<option {% if module_microdatapro_target_gender  ==  "female" %}selected="selected"{% endif %} value="female">{{ text_target_gender_female }}</option>
+											<option {% if module_microdatapro_target_gender  ==  "male" %}selected="selected"{% endif %} value="male">{{ text_target_gender_male }}</option>
+											<option {% if module_microdatapro_target_gender  ==  "unisex" %}selected="selected"{% endif %} value="unisex">{{ text_target_gender_unisex }}</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting25" target="_blank">{{ text_attr_color }}</a></label>
+									<div class="col-sm-10">
+										<select name="module_microdatapro_attr_color" class="form-control">
+											<option {% if module_microdatapro_attr_color  ==  "" %}selected="selected"{% endif %} value="">{{ text_select }}</option>
+											{% for attribute in all_attributes %}
+												<option {% if module_microdatapro_attr_color  ==  attribute.attribute_id %}selected="selected"{% endif %} value="{{ attribute.attribute_id }}">{{ attribute.attribute_group ~ '=>' ~ attribute.name }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting25" target="_blank">{{ text_attr_material }}</a></label>
+									<div class="col-sm-10">
+										<select name="module_microdatapro_attr_material" class="form-control">
+											<option {% if module_microdatapro_attr_material  ==  "" %}selected="selected"{% endif %} value="">{{ text_select }}</option>
+											{% for attribute in all_attributes %}
+												<option {% if module_microdatapro_attr_material  ==  attribute.attribute_id %}selected="selected"{% endif %} value="{{ attribute.attribute_id }}">{{ attribute.attribute_group ~ '=>' ~ attribute.name }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting25" target="_blank">{{ text_attr_size }}</a></label>
+									<div class="col-sm-10">
+										<select name="module_microdatapro_attr_size" class="form-control">
+											<option {% if module_microdatapro_attr_size  ==  "" %}selected="selected"{% endif %} value="">{{ text_select }}</option>
+											{% for attribute in all_attributes %}
+												<option {% if module_microdatapro_attr_size  ==  attribute.attribute_id %}selected="selected"{% endif %} value="{{ attribute.attribute_id }}">{{ attribute.attribute_group ~ '=>' ~ attribute.name }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_twitter_account_h }}" href="https://microdata.pro/about/settings-7-0#setting26" target="_blank">{{ text_twitter_account }}</a></label>
+								<div class="col-sm-10">
+									<input type="text" name="module_microdatapro_twitter_account" value="{{ module_microdatapro_twitter_account }}" class="form-control" />
+								</div>
+							</div>
+						</div>
+				    <div role="tabpanel" class="tab-pane fade" id="other">
+
+							<div class="form-group">
+								<div class="form-group" style="margin-left:0;">
+									<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting27" target="_blank">{{ text_category_page }}</a></label>
+			            <div class="col-sm-10">
+										<input onchange="$('#module_microdatapro_category_syntax').fadeToggle(300);" type="checkbox" name="module_microdatapro_category" {% if module_microdatapro_category %}checked="checked"{% endif %} value="1" class="form-control" />
+			            </div>
+		            </div>
+								<div id="module_microdatapro_category_syntax" {% if not module_microdatapro_category %}style="display:none;"{% endif %}>
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting2" target="_blank" >{{ text_syntax }}</a></label>
+										<div class="col-sm-10">
+											<select name="module_microdatapro_category_syntax" class="form-control">
+												<option value="all" {% if module_microdatapro_category_syntax  ==  'all'%}selected="selected"{% endif %}>{{ text_company_syntax_all }}</option>
+												<option value="ld" {% if module_microdatapro_category_syntax  ==  'ld'%}selected="selected"{% endif %}>{{ text_company_syntax_ld }}</option>
+												<option value="md" {% if module_microdatapro_category_syntax  ==  'md'%}selected="selected"{% endif %}>{{ text_company_syntax_md }}</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_product_agregator }}" href="https://microdata.pro/about/settings-7-0#setting28" target="_blank">{{ text_price_from_to }}</a></label>
+										<div class="col-sm-10">
+											<input type="checkbox" name="module_microdatapro_category_range" {% if module_microdatapro_category_range %}checked="checked"{% endif %} value="1" class="form-control" />
+				            </div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><a data-toggle="tooltip" title="{{ text_category_rating }}" href="https://microdata.pro/about/settings-7-0#setting29" target="_blank">{{ text_all_rating }}</a></label>
+										<div class="col-sm-10">
+											<input type="checkbox" name="module_microdatapro_category_review" {% if module_microdatapro_category_review %}checked="checked"{% endif %} value="1" class="form-control" />
+				            </div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><a data-toggle="tooltip" title="" href="https://microdata.pro/about/settings-7-0#setting30" target="_blank">{{ text_images_to_gallery }}</a></label>
+										<div class="col-sm-10">
+											<input type="checkbox" name="module_microdatapro_category_gallery" {% if module_microdatapro_category_gallery %}checked="checked"{% endif %} value="1" class="form-control" />
+				            </div>
+									</div>
+							  </div>
+		          </div>
+
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting31" target="_blank">{{ text_manufacturer_page }}</a></label>
+		            <div class="col-sm-2">
+									<input onchange="$('#module_microdatapro_manufacturer_syntax').fadeToggle(300);" type="checkbox" name="module_microdatapro_manufacturer" {% if module_microdatapro_manufacturer %}checked="checked"{% endif %} value="1" class="form-control" />
+		            </div>
+								<div id="module_microdatapro_manufacturer_syntax" {% if not module_microdatapro_manufacturer %}style="display:none;"{% endif %}>
+								<label class="col-sm-3 control-label"><a href="https://microdata.pro/about/settings-7-0#setting2" target="_blank" >{{ text_syntax }}</a></label>
+		            <div class="col-sm-5">
+									<select name="module_microdatapro_manufacturer_syntax" class="form-control">
+										<option value="all" {% if module_microdatapro_manufacturer_syntax  ==  'all'%}selected="selected"{% endif %}>{{ text_company_syntax_all }}</option>
+										<option value="ld" {% if module_microdatapro_manufacturer_syntax  ==  'ld'%}selected="selected"{% endif %}>{{ text_company_syntax_ld }}</option>
+										<option value="md" {% if module_microdatapro_manufacturer_syntax  ==  'md'%}selected="selected"{% endif %}>{{ text_company_syntax_md }}</option>
+									</select>
+								</div>
+								</div>
+		          </div>
+							<div class="form-group">
+		            <label class="col-sm-2 control-label"><a href="https://microdata.pro/about/settings-7-0#setting31" target="_blank">{{ text_information_page }}</a></label>
+		            <div class="col-sm-2">
+									<input onchange="$('#module_microdatapro_information_syntax').fadeToggle(300);" type="checkbox" name="module_microdatapro_information" {% if module_microdatapro_information %}checked="checked"{% endif %} value="1" class="form-control" />
+		            </div>
+								<div id="module_microdatapro_information_syntax" {% if not module_microdatapro_information %}style="display:none;"{% endif %}>
+								<label class="col-sm-3 control-label"><a href="https://microdata.pro/about/settings-7-0#setting2" target="_blank" >{{ text_syntax }}</a></label>
+		            <div class="col-sm-5">
+									<select name="module_microdatapro_information_syntax" class="form-control">
+										<option value="all" {% if module_microdatapro_information_syntax  ==  'all'%}selected="selected"{% endif %}>{{ text_company_syntax_all }}</option>
+										<option value="ld" {% if module_microdatapro_information_syntax  ==  'ld'%}selected="selected"{% endif %}>{{ text_company_syntax_ld }}</option>
+										<option value="md" {% if module_microdatapro_information_syntax  ==  'md'%}selected="selected"{% endif %}>{{ text_company_syntax_md }}</option>
+									</select>
+								</div>
+								</div>
+		          </div>
+						</div>
+				    <div role="tabpanel" class="tab-pane fade" id="info">
+							<div class="form-group">
+								<div class="col-sm-12">
+									{{ text_thanks_new }}
+								</div>
+							</div>
+							<div class="form-group">
+							  <div class="col-sm-3"><span data-toggle="tooltip" title="{{ text_faq_h }}">{{ text_check_license }}</span></div>
+							  <div class="col-sm-9"><a href="{{ lhref }}" target="_blank"><i class="fa fa-key" aria-hidden="true"></i> https://microdata.pro/status/</a></div>
+							</div>
+							<div class="form-group">
+							  <div class="col-sm-3"><span data-toggle="tooltip" title="{{ text_faq_h }}">{{ text_faq }}</span></div>
+							  <div class="col-sm-9"><a href="https://microdata.pro/faq/" target="_blank">https://microdata.pro/faq/</a></div>
+							</div>
+							<div class="form-group">
+							  <div class="col-sm-3"><span data-toggle="tooltip" title="{{ text_check_h }}"><b>{{ text_check }}</b></span></div>
+							  <div class="col-sm-9">
+									<a target="_blank" href="https://search.google.com/structured-data/testing-tool/#url={{ site_url }}"><i class="fa fa-google" aria-hidden="true"></i> Google structured data testing tool</a><br>
+									<a target="_blank" href="https://webmaster.yandex.ru/tools/microtest/">{{ text_yandex_validator }}</a><br>
+									<a target="_blank" href="https://cards-dev.twitter.com/validator"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter card validator</a><br>
+									<a target="_blank" href="https://developers.facebook.com/tools/debug/sharing"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook sharing debug</a>
+							  </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3"><span data-toggle="tooltip" title="{{ text_contacts_h }}">{{ text_contacts }}</span></div>
+							  <div class="col-sm-9">
+									{{ text_email }} <a href="mailto:info@microdata.pro">info@microdata.pro</a><br>
+									{{ text_site }} <a href="https://microdata.pro" target="_blank">https://microdata.pro</a><br>
+									Opencartforum <a href="https://opencartforum.com/profile/18336-exploits/" target="_blank">https://opencartforum.com/profile/18336-exploits/</a><br>
+									Facebook <a href="https://www.facebook.com/nikolay.prut" target="_blank">https://www.facebook.com/nikolay.prut</a>
+							  </div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3">{{ text_other_modules }}</div>
+							  <div class="col-sm-9">
+									Easyphoto <a href="https://microdata.pro/opencart-dev/easyphoto" target="_blank">https://microdata.pro/opencart-dev/easyphoto</a><br>
+									Wishlist+ <a href="https://microdata.pro/wishlist-plus/" target="_blank">https://microdata.pro/wishlist-plus/</a><br>
+							  </div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-3">{{ text_reviews_mod }}</div>
+							  <div class="col-sm-9">
+									{{ text_on_site }} <a href="https://opencartforum.com/files/file/2859-microdatapro-mikrorazmetka-json-ldmicrodata/?tab=reviews" target="_blank">opencartforum.com</a><br>
+									{{ text_on_site }} <a href="https://prodelo.biz/moduli-opencart/seo/microdatapro" target="_blank">prodelo.biz</a><br>
+									{{ text_on_site }} <a href="https://liveopencart.ru/opencart-moduli-shablony/moduli/obmen-dannyimi/mikrorazmetka-application-ld-json-pro-microdata-3-0" target="_blank">liveopencart.ru</a><br>
+									{{ text_on_site }} <a href="http://shop.opencart-russia.ru/microdata-applicationldjson-pro" target="_blank">shop.opencart-russia.ru</a>
+							  </div>
+							</div>
+
+							<hr>
+							{{ more_info }}
+
+						</div>
+				  </div>
+
+				{% endif %}
+
+				<input type="hidden" name="module_microdatapro_license_key" value="{{ module_microdatapro_license_key }}" >
+				<input type="hidden" name="module_microdatapro_new_version" value="1" >
+			  </div>
+				</form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	$('#clear_old').click(function(){
+		var $this = $(this);
+		$this.button('loading');
+		setTimeout(function() {
+			$.ajax({
+				url: 'index.php?route={{ href_old }}/clear_old&user_token={{ user_token }}',
+				type: 'post',
+				dataType: 'json',
+				success: function(succ){
+					$('#old_microdata_block').text("{{ text_success_removed }} (" + succ + ")");
+					setTimeout(function(){$('#old_microdata_block').slideUp('600');}, 5000);
+					$.post('index.php?route=extension/modification/refresh&user_token={{ user_token }}').done(function(data) {
+							$('#old_h3_title').html('2) <i style="color:#00b32d;" class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ text_old_microdata_deleted }}');
+					});
+				}
+			});
+    }, 1000);
+	});
+</script>
+{{ footer }}
