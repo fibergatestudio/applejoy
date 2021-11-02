@@ -372,13 +372,21 @@
 
 <script type="text/javascript"><!--
 
+	// Change size oc filter search
+	$(document).ready(function(){
+		var mainCat = $('.main-catalog');
+		mainCat.find('#column-left').removeClass('col-sm-3');
+		mainCat.find('#column-left').addClass('col-sm-11');
+	});
+
+
 $('#button-search').bind('click', function() {
 
   url = 'index.php?route=product/search';
 
 
 
-  var search = $('#content input[name=\'search\']').prop('value');
+  var search = $('.wrapper-list-catalog input[name=\'search\']').prop('value');
 
 
 
@@ -390,7 +398,7 @@ $('#button-search').bind('click', function() {
 
 
 
-  var category_id = $('#content select[name=\'category_id\']').prop('value');
+  var category_id = $('.wrapper-list-catalog select[name=\'category_id\']').prop('value');
 
 
 
@@ -402,7 +410,7 @@ $('#button-search').bind('click', function() {
 
 
 
-  var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
+  var sub_category = $('.wrapper-list-catalog input[name=\'sub_category\']:checked').prop('value');
 
 
 
@@ -414,7 +422,7 @@ $('#button-search').bind('click', function() {
 
 
 
-  var filter_description = $('#content input[name=\'description\']:checked').prop('value');
+  var filter_description = $('.wrapper-list-catalog input[name=\'description\']:checked').prop('value');
 
 
 
@@ -432,7 +440,7 @@ $('#button-search').bind('click', function() {
 
 
 
-$('#content input[name=\'search\']').bind('keydown', function(e) {
+$('.wrapper-list-catalog input[name=\'search\']').bind('keydown', function(e) {
 
   if (e.keyCode == 13) {
 
