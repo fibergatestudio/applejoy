@@ -546,5 +546,31 @@ class ControllerAccountAccount extends Controller {
 		$data['products'] = [];
 		$this->response->setOutput($this->load->view('account/wishlist_modal', $data));
 	}
-
+
+	public function del_wish_from_account(){
+		$this->load->language('account/account');
+		if (isset($this->request->post['product_id'])) {
+			$product_id = $this->request->post['product_id'];
+		} else {
+			$product_id = 0;
+		}
+		$this->load->model('catalog/product');
+		$product_info = $this->model_catalog_product->getProduct($product_id);
+    $this->load->model('account/wishlist');
+		if ($product_info) {
+			if ($this->customer->isLogged()) {
+				$this->model_account_wishlist->deleteWishlist($product_id);
+			}
+		}
+		$results = $this->model_account_wishlist->getWishlist();
+		if(!empty($results)){
+			echo '1';
+			return false;
+		} else {
+			$data["msg_empty_wishlist"] = $this->language->get('msg_empty_wishlist');
+			$data["msg_link_continue_wishlist"] = $this->language->get('msg_link_continue_wishlist');
+			$data['home'] = $this->url->link('common/home');
+			$this->response->setOutput($this->load->view('account/wishlist_empty', $data));
+		}
+	}
 }
