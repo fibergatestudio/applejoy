@@ -909,7 +909,7 @@
   <script type="text/javascript"><!--
   $('select[name=\'customer_group_id\']').on('change', function() {
     $.ajax({
-      url: '/index.php?route=customer/customer/customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+      url: 'index.php?route=customer/customer/customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
       dataType: 'json',
       success: function(json) {
         $('.custom-field').hide();
@@ -1151,7 +1151,7 @@
   <script type="text/javascript"><!--
   function country(element, index, zone_id) {
     $.ajax({
-      url: '/index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
+      url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
       dataType: 'json',
       beforeSend: function() {
         $('select[name=\'address[' + index + '][country_id]\']').prop('disabled', true);
@@ -1205,7 +1205,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: '/index.php?route=customer/customer/addhistory&user_token={{ user_token }}&customer_id={{ customer_id }}',
+      url: 'index.php?route=customer/customer/addhistory&user_token={{ user_token }}&customer_id={{ customer_id }}',
       type: 'post',
       dataType: 'json',
       data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
@@ -1249,7 +1249,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: '/index.php?route=customer/customer/addtransaction&user_token={{ user_token }}&customer_id={{ customer_id }}',
+      url: 'index.php?route=customer/customer/addtransaction&user_token={{ user_token }}&customer_id={{ customer_id }}',
       type: 'post',
       dataType: 'json',
       data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
@@ -1294,7 +1294,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: '/index.php?route=customer/customer/addreward&user_token={{ user_token }}&customer_id={{ customer_id }}',
+      url: 'index.php?route=customer/customer/addreward&user_token={{ user_token }}&customer_id={{ customer_id }}',
       type: 'post',
       dataType: 'json',
       data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
@@ -1352,7 +1352,7 @@
         clearInterval(timer);
 
         $.ajax({
-          url: '/index.php?route=tool/upload/upload&user_token={{ user_token }}',
+          url: 'index.php?route=tool/upload/upload&user_token={{ user_token }}',
           type: 'post',
           dataType: 'json',
           data: new FormData($('#form-upload')[0]),

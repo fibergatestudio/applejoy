@@ -102,7 +102,7 @@ $(document).ready(function () {
 
 							$.ajax({
 
-								url: '/index.php?route=common/filemanager&user_token=' + getURLVar('user_token'),
+								url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token'),
 
 								dataType: 'html',
 

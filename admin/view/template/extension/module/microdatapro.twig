@@ -692,7 +692,7 @@
 		$this.button('loading');
 		setTimeout(function() {
 			$.ajax({
-				url: '/index.php?route={{ href_old }}/clear_old&user_token={{ user_token }}',
+				url: 'index.php?route={{ href_old }}/clear_old&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				success: function(succ){
