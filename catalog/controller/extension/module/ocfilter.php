@@ -267,9 +267,9 @@ class ControllerExtensionModuleOCFilter extends Controller {
     $this->ocfilter->seo->setLastBreadcrumb();
     
     // Output   
-    $data['stylesheet'] = $this->ocfilter->helper->getRenderedStyle();  
+    $data['stylesheet'] = '/'.$this->ocfilter->helper->getRenderedStyle();  
     
-    $data['javascript'] = 'catalog/view/javascript/ocfilter48/ocfilter.js?v=' . OCF_VERSION;
+    $data['javascript'] = '/catalog/view/javascript/ocfilter48/ocfilter.js?v=' . OCF_VERSION;
        
     $this->outputDebug($data);
 
