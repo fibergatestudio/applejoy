@@ -96,7 +96,7 @@ function sendform(){
 	//$('#Modal-vacanse-done').addClass('show');
 	return;
   $.ajax({
-		url: '/index.php?route=custompage/vacancies/addSubscribe',
+		url: 'index.php?route=custompage/vacancies/addSubscribe',
     type: 'post',
     data: $('#send-vacancy').serialize(),
     success: function(json) {

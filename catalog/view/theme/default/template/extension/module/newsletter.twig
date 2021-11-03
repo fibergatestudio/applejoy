@@ -87,7 +87,7 @@ $(document).ready(function() {
 	});
 	$('#button-subscribe.{{ module }}').on('click', function() {
 		$.ajax({
-			url: '/index.php?route=extension/module/newsletter/subscribe',
+			url: 'index.php?route=extension/module/newsletter/subscribe',
 			type: 'post',
 			dataType: 'json',
 			data: 'email=' + encodeURIComponent($('input[id=\'email{{ module }}\']').val()),
@@ -110,7 +110,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	$('#button-unsubscribe.{{ module }}').on('click', function() {
 		$.ajax({
-			url: '/index.php?route=extension/module/newsletter/unsubscribe',
+			url: 'index.php?route=extension/module/newsletter/unsubscribe',
 			type: 'post',
 			dataType: 'json',
 			data: 'email=' + encodeURIComponent($('input[id=\'email{{ module }}\']').val()),
