@@ -137,7 +137,7 @@
 $(document).ready(function() {
   var first_pay = $('input[name=\'payment_method\']:first').val();
   $.ajax({
-        url: 'index.php?route=checkout/payment_method/save',
+        url: '/index.php?route=checkout/payment_method/save',
         type: 'post',
         data: 'payment_method=' + first_pay + '&comment=' + $('input[name="comment"]'),
         dataType: 'json',
@@ -150,7 +150,7 @@ $(document).ready(function() {
     });
     var first_pay = $('input[name=\'shipping_method\']:first').val();
     $.ajax({
-          url: 'index.php?route=checkout/shipping_method/save',
+          url: '/index.php?route=checkout/shipping_method/save',
           type: 'post',
           data: 'shipping_method=' + first_pay + '&comment=' + $('input[name="comment"]'),
           dataType: 'json',
@@ -169,7 +169,7 @@ $(document).ready(function() {
 $(document).delegate('#custom-order', 'click', function() {
 
  $.ajax({
-        url: 'index.php?route=checkout/customorder',
+        url: '/index.php?route=checkout/customorder',
         type:     "POST",
         data: $("#form-order").serialize(),
         beforeSend: function() {
@@ -202,7 +202,7 @@ $(document).delegate('#custom-order', 'click', function() {
 $('input[name="payment_method"]').click(function(){
   var val = $('input[name=\'payment_method\']:checked').val();
   $.ajax({
-        url: 'index.php?route=checkout/payment_method/save',
+        url: '/index.php?route=checkout/payment_method/save',
         type: 'post',
         data: 'payment_method=' + val + '&comment=' + $('input[name="comment"]'),
         dataType: 'json',
@@ -217,7 +217,7 @@ $('input[name="payment_method"]').click(function(){
 $('input[name="shipping_method"]').click(function(){
   var val = $('input[name=\'shipping_method\']:checked').val();
   $.ajax({
-        url: 'index.php?route=checkout/shipping_method/save',
+        url: '/index.php?route=checkout/shipping_method/save',
         type: 'post',
         data: 'shipping_method=' + val + '&comment=' + $('input[name="comment"]'),
         dataType: 'json',

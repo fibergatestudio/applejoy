@@ -103,7 +103,7 @@ $('#klarna-shipping-method input[type=\'radio\'], #confirm-shipping input[type=\
 
 
     $.ajax({
-        url: 'index.php?route=checkout/shipping_method/save',
+        url: '/index.php?route=checkout/shipping_method/save',
         type: 'post',
         data: $('#klarna-shipping-method input[type=\'radio\']:checked, #klarna-shipping-method input[type=\'hidden\']'),
         dataType: 'json',
@@ -145,7 +145,7 @@ var kc = {
 		});
 
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove',
+			url: '/index.php?route=checkout/cart/remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -188,7 +188,7 @@ var kc = {
 		});
 
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove',
+			url: '/index.php?route=checkout/cart/remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
