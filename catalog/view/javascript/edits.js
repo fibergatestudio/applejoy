@@ -766,3 +766,24 @@ function change_class_remowe_wishlist(product_id) {
 		}
 	});
 }
+
+function del_wish_from_account(like){
+	var product_id = like.getAttribute('data-id');
+	var li_wish = like.closest("li");
+	var ul_wish = like.closest("ul");
+	$.ajax({
+		url: 'index.php?route=account/account/del_wish_from_account',
+		type: 'post',
+		data: 'product_id=' + product_id,
+		success: function (response) {
+			li_wish.parentNode.removeChild(li_wish);
+			if(response == '1') {
+				return false;
+			}
+			ul_wish.insertAdjacentHTML('afterend', response);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
