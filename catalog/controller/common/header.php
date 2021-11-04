@@ -91,6 +91,10 @@ class ControllerCommonHeader extends Controller {
 		$this->load->language('common/header');
 
 
+		// Current url
+		
+		$data['_route_'] = $this->request->get['_route_'];
+
 
 		// Wishlist
 
