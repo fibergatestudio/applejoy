@@ -150,8 +150,8 @@
                               selected_model = device_name;
 
                                  $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model,
                                  dataType: 'json',
                                  success: function(json) {
                                        $( "#list_iphone_device_gb" ).empty();
@@ -173,8 +173,8 @@
                               selected_gb = device_gb;
                               //$('#second_step').show();
                               $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model+'&device_gb=' +selected_gb,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model+'&device_gb=' +selected_gb,
                                  dataType: 'json',
                                  success: function(json) {
                                     console.log(json['rows'][0]['device_discount']);
@@ -243,8 +243,8 @@
                               selected_model = device_name;
 
                                  $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model,
                                  dataType: 'json',
                                  success: function(json) {
                                        $( "#list_iphone_device_gb" ).empty();
@@ -266,8 +266,8 @@
                               selected_gb = device_gb;
                               //$('#second_step').show();
                               $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model+'&device_gb=' +selected_gb,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model+'&device_gb=' +selected_gb,
                                  dataType: 'json',
                                  success: function(json) {
                                     //console.log(json['rows'][0]['device_discount']);
@@ -293,8 +293,8 @@
                               //console.log(selected_model_ipad);
 
                                  $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_ipad,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_ipad,
                                  dataType: 'json',
                                  success: function(json) {
                                        //console.log(json);
@@ -317,8 +317,8 @@
                               selected_gb = device_gb;
                               //$('#second_step').show();
                               $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_ipad+'&device_gb=' +selected_gb,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_ipad+'&device_gb=' +selected_gb,
                                  dataType: 'json',
                                  success: function(json) {
                                     //console.log(json['rows'][0]['device_discount']);
@@ -341,8 +341,8 @@
                               selected_conn = device_conn;
                               //$('#second_step').show();
                               $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_ipad+'&device_gb=' +selected_gb,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_ipad+'&device_gb=' +selected_gb,
                                  dataType: 'json',
                                  success: function(json) {
                                     //console.log(json['rows'][0]['device_discount']);
@@ -423,7 +423,7 @@
                            selected_model_mac = device_name;
 
                            $.ajax({
-                              url: '/index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_mac,
+                              url: 'index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_mac,
                               dataType: 'json',
                               success: function(json) {
                                     $( "#list_mac_device_year" ).empty();
@@ -449,7 +449,7 @@
                            selected_year_mac = device_year;
 
                            $.ajax({
-                              url: '/index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_mac,
+                              url: 'index.php?route=information/tradein/getDeviceInfoByName&device_name='+selected_model_mac,
                               dataType: 'json',
                               success: function(json) {
                                     $( "#list_mac_device_gb" ).empty();
@@ -477,8 +477,8 @@
                            selected_gb_mac = device_gb;
                            //$('#second_step').show();
                            $.ajax({
-                              //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                              url: '/index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_mac+'&device_gb=' +selected_gb_mac,
+                              //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                              url: 'index.php?route=information/tradein/checkDevicePrice&device_name='+selected_model_mac+'&device_gb=' +selected_gb_mac,
                               dataType: 'json',
                               success: function(json) {
                                  //console.log(json['rows'][0]['device_discount']);
@@ -530,8 +530,8 @@
                               selected_model = device_name;
 
                               $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/checkDevicePriceByName&device_name='+selected_model,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/checkDevicePriceByName&device_name='+selected_model,
                                  dataType: 'json',
                                  success: function(json) {
                                     //console.log(json['rows'][0]['device_discount']);
@@ -608,7 +608,7 @@
 
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
-                                 url: '/index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
                                    clearAllLists();
@@ -704,7 +704,7 @@
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                               console.log(device_id);
                                  $.ajax({
-                                 url: '/index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
                                    clearAllLists();
@@ -798,7 +798,7 @@
                               $('#dropdown-sorting-model-macbook-buy').text(device_name);
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
-                                 url: '/index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
                                    clearAllLists();
@@ -890,8 +890,8 @@
 
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
                                    clearAllLists();
@@ -986,8 +986,8 @@
 
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
                                    clearAllLists();
@@ -1080,8 +1080,8 @@
 
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
                                    clearAllLists();
@@ -1174,8 +1174,8 @@
 
                               var device_id = $(this).closest("li.form-check").find("input[name='prod_id']").val();
                                  $.ajax({
-                                 //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                                 url: '/index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
+                                 //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                                 url: 'index.php?route=information/tradein/prodGetDeviceInfoByName&model='+device_name,
                                  dataType: 'json',
                                  success: function(json) {
                                    clearAllLists();
@@ -1381,8 +1381,8 @@
                   function getPrice(model, options)
                   {
                      $.ajax({
-                        //url: '/index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
-                        url: '/index.php?route=information/tradein/getDevicePriceProd&prod_device_id='+model+'&device_options[]=' +options,
+                        //url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                        url: 'index.php?route=information/tradein/getDevicePriceProd&prod_device_id='+model+'&device_options[]=' +options,
                         dataType: 'json',
                         success: function(json) {
                            json = json['rows'];

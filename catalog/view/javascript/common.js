@@ -46,11 +46,11 @@ function getURLVar(key) {
 
 
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 	// Highlight any found errors
 
-	$('.text-danger').each(function () {
+	$('.text-danger').each(function() {
 
 		var element = $(this).parent().parent();
 
@@ -68,7 +68,7 @@ $(document).ready(function () {
 
 	// Currency
 
-	$('#form-currency .currency-select').on('click', function (e) {
+	$('#form-currency .currency-select').on('click', function(e) {
 
 		e.preventDefault();
 
@@ -86,7 +86,7 @@ $(document).ready(function () {
 
 	// Language
 
-	$('#form-language .language-select').on('click', function (e) {
+	$('#form-language .language-select').on('click', function(e) {
 
 		e.preventDefault();
 
@@ -102,7 +102,7 @@ $(document).ready(function () {
 
 
 
-	$('#mobil-language .language-select').on('click', function (e) {
+	$('#mobil-language .language-select').on('click', function(e) {
 
 		e.preventDefault();
 
@@ -124,9 +124,9 @@ $(document).ready(function () {
 
 	// Search to home
 
-	$('#search input[name=\'search\']').parent().find('button').on('click', function () {
+	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
 
-		var url = window.location.origin + '/index.php?route=product/search';
+		var url = window. location. origin + '/index.php?route=product/search';
 
 		var value = $('#search input[name=\'search\']').val();
 
@@ -142,8 +142,8 @@ $(document).ready(function () {
 
 
 	// Form submit
-
-	$('#search').on('submit', function (e) {
+	
+	$('#search').on('submit', function(e){
 		e.preventDefault();
 
 		$('#search input[name=\'search\']').parent().find('button').trigger('click');
@@ -152,7 +152,7 @@ $(document).ready(function () {
 
 	// Menu
 
-	$('#menu .dropdown-menu').each(function () {
+	$('#menu .dropdown-menu').each(function() {
 
 		var menu = $('#menu').offset();
 
@@ -176,7 +176,7 @@ $(document).ready(function () {
 
 	// Product List
 
-	$('#list-view').click(function () {
+	$('#list-view').click(function() {
 
 		$('#content .product-grid > .clearfix').remove();
 
@@ -198,7 +198,7 @@ $(document).ready(function () {
 
 	// Product Grid
 
-	$('#grid-view').click(function () {
+	$('#grid-view').click(function() {
 
 		// What a shame bootstrap does not take into account dynamically loaded columns
 
@@ -252,7 +252,7 @@ $(document).ready(function () {
 
 	// Checkout
 
-	$(document).on('keydown', '#collapse-checkout-option input[name=\'email\'], #collapse-checkout-option input[name=\'password\']', function (e) {
+	$(document).on('keydown', '#collapse-checkout-option input[name=\'email\'], #collapse-checkout-option input[name=\'password\']', function(e) {
 
 		if (e.keyCode == 13) {
 
@@ -266,15 +266,15 @@ $(document).ready(function () {
 
 	// tooltips on hover
 
-	$('[data-toggle=\'tooltip\']').tooltip({ container: 'body' });
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 
 
 
 	// Makes tooltips work on ajax generated content
 
-	$(document).ajaxStop(function () {
+	$(document).ajaxStop(function() {
 
-		$('[data-toggle=\'tooltip\']').tooltip({ container: 'body' });
+		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 
 	});
 
@@ -286,31 +286,31 @@ $(document).ready(function () {
 
 var cart = {
 
-	'add': function (product_id, quantity) {
+	'add': function(product_id, quantity) {
 
 		$.ajax({
 
-			url: '/index.php?route=checkout/cart/add',
+			url: 'index.php?route=checkout/cart/add',
 
 			type: 'post',
 
-			data: 'product_id=' + product_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
+			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 
 			dataType: 'json',
 
-			beforeSend: function () {
+			beforeSend: function() {
 
 				$('#cart > button').button('loading');
 
 			},
 
-			complete: function () {
+			complete: function() {
 
 				$('#cart > button').button('reset');
 
 			},
 
-			success: function (json) {
+			success: function(json) {
 
 				$('.alert-dismissible, .text-danger').remove();
 
@@ -350,7 +350,7 @@ var cart = {
 
 			},
 
-			error: function (xhr, ajaxOptions, thrownError) {
+			error: function(xhr, ajaxOptions, thrownError) {
 
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
@@ -360,31 +360,31 @@ var cart = {
 
 	},
 
-	'update': function (key, quantity) {
+	'update': function(key, quantity) {
 
 		$.ajax({
 
-			url: '/index.php?route=checkout/cart/edit',
+			url: 'index.php?route=checkout/cart/edit',
 
 			type: 'post',
 
-			data: 'key=' + key + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
+			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 
 			dataType: 'json',
 
-			beforeSend: function () {
+			beforeSend: function() {
 
 				$('#cart > button').button('loading');
 
 			},
 
-			complete: function () {
+			complete: function() {
 
 				$('#cart > button').button('reset');
 
 			},
 
-			success: function (json) {
+			success: function(json) {
 
 				// Need to set timeout otherwise it wont update the total
 
@@ -408,7 +408,7 @@ var cart = {
 
 			},
 
-			error: function (xhr, ajaxOptions, thrownError) {
+			error: function(xhr, ajaxOptions, thrownError) {
 
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
@@ -418,11 +418,11 @@ var cart = {
 
 	},
 
-	'remove': function (key) {
+	'remove': function(key) {
 
 		$.ajax({
 
-			url: '/index.php?route=checkout/cart/remove',
+			url: 'index.php?route=checkout/cart/remove',
 
 			type: 'post',
 
@@ -430,19 +430,19 @@ var cart = {
 
 			dataType: 'json',
 
-			beforeSend: function () {
+			beforeSend: function() {
 
 				$('#cart > button').button('loading');
 
 			},
 
-			complete: function () {
+			complete: function() {
 
 				$('#cart > button').button('reset');
 
 			},
 
-			success: function (json) {
+			success: function(json) {
 
 				// Need to set timeout otherwise it wont update the total
 
@@ -466,7 +466,7 @@ var cart = {
 
 			},
 
-			error: function (xhr, ajaxOptions, thrownError) {
+			error: function(xhr, ajaxOptions, thrownError) {
 
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
@@ -482,17 +482,17 @@ var cart = {
 
 var voucher = {
 
-	'add': function () {
+	'add': function() {
 
 
 
 	},
 
-	'remove': function (key) {
+	'remove': function(key) {
 
 		$.ajax({
 
-			url: '/index.php?route=checkout/cart/remove',
+			url: 'index.php?route=checkout/cart/remove',
 
 			type: 'post',
 
@@ -500,19 +500,19 @@ var voucher = {
 
 			dataType: 'json',
 
-			beforeSend: function () {
+			beforeSend: function() {
 
 				$('#cart > button').button('loading');
 
 			},
 
-			complete: function () {
+			complete: function() {
 
 				$('#cart > button').button('reset');
 
 			},
 
-			success: function (json) {
+			success: function(json) {
 
 				// Need to set timeout otherwise it wont update the total
 
@@ -536,7 +536,7 @@ var voucher = {
 
 			},
 
-			error: function (xhr, ajaxOptions, thrownError) {
+			error: function(xhr, ajaxOptions, thrownError) {
 
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
@@ -554,15 +554,15 @@ var wishlist = {
 
 	/*'add': function(product_id) {*/
 
-	'add': function (elem) {
+	'add': function(elem) {
 
 		var product_id = elem.getAttribute('data-id');
 
-		if (elem.classList.contains('active')) {
+		if(elem.classList.contains('active')){
 
 			$.ajax({
 
-				url: '/index.php?route=account/wishlist/remove',
+				url: 'index.php?route=account/wishlist/remove',
 
 				type: 'post',
 
@@ -570,9 +570,9 @@ var wishlist = {
 
 				dataType: 'json',
 
-				success: function (json) {
+				success: function(json) {
 
-					if (json == '0') {
+					if(json == '0'){
 						$('button[data-target="#Modal-login"]').click();
 						return false;
 					}
@@ -582,7 +582,7 @@ var wishlist = {
 
 				},
 
-				error: function (xhr, ajaxOptions, thrownError) {
+				error: function(xhr, ajaxOptions, thrownError) {
 
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
@@ -594,7 +594,7 @@ var wishlist = {
 
 			$.ajax({
 
-				url: '/index.php?route=account/wishlist/add',
+				url: 'index.php?route=account/wishlist/add',
 
 				type: 'post',
 
@@ -602,9 +602,9 @@ var wishlist = {
 
 				dataType: 'json',
 
-				success: function (json) {
+				success: function(json) {
 
-					if (json == '0') {
+					if(json == '0'){
 						$('button[data-target="#Modal-login"]').click();
 						return false;
 					}
@@ -612,7 +612,7 @@ var wishlist = {
 
 				},
 
-				error: function (xhr, ajaxOptions, thrownError) {
+				error: function(xhr, ajaxOptions, thrownError) {
 
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
@@ -628,7 +628,7 @@ var wishlist = {
 
 	},
 
-	'remove': function () {
+	'remove': function() {
 
 
 
@@ -640,11 +640,11 @@ var wishlist = {
 
 var compare = {
 
-	'add': function (product_id) {
+	'add': function(product_id) {
 
 		$.ajax({
 
-			url: '/index.php?route=product/compare/add',
+			url: 'index.php?route=product/compare/add',
 
 			type: 'post',
 
@@ -652,7 +652,7 @@ var compare = {
 
 			dataType: 'json',
 
-			success: function (json) {
+			success: function(json) {
 
 				$('.alert-dismissible').remove();
 
@@ -674,7 +674,7 @@ var compare = {
 
 			},
 
-			error: function (xhr, ajaxOptions, thrownError) {
+			error: function(xhr, ajaxOptions, thrownError) {
 
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
@@ -684,7 +684,7 @@ var compare = {
 
 	},
 
-	'remove': function () {
+	'remove': function() {
 
 
 
@@ -696,7 +696,7 @@ var compare = {
 
 /* Agree to Terms */
 
-$(document).delegate('.agree', 'click', function (e) {
+$(document).delegate('.agree', 'click', function(e) {
 
 	e.preventDefault();
 
@@ -718,9 +718,9 @@ $(document).delegate('.agree', 'click', function (e) {
 
 		dataType: 'html',
 
-		success: function (data) {
+		success: function(data) {
 
-			html = '<div id="modal-agree" class="modal">';
+			html  = '<div id="modal-agree" class="modal">';
 
 			html += '  <div class="modal-dialog">';
 
@@ -760,11 +760,11 @@ $(document).delegate('.agree', 'click', function (e) {
 
 // Autocomplete */
 
-(function ($) {
+(function($) {
 
-	$.fn.autocomplete = function (option) {
+	$.fn.autocomplete = function(option) {
 
-		return this.each(function () {
+		return this.each(function() {
 
 			this.timer = null;
 
@@ -782,7 +782,7 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Focus
 
-			$(this).on('focus', function () {
+			$(this).on('focus', function() {
 
 				this.request();
 
@@ -792,9 +792,9 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Blur
 
-			$(this).on('blur', function () {
+			$(this).on('blur', function() {
 
-				setTimeout(function (object) {
+				setTimeout(function(object) {
 
 					object.hide();
 
@@ -806,9 +806,9 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Keydown
 
-			$(this).on('keydown', function (event) {
+			$(this).on('keydown', function(event) {
 
-				switch (event.keyCode) {
+				switch(event.keyCode) {
 
 					case 27: // escape
 
@@ -830,7 +830,7 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Click
 
-			this.click = function (event) {
+			this.click = function(event) {
 
 				event.preventDefault();
 
@@ -852,7 +852,7 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Show
 
-			this.show = function () {
+			this.show = function() {
 
 				var pos = $(this).position();
 
@@ -876,7 +876,7 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Hide
 
-			this.hide = function () {
+			this.hide = function() {
 
 				$(this).siblings('ul.dropdown-menu').hide();
 
@@ -886,13 +886,13 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Request
 
-			this.request = function () {
+			this.request = function() {
 
 				clearTimeout(this.timer);
 
 
 
-				this.timer = setTimeout(function (object) {
+				this.timer = setTimeout(function(object) {
 
 					object.source($(object).val(), $.proxy(object.response, object));
 
@@ -904,7 +904,7 @@ $(document).delegate('.agree', 'click', function (e) {
 
 			// Response
 
-			this.response = function (json) {
+			this.response = function(json) {
 
 				html = '';
 
