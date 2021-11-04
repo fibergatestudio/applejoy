@@ -224,13 +224,19 @@
 
           </div>
           <div class="tab-pane fade mt-3" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">
+            {% if wishlist is empty %}
+            <div class="modal-body">
+              <span class="text fw-500">{{ msg_empty_wishlist }}</span>
+              <span class="text fw-500"><a href="{{ home }}" class="color-purple">{{ msg_link_continue_wishlist }}</a></span>
+            </div>
+            {% else %}
             <ul class="list-favorite-product">
               {% for favorite in wishlist %}
               <li class="item-product">
                 <div class="wrapper-item-product">
                   <div class="wrapper-img-product">
                     <a href="{{ favorite.href }}" class="block-img"><img src="{{ favorite.thumb }}" alt="image-phone" class="img-product img-fluid"></a>
-                    <div class="icon icon-like active"></div>
+                    <div class="icon icon-like active" onclick="del_wish_from_account(this);" data-id="{{ favorite.product_id }}"></div>
                   </div>
                   <div><a href="{{ favorite.href }}" class="name-product">{{ favorite.name }}</a></div>
                   <div class="item-product-bottom-wrapper">
@@ -253,6 +259,7 @@
               {% endfor %}
 
             </ul>
+            {% endif %}
 
           </div>
         </div>
