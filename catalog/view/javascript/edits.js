@@ -1,5 +1,18 @@
 /*
 
+Category link
+
+ */
+
+$('.category-active-parent').on('click', function(e){
+	var href = $(this).attr('href');
+
+	window.location.href = href;
+});
+
+
+/*
+
 Phone mask
 
 */
