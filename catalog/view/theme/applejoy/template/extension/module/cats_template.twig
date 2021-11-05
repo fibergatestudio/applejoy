@@ -195,7 +195,7 @@
                {% for id_cat_desc, cat_desc in categories_tree %}
                  {% if cat_desc.childs is defined %}
                <li class="nav-item dropdown root-dropdown">
-                  <a class="nav-link nav-link-toggle" href="#" id="main_li-{{ id_cat_desc }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ cat_desc.name }}</a>
+                  <a class="nav-link nav-link-toggle category-active-parent" href="{{ cat_desc.href }}" id="main_li-{{ id_cat_desc }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ cat_desc.name }}</a>
                   <div class="dropdown-menu wrap" aria-labelledby="main_li-{{ id_cat_desc }}">
                     {% if cat_desc.childs|length > 8 %}
                      <ul class="two-col-grid">
