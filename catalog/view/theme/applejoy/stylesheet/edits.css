@@ -45,3 +45,7 @@ div.error-phone, div.error-checkbox{
     color: #393177;
     font-weight: 500;
 }
+
+.mobile-banner-hover:hover {
+	cursor:pointer;
+}

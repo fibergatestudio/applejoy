@@ -178,20 +178,8 @@ class ControllerCommonHeader extends Controller {
 					$canonical = explode( '?', $pageURL )[0];
 				}
 				$data['canonical'] = $canonical;
-				//echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-
-
-                if($_SERVER['REQUEST_URI'] == '/' || $_SERVER['REQUEST_URI'] == '/index.php?route=common/home'){
-
-                    return $this->load->view('common/test', $data);
-
-                } else {
 
                     return $this->load->view('common/headerpage', $data);
-
-                }
-
 	}
 
 }
-
