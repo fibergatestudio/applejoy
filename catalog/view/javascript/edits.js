@@ -1,5 +1,15 @@
 /*
 
+Mobile category
+
+ */
+
+$('.mobile-banner-hover').on('click', function(){
+	window.location.href = $(this).attr('rel');
+});
+
+/*
+
 Category link
 
  */
