@@ -55,3 +55,13 @@ div.error-phone, div.error-checkbox{
     font-weight: 500;
     color: #707070;
 }
+
+.category-content {
+	position:absolute;
+}
+
+@media (max-width: 768px) {
+	.category-content {
+	position:relative;
+	}
+}
