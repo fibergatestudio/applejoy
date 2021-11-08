@@ -45,3 +45,23 @@ div.error-phone, div.error-checkbox{
     color: #393177;
     font-weight: 500;
 }
+
+.mobile-banner-hover:hover {
+	cursor:pointer;
+}
+
+.popup-collapse .phone-link {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #707070;
+}
+
+.category-content {
+	position:absolute;
+}
+
+@media (max-width: 768px) {
+	.category-content {
+	position:relative;
+	}
+}
