@@ -49,3 +49,9 @@ div.error-phone, div.error-checkbox{
 .mobile-banner-hover:hover {
 	cursor:pointer;
 }
+
+.popup-collapse .phone-link {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #707070;
+}
