@@ -56,12 +56,8 @@ div.error-phone, div.error-checkbox{
     color: #707070;
 }
 
-.category-content {
-	position:absolute;
+@media (min-width: 768px) {
+.main-catalog #filter-collapse {
+    grid-area: active-filter;
 }
-
-@media (max-width: 768px) {
-	.category-content {
-	position:relative;
-	}
 }
