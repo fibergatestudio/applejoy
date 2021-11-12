@@ -50,7 +50,12 @@
 
                     </div>
                 </div>
-                <div class="main-catalog category-content">
+                <div class="main-catalog">
+                  <div class="collapse" id="filter-collapse">
+                        <div class="filter-catalog">
+                          {{ column_left }}
+                        </div>
+                      </div>
                     <div class="wrapper-list-catalog">
                         {% if products %}
                         <ul class="list-catalog-product">
@@ -110,7 +115,6 @@
                         {{ pagination }}
                     </div>
                 </div>
-                  {{ column_left }}
             </div>
 </div>
 {{ footer }} 
