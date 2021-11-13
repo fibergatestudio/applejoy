@@ -110,7 +110,7 @@
       -ms-user-select: none;
           user-select: none;
   background-image: none;
-  background-color: #ECEEF2;
+  background-color: transparent;
   border: none;
   border-radius: 4px;
 }
@@ -189,7 +189,7 @@ a.ocf-btn.ocf-disabled { pointer-events: none; }
   line-height: 1;
   color: #555555;
   text-align: center;
-  background-color: #ECEEF2;
+  background-color: transparent;
   border-radius: 4px;
 }
 .ocf-input-group .ocf-form-control:first-child,
@@ -603,23 +603,28 @@ textarea.ocf-form-control:focus {
 
 .ocf-theme-light .ocf-search-btn-static:hover,
 .ocf-theme-light .ocf-search-btn-popover:hover {
-  background-color: #596063;
+  background-color: transparent;
 }
 
 .ocf-theme-light .ocf-search-btn-static:focus,
 .ocf-theme-light .ocf-search-btn-static:active,
 .ocf-theme-light .ocf-search-btn-popover:focus,
 .ocf-theme-light .ocf-search-btn-popover:active {
-  background-color: #596063;
+  background-color: transparent;
 }
 
 .ocf-theme-light .ocf-search-btn-static,
 .ocf-theme-light .ocf-search-btn-popover,
 .ocf-theme-light .ocf-search-btn-static.ocf-disabled,
 .ocf-theme-light .ocf-search-btn-popover.ocf-disabled {
-  background-color: #6a7275;
-  color: #fff;
+  background-color: transparent;
+  color: #393177;
+  border: 1px solid #393177;
 } 
+
+#ocf-filter-2-0-1 .ocf-value-slider {
+  display: none;
+}
 
 /* LIGHT BLOCK THEME */
 .ocf-theme-light-block .ocf-noUi-connects:before, 
