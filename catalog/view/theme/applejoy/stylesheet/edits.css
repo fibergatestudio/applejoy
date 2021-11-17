@@ -56,6 +56,10 @@ div.error-phone, div.error-checkbox{
     color: #707070;
 }
 
+.modal-backdrop {
+	background-color: #fffbfb;
+}
+
 @media (min-width: 768px) {
 .main-catalog #filter-collapse {
     grid-area: active-filter;
