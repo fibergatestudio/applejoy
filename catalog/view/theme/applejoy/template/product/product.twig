@@ -140,8 +140,6 @@
 
          {% endif %}
 
-         {% set j = 0 %}
-
          {% for option in options %}
          {% if option.type == 'link' and module_ProductOptionLink_status %}
 
@@ -175,14 +173,17 @@
           {% endif %}
           {% for links_value in links[option.product_option_id] %}
           {% if ((option.product_option_id==links_value.product_option_id) and ((not module_ProductOptionLink_on_off_stock) or (not (links_value.quantity=='0')))) %}
+
+          {% set class_option = loop.index == 1 ? "btn-product active" : "btn-product" %}
+
           {% if option.option_id == 13 %}
             <a href="{{ links_value.href }}" class="img-color-product">
                 <img src="{{ links_value.image }}" alt="{{ links_value.name }}"  class="img"/>
             </a>
             {% elseif option.option_id == 14 %}
-              <a href="{{ links_value.href }}" class="btn-product" style="text-decoration: none; color:#000;">{{ links_value.name }}</a>
+              <a href="{{ links_value.href }}" class="{{ class_option }}">{{ links_value.name }}</a>
               {% elseif option.option_id == 15 %}
-              <a href="{{ links_value.href }}" class="btn-product" style="text-decoration: none; color:#000;">{{ links_value.name }}</a>
+              <a href="{{ links_value.href }}" class="{{ class_option }}">{{ links_value.name }}</a>
           {% else %}
           <div>
             <label class="text-center">
@@ -396,7 +397,8 @@
               <span class="name">{{ option.name }} :</span>
               <div class="items-memory">
                 {% for option_value in option.product_option_value %}
-                <span class="btn-product" data-val="{{ option_value.product_option_value_id }}" data-inpt="{{ option.product_option_id }}">{{ option_value.name }}</span>
+                {% set class_option = loop.index == 1 ? "btn-product active" : "btn-product" %}
+                <span class="{{ class_option }}" data-val="{{ option_value.product_option_value_id }}" data-inpt="{{ option.product_option_id }}" style="cursor:pointer;">{{ option_value.name }}</span>
                 {% endfor %}
               </div>
             </div>
@@ -405,7 +407,8 @@
               <span class="name">{{ option.name }} :</span>
               <div class="items-memory">
                 {% for option_value in option.product_option_value %}
-                <span class="btn-product" data-val="{{ option_value.product_option_value_id }}" data-inpt="{{ option.product_option_id }}">{{ option_value.name }}</span>
+                {% set class_option = loop.index == 1 ? "btn-product active" : "btn-product" %}
+                <span class="{{ class_option }}" data-val="{{ option_value.product_option_value_id }}" data-inpt="{{ option.product_option_id }}" style="cursor:pointer;">{{ option_value.name }}</span>
                 {% endfor %}
               </div>
             </div>
