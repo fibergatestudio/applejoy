@@ -1,0 +1,367 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-ProductOptionLink" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <br>
+	  <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+		{% if error_warning %}
+			<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}
+	<div class="panel panel-default">
+
+		<style>
+			<!--/* Стиль описания таба */-->
+			.css_tab_info {
+				color:red;
+
+			}
+			<!--/* Стиль названия значений в табах */-->
+			.css_css_name {
+				color:blue;
+				background-color:#f1f1f1;
+				font-size:14px
+			}
+			<!--/* Стиль описания значений в табах */-->
+			.css_tab_info_mini {
+
+
+			}
+			<!--/* Стили значения стилей */-->
+			.css_link_view_0 {
+				 background-color: #8fbb6c;
+			}
+			.css_link_view_1 {
+				 background-color: #a000005e;
+			}
+			.css_link_view_2 {
+				 background-color: #8a8a8a36;
+			}
+			.css_link_view_3 {
+				 background-color: #eaf54036;
+			}
+		</style>
+
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+		</div>
+		<div class="panel-body">
+		  <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-ProductOptionLink" class="form-horizontal">
+
+				<!--Статус модуля-->
+				<div class="form-group panel-heading">
+				<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+					<div class="col-sm-10">
+						<select name="module_ProductOptionLink_status" id="input-status" class="form-control">
+							{% if module_ProductOptionLink_status %}
+								<option value="1" selected>{{ text_enabled }}</option>
+								<option value="0">{{ text_disabled }}</option>
+							{% else %}
+								<option value="1">{{ text_enabled }}</option>
+								<option value="0" selected>{{ text_disabled }}</option>
+							{% endif %}
+						</select>
+					</div>
+				</div>
+
+			<div class="row panel-heading">
+				<!--Вывод вкладок-->
+				<div class="col-md-2">
+					<ul class="nav nav-pills nav-stacked" >
+						<li class="active"><a href="#tab_settings_admin" data-toggle="tab">{{ tab_settings_admin }}</a></li>
+						<li ><a href="#tab_settings_user" data-toggle="tab">{{ tab_settings_user }}</a></li>
+						<li ><a href="#tab_css" data-toggle="tab">{{ tab_css }}</a></li>
+					</ul>
+				</div>
+
+				<!--Значение вкладок-->
+			  <div class="col-md-10">
+				<div class="tab-content">
+
+				  <!--Значения таба админки-->
+				  <div class="tab-pane active" id="tab_settings_admin">
+					<div class="form-group text-center">
+						<h2 class="text-center css_tab_info">{{ text_info_tab_settings_admin }}</h2>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label alert-info" >{{ entry_on_of_admin }}</label><br><br>
+
+						<!--Статус Вывод опций-->
+						<div class="form-group">
+							<div class="col-sm-4">
+								{{ entry_link_view }}
+							</div>
+							<div class="col-sm-4">
+								<select name="module_ProductOptionLink_link_view" class="form-control">
+									{% if module_ProductOptionLink_link_view == '1' %}
+										<option value="0">{{ link_view_0 }}</option>
+										<option value="2">{{ link_view_2 }}</option>
+										<option value="1" selected>{{ link_view_1 }}</option>
+										<option value="3">{{ link_view_3 }}</option>
+									{% elseif module_ProductOptionLink_link_view == '2' %}
+										<option value="0">{{ link_view_0 }}</option>
+										<option value="2" selected>{{ link_view_2 }}</option>
+										<option value="1">{{ link_view_1 }}</option>
+										<option value="3">{{ link_view_3 }}</option>
+									{% elseif module_ProductOptionLink_link_view == '3' %}
+										<option value="0">{{ link_view_0 }}</option>
+										<option value="2">{{ link_view_2 }}</option>
+										<option value="1">{{ link_view_1 }}</option>
+										<option value="3" selected>{{ link_view_3 }}</option>
+									{% else %}
+										<option value="0" selected>{{ link_view_0 }}</option>
+										<option value="2">{{ link_view_2 }}</option>
+										<option value="1">{{ link_view_1 }}</option>
+										<option value="3">{{ link_view_3 }}</option>
+									{% endif %}
+								</select>
+							</div>
+						</div>
+
+						 <!--Статус названия-->
+						<div class="checkbox form-group">
+							<div class="col-sm-4">
+								{{ entry_on_off_name }}
+							</div>
+							<div class="col-sm-6">
+								{% if module_ProductOptionLink_on_off_name %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_name" data-on="{{ text_on }}" data-off="{{ text_off }}" checked data-toggle="toggle" value="1" >
+								{% else %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_name" data-on="{{ text_on }}" data-off="{{ text_off }}" data-toggle="toggle" value="1">
+								{% endif %}
+							</div>
+						</div>
+
+						 <!--Статус изображения-->
+						<div class="checkbox form-group">
+							<div class="col-sm-4">
+								{{ entry_on_off_images }}
+							</div>
+							<div class="col-sm-4">
+								<select name="module_ProductOptionLink_on_off_images" class="form-control">
+									{% if module_ProductOptionLink_on_off_images == '1' %}
+										<option value="0">{{ text_off }}</option>
+										<option value="1" selected>{{ text_option }}</option>
+										<option value="2">{{ text_product }}</option>
+									{% elseif module_ProductOptionLink_on_off_images == '2' %}
+										<option value="0">{{ text_off }}</option>
+										<option value="1">{{ text_option }}</option>
+										<option value="2" selected>{{ text_product }}</option>
+									{% else %}
+										<option value="0" selected>{{ text_off }}</option>
+										<option value="1">{{ text_option }}</option>
+										<option value="2">{{ text_product }}</option>
+									{% endif %}
+								</select>
+							</div>
+						</div>
+
+						<!--Статус полной проверки при копировании-->
+						<div class="checkbox form-group" >
+							<label class="col-sm-4 control-label" style="text-align: left">
+								<span data-toggle="tooltip" title="{{ help_fullcheck }}">
+									{{ entry_on_off_fullcheck }}
+								</span>
+							</label>
+							<div class="col-sm-6">
+								{% if module_ProductOptionLink_on_off_fullcheck %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_fullcheck" data-on="{{ text_on }}" data-off="{{ text_off }}" checked data-toggle="toggle" value="1">
+								{% else %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_fullcheck" data-on="{{ text_on }}" data-off="{{ text_off }}" data-toggle="toggle" value="1">
+								{% endif %}
+							</div>
+						</div>
+						
+						<!--Статус пакетного сохранения-->
+						<div class="checkbox form-group" >
+							<label class="col-sm-4 control-label" style="text-align: left">
+								<span data-toggle="tooltip" title="{{ help_save }}">
+									{{ entry_on_off_save }}
+								</span>
+							</label>
+							<div class="col-sm-6">
+								{% if module_ProductOptionLink_on_off_save %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_save" data-on="{{ text_on }}" data-off="{{ text_off }}" checked data-toggle="toggle" value="1">
+								{% else %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_save" data-on="{{ text_on }}" data-off="{{ text_off }}" data-toggle="toggle" value="1">
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				  </div>
+
+
+
+				  <!--Значения таба пользователя-->
+				  <div class="tab-pane" id="tab_settings_user">
+					<div class="form-group text-center">
+						<h2 class="text-center css_tab_info">{{ text_info_tab_settings_user }}</h2>
+					</div>
+
+					<div class="form-group">
+						 <!--Статус вывода при отсутсвии товара-->
+						<div class="checkbox">
+							<label >
+								{% if module_ProductOptionLink_on_off_stock %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_stock" data-on="{{ text_on }}" data-off="{{ text_off }}" checked data-toggle="toggle" value="1" class="text-center">
+								{% else %}
+									<input type="checkbox" name="module_ProductOptionLink_on_off_stock" data-on="{{ text_on }}" data-off="{{ text_off }}" data-toggle="toggle" value="1" class="text-center">
+								{% endif %}
+								{{ entry_on_off_stock }}
+							</label>
+						</div>
+
+						 <!--Размер изображения-->
+						<div class="input-group">
+							<br><label class="control-label alert-info" for="input-style_name">{{ entry_resize }}</label><br><br>
+								<div class="text-center">
+									{{ entry_resize_length }}
+									<input
+									class="text-center"
+									type="number"
+									min="1"
+									name="module_ProductOptionLink_resize_length"
+									value="{{ module_ProductOptionLink_resize_length }}">
+
+									{{ entry_resize_height }}
+									<input
+									class="text-center"
+									type="number"
+									min="1"
+									name="module_ProductOptionLink_resize_height"
+									value="{{ module_ProductOptionLink_resize_height }}">
+								</div>
+
+						</div>
+					</div>
+				  </div>
+
+				  <!--Значения таба стилей-->
+				  <div class="tab-pane" id="tab_css">
+					<div class="form-group text-center">
+						<h2 class="text-center css_tab_info">{{ text_info_tab_css }}</h2>
+						<div class="text-center css_tab_info_mini">
+							{{ text_info_tab_css_mini }}
+						</div>
+					</div>
+
+					 <!--Стили Название опции-->
+					<div class="form-group">
+						<label class="col-sm-2 control-label " for="input-style_name">{{ entry_style_name }}</label>
+						<div class="col-sm-10">
+							<textarea class = "css_css_name" name="module_ProductOptionLink_style[name]" placeholder="{{ entry_style_name }}" cols="55" rows="5">{{ module_ProductOptionLink_style.name }}</textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						
+						<ul class="nav nav-tabs" >
+							<li class="active css_link_view_0"><a href="#tab_link_view_0" data-toggle="tab">{{ link_view_0 }}</a></li>
+							<li class="css_link_view_1"><a href="#tab_link_view_1" data-toggle="tab">{{ link_view_1 }}</a></li>
+							<li class="css_link_view_3"><a href="#tab_link_view_3" data-toggle="tab">{{ link_view_3 }}</a></li>
+						</ul>
+						
+						<div class="tab-content">
+							<div class="tab-pane active css_link_view_0" id="tab_link_view_0">
+								<!--Стили Основная ссылка-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style">{{ entry_style_link }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view0][link]" placeholder="{{ entry_style_link }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view0.link }}</textarea>
+									</div>
+								</div>
+
+								<!--Если совпадает с текущим товаром-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style_product">{{ entry_style_product }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view0][product]" placeholder="{{ entry_style_product }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view0.product }}</textarea>
+									</div>
+								</div>
+
+								<!--Если не задан товар-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style_noproduct">{{ entry_style_noproduct }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view0][noproduct]" placeholder="{{ entry_style_noproduct }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view0.noproduct }}</textarea>
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane css_link_view_1" id="tab_link_view_1">
+								<!--Стили Основная ссылка-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style">{{ entry_style_link }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view1][link]" placeholder="{{ entry_style_link }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view1.link }}</textarea>
+									</div>
+								</div>
+
+								<!--Если совпадает с текущим товаром-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style_product">{{ entry_style_product }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view1][product]" placeholder="{{ entry_style_product }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view1.product }}</textarea>
+									</div>
+								</div>
+
+								<!--Если не задан товар-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style_noproduct">{{ entry_style_noproduct }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view1][noproduct]" placeholder="{{ entry_style_noproduct }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view1.noproduct }}</textarea>
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane css_link_view_3" id="tab_link_view_3">
+								<!--Стили Основная ссылка-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style">{{ entry_style_link }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view3][link]" placeholder="{{ entry_style_link }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view3.link }}</textarea>
+									</div>
+								</div>
+
+								<!--Если совпадает с текущим товаром-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style_product">{{ entry_style_product }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view3][product]" placeholder="{{ entry_style_product }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view3.product }}</textarea>
+									</div>
+								</div>
+
+								<!--Если не задан товар-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label " for="input-style_noproduct">{{ entry_style_noproduct }}</label>
+									<div class="col-sm-10">
+										<textarea class = "css_css_name" name="module_ProductOptionLink_style[view3][noproduct]" placeholder="{{ entry_style_noproduct }}" cols="55" rows="5">{{ module_ProductOptionLink_style.view3.noproduct }}</textarea>
+									</div>
+								</div>
+							</div>
+						</div>						
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </form>
+		</div>
+	</div>
+  </div>
+</div>
+{{ footer }}

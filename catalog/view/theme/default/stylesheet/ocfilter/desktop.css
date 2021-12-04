@@ -106,7 +106,18 @@
 .ocf-filter { margin-bottom: 15px; } 
 .ocf-horizontal .ocf-filter { padding-left: 5px; padding-right: 5px; min-width: 200px; flex: auto; }   
 
-  .ocf-filter-body { position: relative; }
+  .ocf-filter-body {
+    border-top: 1px solid #919090;
+    position: relative;
+  }
+  .ocf-filter-body::before {
+    content: "";
+    display: block;
+    height: 0;
+    border-top: 2px solid #393177;
+    width: 87px;
+    margin-top: 0;
+  }
   
     /* Filter item header */
     .ocf-filter-header,
@@ -261,10 +272,16 @@
   border: none;  
   font-weight: bold;
   padding: 8px 12px;
-  background-color: #eceef2;
+  background-color: transparent;
   border-radius: 3px;
 }
-.ocf-theme-light .ocf-dropdown .ocf-filter-header:hover { background-color: #F4F5F8; }
+
+.ocf-theme-light .ocf-dropdown .ocf-filter-header:hover .ocf-filter-name {
+  text-decoration: underline;
+}
+
+/*.ocf-theme-light .ocf-dropdown .ocf-filter-header:hover { background-color: #F4F5F8; }*/
+
 .ocf-theme-light.ocf-horizontal .ocf-dropdown .ocf-filter-header { font-weight: normal; }
 .ocf-theme-light .ocf-active.ocf-dropdown .ocf-filter-header{ background-color: #ffeedf; }
 .ocf-theme-light .ocf-filter-header .ocf-filter-discard:hover{ filter: invert(38%) sepia(18%) saturate(5963%) hue-rotate(328deg) brightness(81%) contrast(105%); }
