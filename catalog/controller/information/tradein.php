@@ -138,7 +138,7 @@ class ControllerInformationTradein extends Controller {
 
 		// BY IPHONEs
 		$data['by_iphones'] = [];
-		$macbooks = $this->getProdsByCat("Трейдин Б/у iPhone");
+		$macbooks = $this->getProdsByCat("Б/у iPhone");
 		$arr_true = [];
 		foreach($macbooks as $macbook){
 			foreach($macbook->rows as $mac){
